@@ -1,15 +1,24 @@
-import React from 'react';
+import { ButtonProps } from "../types/components/button";
 
-const Button = ({ children, onClick, type = 'button', className = '' }) => {
+export function Button({
+  children,
+  className,
+  onClick,
+  disabled,
+  ...props
+}: ButtonProps) {
   return (
     <button
-      type={type}
-      onClick={onClick}
-      className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${className}`}
+      onClick={(e) => {
+        e.preventDefault();
+        if (onClick) onClick(e);
+      }}
+      disabled={disabled}
+      {...props}
+      type="submit"
+      className={`${className} rounded-md font-medium text-center disabled:hover:bg-opacity-100 hover:bg-opacity-85 transition-all duration-300 w-full py-4 px-4`}
     >
       {children}
     </button>
   );
-};
-
-export default Button;
+}
