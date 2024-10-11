@@ -16,7 +16,7 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 
 **Demo:**
 
-Visit this website: 
+Visit this website: https://support-hive.vercel.app/
 
 # Getting Started
 
