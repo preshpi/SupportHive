@@ -11,7 +11,7 @@ const AuthSidebar = () => {
           Join a community of changemakers and fuel the future.
         </p>
 
-        {/* <img src={Imagedndnd} width={300} height={300} alt="support-img" /> */}
+        <img src={Imagedndnd} width={300} height={300} alt="support-img" />
       </div>
     </main>
   );
