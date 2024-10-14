@@ -16,7 +16,7 @@ const AppRoutes = () => {
           element={<ResetPasswordConfirm />}
         />
         <Route path="/email-verification" element={<EmailVerification />} />
-        <Route path="create-account" element={<CreateAccount />} />
+        <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
