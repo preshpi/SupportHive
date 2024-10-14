@@ -13,7 +13,7 @@ const AuthSidebar = () => {
 
         <img
           src={Imagedndnd}
-          className="w-auto object-contain"
+          className="w-auto object-contain mt-[45px]"
           alt="support-img"
         />
       </div>
