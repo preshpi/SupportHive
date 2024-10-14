@@ -23,4 +23,5 @@ export interface InputProps {
   emoji?: boolean;
   maxLength?: number;
   readOnly?: boolean;
+  options?: string[];
 }

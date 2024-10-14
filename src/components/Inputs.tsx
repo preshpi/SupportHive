@@ -25,6 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       minLength,
       maxLength,
       autoComplete,
+      options,
     },
     ref
   ) => {
@@ -35,7 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <label className="text-left font-light capitalize text-black text-[14px]">
           {label} {label && <span className="text-red-500">*</span>}
         </label>
-        {!textarea && (
+        {!textarea && !options && (
           <div className="relative">
             <input
               name={name}
@@ -85,6 +86,37 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             maxLength={maxLength}
             onChange={onChange}
           ></textarea>
+        )}
+        {options && (
+          <select
+            name={name}
+            id={id}
+            value={value}
+            ref={ref as React.Ref<HTMLSelectElement>}
+            className={`${
+              additionalClasses
+                ? additionalClasses + " w-full text-base"
+                : "w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light  focus:ring-1 ring-black outline-none"
+            }`}
+            required={required}
+            disabled={disabled}
+            onChange={onChange}
+            {...additionalAttributes}
+          >
+            <option value="" disabled>
+              {placeholder || "Select an option"}
+            </option>
+            {options.map(
+              (
+                option: string,
+                index: number // Add typing here
+              ) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              )
+            )}
+          </select>
         )}
       </div>
     );
