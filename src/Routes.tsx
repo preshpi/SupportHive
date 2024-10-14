@@ -10,13 +10,13 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<ResetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-password-confirm"
           element={<ResetPasswordConfirm />}
         />
         <Route path="/email-verification" element={<EmailVerification />} />
-        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
