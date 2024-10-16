@@ -1,44 +1,28 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
 import AuthLayout from "./Layout";
+import { useForm } from "react-hook-form";
+import {
+  createAccountSchema,
+  TcreateAccountSchema,
+} from "../../types/auth/createAccount";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateAccount = () => {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [gender, setGender] = useState<string>("Male"); // Default to Male
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ email?: string; confirmPassword?: string }>({});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TcreateAccountSchema>({
+    resolver: zodResolver(createAccountSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setErrors({}); 
-
-    
-    if (!email.includes('@') || !email.includes('.')) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        email: "Please enter a valid email address.",
-      }));
-      return;
-    }
-
-    
-    if (password !== confirmPassword) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        confirmPassword: "Passwords do not match.",
-      }));
-      return;
-    }
-
-    
-    console.log("Account created:", { firstName, lastName, email, gender, password });
+  const onSubmit = (data: TcreateAccountSchema) => {
+    console.log(data, "datatta");
+    reset();
   };
-
   return (
     <AuthLayout>
       <div className="flex gap-y-10 flex-col items-start my-[40px] max-w-[440px] mx-auto">
@@ -47,84 +31,115 @@ const CreateAccount = () => {
           <p className="text-base">Get started by creating an account.</p>
         </div>
 
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="w-full">
           <div className="space-y-4">
             <div className="flex gap-4">
-              <Input
-                name="first-name"
-                label="First Name"
-                value={firstName}
-                id="first-name"
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Enter first name"
-                type="text"
-                autoComplete="on"
-              />
-              <Input
-                name="last-name"
-                label="Last Name"
-                value={lastName}
-                id="last-name"
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Enter last name"
-                type="text"
-                autoComplete="on"
-              />
+              <div className="flex flex-col gap-y-1">
+                <Input
+                  label="First Name"
+                  id="first-name"
+                  {...register("firstname")}
+                  placeholder="Enter first name"
+                  type="text"
+                  autoComplete="on"
+                />
+                {errors.firstname && (
+                  <span className="text-red-500 text-sm">{`${errors.firstname.message}`}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-y-1">
+                <Input
+                  label="Last Name"
+                  {...register("lastname")}
+                  id="last-name"
+                  placeholder="Enter last name"
+                  type="text"
+                  autoComplete="on"
+                />
+                {errors.lastname && (
+                  <span className="text-red-500 text-sm">{`${errors.lastname.message}`}</span>
+                )}
+              </div>
             </div>
-            <Input
-              name="email"
-              label="Email Address"
-              value={email}
-              id="email"
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter email address"
-              type="email"
-              autoComplete="on"
-            />
-            {errors.email && <p className="text-red-500">{errors.email}</p>}
-            
-            <Input
-              name="gender"
-              label="Gender"
-              value={gender}
-              id="gender"
-              onChange={(e) => setGender(e.target.value)}
-              placeholder="Select option"
-              type="select"
-              options={["Male", "Female", "Other"]}
-              autoComplete="on"
-            />
-            <Input
-              name="password"
-              label="Password"
-              value={password}
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              type="password"
-              autoComplete="on"
-              password
-            />
-            <Input
-              name="confirm-password"
-              label="Confirm Password"
-              value={confirmPassword}
-              id="confirm-password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm password"
-              type="password"
-              autoComplete="on"
-              password
-            />
-            {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+
+            <div className="flex flex-col gap-y-1">
+              <Input
+                label="Email Address"
+                {...register("email")}
+                id="email"
+                placeholder="Enter email address"
+                type="email"
+                autoComplete="on"
+              />
+
+              {errors.email && (
+                <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-y-1">
+              <Input
+                label="Gender"
+                id="gender"
+                {...register("gender")}
+                placeholder="Select option"
+                type="select"
+                options={["Male", "Female", "Other"]}
+                autoComplete="on"
+              />
+              {errors.gender && (
+                <span className="text-red-500 text-sm">{`${errors.gender.message}`}</span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-y-1">
+              <Input
+                label="Password"
+                id="password"
+                {...register("password")}
+                placeholder="Enter password"
+                type="password"
+                autoComplete="on"
+                password
+              />
+              {errors.password && (
+                <span className="text-red-500 text-sm">{`${errors.password.message}`}</span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-y-1">
+              <Input
+                label="Confirm Password"
+                {...register("confirmPassword")}
+                id="confirm-password"
+                placeholder="Confirm password"
+                type="password"
+                autoComplete="on"
+                password
+              />
+
+              {errors.confirmPassword && (
+                <span className="text-red-500 text-sm">{`${errors.confirmPassword.message}`}</span>
+              )}
+            </div>
           </div>
           <div className="flex gap-2 text-black text-sm pt-3">
-            <input type="checkbox" name="" id="" />
-            <p>I accept SupportHive’s <b>Term of Service</b> and <b>Privacy Policy</b>.</p>
+            <input type="checkbox" {...register("terms")} id="terms" />
+            <p>
+              I accept SupportHive's <b>Term of Service</b> and{" "}
+              <b>Privacy Policy</b>.
+            </p>
           </div>
+          {errors.terms && (
+            <p className="text-red-500 text-sm mt-2">{errors.terms.message}</p>
+          )}
 
           <div className="mt-[32px] space-y-4">
-            <Button className="bg-normal-300 text-white text-sm">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              className="bg-normal-300 text-white text-sm"
+            >
               Proceed
             </Button>
             <div className="text-sm flex items-center justify-center gap-x-2">

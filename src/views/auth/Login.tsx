@@ -1,24 +1,25 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthLayout from "./Layout";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
+import { useForm } from "react-hook-form";
+import { LoginSchema, TLogin } from "../../types/auth/login";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<TLogin>({ resolver: zodResolver(LoginSchema) });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (email !== "test@gmail.com" || password !== "password123") {
-      setErrorMessage("Incorrect email or password.");
+  const onSubmit = (data: TLogin) => {
+    if (data.email !== "test@gmail.com" || data.password !== "password123") {
+      console.log("Incorrect email or password.");
       return;
     }
-
-    setErrorMessage(null);
-    console.log("Login successful!");
+    reset();
   };
 
   return (
@@ -29,33 +30,36 @@ const Login = () => {
           <p className="text-base">Log in to begin and manage your campaign</p>
         </div>
 
-        <form className="w-full" onSubmit={handleSubmit}>
+        <form className="w-full">
           <div className="space-y-4">
-            <div className="flex flex-col gap-y-4">
+            <div className="flex flex-col gap-y-1">
               <Input
-                name="email"
                 label="Email Address"
-                value={email}
+                {...register("email")}
                 id="email"
                 placeholder="Enter email address"
                 type="email"
                 autoComplete="on"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
               />
 
+              {errors.email && (
+                <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
+              )}
+            </div>
+            <div className="flex flex-col gap-y-1">
               <Input
-                name="password"
                 label="Password"
-                value=""
                 id="password"
-                onChange={() => {}}
+                {...register("password")}
                 placeholder="Enter password"
                 type="password"
                 autoComplete="on"
                 password
               />
+
+              {errors.password && (
+                <span className="text-red-500 text-sm">{`${errors.password.message}`}</span>
+              )}
             </div>
 
             <button className="flex items-end justify-end text-sm w-full">
@@ -63,12 +67,11 @@ const Login = () => {
             </button>
           </div>
 
-          {errorMessage && (
-            <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-          )}
-
           <div className="mt-[32px] space-y-4">
-            <Button className="bg-normal-300 text-white text-sm">
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              className="bg-normal-300 text-white text-sm"
+            >
               Proceed
             </Button>
 
