@@ -12,19 +12,13 @@ const Login = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    
-    
-
-    
     if (email !== "test@gmail.com" || password !== "password123") {
       setErrorMessage("Incorrect email or password.");
       return;
     }
 
-    
     setErrorMessage(null);
     console.log("Login successful!");
-    
   };
 
   return (
@@ -37,7 +31,7 @@ const Login = () => {
 
         <form className="w-full" onSubmit={handleSubmit}>
           <div className="space-y-4">
-            <div className="flex flex-col gap-y-1">
+            <div className="flex flex-col gap-y-4">
               <Input
                 name="email"
                 label="Email Address"
@@ -52,25 +46,23 @@ const Login = () => {
               />
 
               <Input
-               name="password"
-                 label="Password"
-                 value=""
-                 id="password"
-                 onChange={() => {}}
-                 placeholder="Enter password"
-                 type="password"
-                 autoComplete="on"
-                 password
+                name="password"
+                label="Password"
+                value=""
+                id="password"
+                onChange={() => {}}
+                placeholder="Enter password"
+                type="password"
+                autoComplete="on"
+                password
               />
-              
             </div>
 
             <button className="flex items-end justify-end text-sm w-full">
-              Forgot Password?
+              <Link to="/forgot-password">Forgot Password?</Link>
             </button>
           </div>
 
-         
           {errorMessage && (
             <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
           )}
@@ -82,7 +74,7 @@ const Login = () => {
 
             <div className="text-sm flex items-center justify-center gap-x-2">
               <p className="text-black">Don't have an account?</p>
-              <Link to="/sign-up" className="text-normal-300 underline">
+              <Link to="/" className="text-normal-300 underline">
                 {" "}
                 Create Account
               </Link>

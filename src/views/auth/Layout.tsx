@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import AuthSidebar from "./AuthSidebar";
 
 const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -7,7 +8,7 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="h-full overflow-y-auto no-scrollbar">
           <div className="lg:px-[64px] pt-[56px]">
             <h1 className="text-normal-500 font-bold text-[20px] logo">
-              SupportHive
+              <Link to="/">SupportHive</Link>
             </h1>
           </div>
 
