@@ -29,7 +29,7 @@ const EmailVerification = () => {
           </Button>
           <div className="text-sm flex items-center justify-center gap-x-1">
             <p className="text-black">Already have an account?</p>
-            <Link to="/sign-up" className="text-normal-300 underline">
+            <Link to="/login" className="text-normal-300 underline">
               {" "}
               Log in
             </Link>

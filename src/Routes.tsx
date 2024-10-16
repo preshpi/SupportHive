@@ -4,6 +4,8 @@ import ResetPasswordConfirm from "./views/auth/ResetPasswordConfirm.js";
 import EmailVerification from "./views/auth/EmailVerification.js";
 import CreateAccount from "./views/auth/CreateAccount.js";
 import ForgotPassword from "./views/auth/ForgotPassword.js";
+import VerificationSuccessful from "./views/auth/VerificationSuccessful.js";
+import Login from "./views/auth/Login.js";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +20,11 @@ const AppRoutes = () => {
         <Route path="/email-verification" element={<EmailVerification />} />
         <Route path="/" element={<CreateAccount />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/Verification-successful"
+          element={<VerificationSuccessful />}
+        />
       </Routes>
     </Router>
   );

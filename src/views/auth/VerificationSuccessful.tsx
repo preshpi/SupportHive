@@ -1,28 +1,25 @@
 import { Link } from "react-router-dom";
 import AuthLayout from "./Layout";
 
-const ResetPasswordConfirm = () => {
+const VerificationSuccessful = () => {
   return (
     <AuthLayout>
       <div className="flex gap-y-10 flex-col items-start mt-[90px] max-w-[440px] mx-auto">
         <div className="text-black ">
-          <h2 className="text-[18px] font-bold">Forgot Password</h2>
+          <h2 className="text-[18px] font-bold">Email Verification</h2>
           <p className="text-base">
-            Please enter your registered email address to reset your password
+            Activate your account by verifying your email address{" "}
           </p>
         </div>
-
         <div className="border-light-50 w-full bg-normal-300/5 text-center border py-5 px-3 rounded-lg">
-          <p className="text-normal-300 text-base">
-            Reset password link sent successfully
-          </p>
+          <p className="text-normal-300 text-base">Verification Successful </p>
         </div>
 
         <p className="text-base text-black">
-          A link to reset your password has been sent to your email
+          Your account is verified and activated. You can now log in.{" "}
         </p>
 
-        <div className="text-sm flex items-center justify-center gap-x-1">
+        <div className="text-sm flex items-center justify-center gap-1">
           <p className="text-black">Already have an account?</p>
           <Link to="/login" className="text-normal-300 underline">
             {" "}
@@ -34,4 +31,4 @@ const ResetPasswordConfirm = () => {
   );
 };
 
-export default ResetPasswordConfirm;
+export default VerificationSuccessful;
