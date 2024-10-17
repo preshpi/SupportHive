@@ -6,6 +6,7 @@ import CreateAccount from "./views/auth/CreateAccount.js";
 import ForgotPassword from "./views/auth/ForgotPassword.js";
 import VerificationSuccessful from "./views/auth/VerificationSuccessful.js";
 import Login from "./views/auth/Login.js";
+import Dashboard from "./views/Dashboard/index.js";
 
 const AppRoutes = () => {
   return (
@@ -18,7 +19,8 @@ const AppRoutes = () => {
           element={<ResetPasswordConfirm />}
         />
         <Route path="/email-verification" element={<EmailVerification />} />
-        <Route path="/" element={<CreateAccount />} />
+        <Route path="/signup" element={<CreateAccount />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route

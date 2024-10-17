@@ -1,12 +1,17 @@
-import { Outlet } from "react-router";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/Nav";
+
+
 
 const Dashboard = () => {
   return (
     <>
       <div className="flex ">
-        <div className="overflow-x-auto min-h-screen w-full bg-[#F8FAFC]">
-          <Outlet />
+        <div className="overflow-x-auto min-h-screen w-full bg-[#F8FAFC] ">
+          <NavBar />
+          <Footer />
         </div>
+       
       </div>
     </>
   );
