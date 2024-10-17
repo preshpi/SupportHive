@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
 import Logo from "../assets/Frame 1618868431.svg";
 import { Button } from "./Button";
 import { FaBars, FaTimes } from "react-icons/fa"; 
+import { useState } from "react";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +36,7 @@ const NavBar = () => {
           <Link to="/">How it works</Link>
           <Link to="/">Browse Campaigns</Link>
           <Link to="/">Login/SignUp</Link>
-          <Button className="w-fit text-white bg-[#28A745]">Start a Campaign</Button>
+          <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">Start a Campaign</button>
         </div>
       </div>
 
@@ -45,9 +46,9 @@ const NavBar = () => {
           <Link to="/" onClick={toggleMenu}>How it works</Link>
           <Link to="/" onClick={toggleMenu}>Browse Campaigns</Link>
           <Link to="/" onClick={toggleMenu}>Login/SignUp</Link>
-          <Button className="w-fit text-white bg-[#28A745]" onClick={toggleMenu}>
+          <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]" onClick={toggleMenu}>
             Start a Campaign
-          </Button>
+          </button>
         </div>
       </div>
     </div>
