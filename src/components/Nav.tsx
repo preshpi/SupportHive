@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import Logo from "../assets/Frame 1618868431.svg";
-import { Button } from "./Button";
+
 import { FaBars, FaTimes } from "react-icons/fa"; 
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <div>
+    <div className="sticky top-0 z-30">
       <div className="flex justify-between items-center mx-auto container px-10 py-5">
         
         <div>
