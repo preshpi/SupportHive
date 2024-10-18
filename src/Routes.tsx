@@ -6,13 +6,27 @@ import CreateAccount from "./views/auth/CreateAccount.js";
 import ForgotPassword from "./views/auth/ForgotPassword.js";
 import VerificationSuccessful from "./views/auth/VerificationSuccessful.js";
 import Login from "./views/auth/Login.js";
-import Dashboard from "./views/Dashboard/index.js";
+import LandingPage from "./views/LandingPage/index.js";
+import Overview from "./views/Dashboard/Overview.js";
+import Dashboardlayout from "./views/Dashboard/layout.js";
+import Campaigns from "./views/Dashboard/Campaigns.js";
+import Transactions from "./views/Dashboard/Transactions.js";
+import Settings from "./views/Dashboard/Settings.js";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
+        {/* dashboard */}
+
+        <Route element={<Dashboardlayout />}>
+          <Route path="/dashboard/overview" element={<Overview />} />
+          <Route path="/dashboard/campaigns" element={<Campaigns />} />
+          <Route path="/dashboard/transactions" element={<Transactions />} />
+          <Route path="/dashboard/settings" element={<Settings />} />
+        </Route>
+
+        {/* Auth Routes */}
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/reset-password-confirm"
@@ -20,13 +34,15 @@ const AppRoutes = () => {
         />
         <Route path="/email-verification" element={<EmailVerification />} />
         <Route path="/signup" element={<CreateAccount />} />
-        <Route path="/" element={<Dashboard />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/Verification-successful"
           element={<VerificationSuccessful />}
         />
+
+        {/* landing page */}
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );

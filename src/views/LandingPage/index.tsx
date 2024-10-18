@@ -2,9 +2,7 @@ import Footer from "../../components/Footer";
 import NavBar from "../../components/Nav";
 import Spotlight from "./Spotlight";
 
-
-
-const Dashboard = () => {
+const LandingPage = () => {
   return (
     <>
       <div className="flex ">
@@ -13,10 +11,9 @@ const Dashboard = () => {
           <Spotlight />
           <Footer />
         </div>
-       
       </div>
     </>
   );
 };
 
-export default Dashboard;
+export default LandingPage;
