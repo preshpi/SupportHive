@@ -10,6 +10,7 @@ export default {
         "gray-100": "#D0D5DD",
         "Light-50": "#EAF6EC",
         "Light-100": "#DFF2E3",
+        "Light-200": "#97D699",
         "normal-300": "#28A745",
         "normal-400": "#24963E",
         "normal-500": "#208637",

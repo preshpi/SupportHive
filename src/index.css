@@ -12,10 +12,14 @@ body {
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.sidebar {
+  grid-row: 1 /-1;
 }
