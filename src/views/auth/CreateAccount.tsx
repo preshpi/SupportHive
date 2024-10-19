@@ -8,6 +8,9 @@ import {
   TcreateAccountSchema,
 } from "../../types/auth/createAccount";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { startTransition } from "react";
+import { auth } from "../../firebase";
 
 const CreateAccount = () => {
   const {
@@ -19,9 +22,29 @@ const CreateAccount = () => {
     resolver: zodResolver(createAccountSchema),
   });
 
-  const onSubmit = (data: TcreateAccountSchema) => {
-    console.log(data, "datatta");
-    reset();
+  const onSubmit = async (data: TcreateAccountSchema) => {
+    const {
+      firstname,
+      lastname,
+      gender,
+      email,
+      terms,
+      password,
+      confirmPassword,
+    } = data;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <AuthLayout>

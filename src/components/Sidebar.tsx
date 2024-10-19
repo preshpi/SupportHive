@@ -40,7 +40,7 @@ const Sidebar = () => {
   return (
     <>
       {isSideBarOpen && (
-        <aside className="h-full absolute lg:sticky w-[264px] bg-Dark-700 z-20 top-0">
+        <aside className="h-full w-[284px]  bg-Dark-700 z-20 top-0">
           <div className="px-6 py-10">
             <div className="flex items-center justify-between">
               <h1 className="text-white font-bold text-[20px] logo">
