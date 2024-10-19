@@ -11,7 +11,8 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 **Tech Stack**:
 
 - Frontend: React, Tailwind CSS
-- Backend: Supabase (Database, Authentication, API)
+- Database: Sanity 
+- Backend: Firebase (Authentication, API)
 - Payments: Paystack for secure online payments
 
 **Demo:**
