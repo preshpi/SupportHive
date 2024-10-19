@@ -55,8 +55,9 @@ const Sidebar = () => {
             </div>
 
             <ul className="flex gap-y-2 flex-col pt-10">
-              {links.map(({ name, path, icon }) => (
+              {links.map(({ name, path, icon }, index) => (
                 <NavLink
+                  key={index}
                   to={path}
                   className={({ isActive }) =>
                     isActive
