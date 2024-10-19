@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Spotlight1 from "../../assets/image (3).svg";
-import Spotlight2 from "../../assets/image (4).svg"
-import Spotlight3 from "../../assets/image (5).svg"
+import Spotlight2 from "../../assets/image (4).svg";
+import Spotlight3 from "../../assets/image (5).svg";
 
 type SpotLightCardProps = {
   image: string;
@@ -26,16 +26,32 @@ const SpotLightCard: React.FC<SpotLightCardProps> = ({
           <img
             src={image}
             alt={name}
-            className="w-[366px] h-[271px] rounded-lg"
+            className="w-full lg:w-[366px] h-[271px] rounded-lg"
           />
         </div>
         <p className="font-semibold text-[20px]">{name}</p>
         <p className="text-black/80 text-[16px] py-2">{description}</p>
-        <p className="text-[14px] py-1">By <span className="semi-bold text-[#28A745]">community Health Initiatives</span></p>
+        <p className="text-[14px] py-1">
+          By{" "}
+          <span className="semi-bold text-[#28A745]">
+            community Health Initiatives
+          </span>
+        </p>
 
         <div className="w-full bg-gray-200 rounded-full h-[5px] my-2">
           <div className="bg-[#28A745] h-full rounded-full" />
         </div>
+        {/* <div className="slidecontainer">
+          <input
+            type="range"
+            name="price"
+            id="price"
+            min="1"
+            max="100"
+            value="50"
+            className="slider "
+          />
+        </div> */}
         <p className="text-[16px] font-semibold py-2">{price}</p>
         <span className="text-[12px] text-[#838383]">{per}</span>
       </div>
@@ -55,24 +71,23 @@ const Spotlight = () => {
       per: "raised",
     },
     {
-        id: 2,
-        name: "Support For Orphans",
-        price: "N12,050 ",
-        description:
-          "This campaign will offer food, shelter, and education to orphans, helping them build a better future",
-        image: Spotlight2,
-        per: "raised",
-      },
-      {
-        id: 3,
-        name: "Support Entepreneurs",
-        price: "N12,050 ",
-        description:
-          "This campaign supports small businesses by providing them with the capital they need to grow and thrive",
-        image: Spotlight3,
-        per: "raised",
-      },
-      
+      id: 2,
+      name: "Support For Orphans",
+      price: "N12,050 ",
+      description:
+        "This campaign will offer food, shelter, and education to orphans, helping them build a better future",
+      image: Spotlight2,
+      per: "raised",
+    },
+    {
+      id: 3,
+      name: "Support Entepreneurs",
+      price: "N12,050 ",
+      description:
+        "This campaign supports small businesses by providing them with the capital they need to grow and thrive",
+      image: Spotlight3,
+      per: "raised",
+    },
 
     // {
     //   id: 2,
@@ -130,7 +145,7 @@ const Spotlight = () => {
 
   return (
     <div className="px-5 lg:px-10">
-      <h1 className="text-[30px] font-bold">In the Spotlight</h1>
+      <h1 className="text-[40px] font-bold">In the Spotlight</h1>
       <div className="grid grid-cols-1 gap-4 my-5 py-5 w-full no-scrollbar overflow-x-auto lg:grid-cols-3 md:grid-cols-2">
         {spotItems.map((campaign) => (
           <SpotLightCard
