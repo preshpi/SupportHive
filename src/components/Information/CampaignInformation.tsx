@@ -9,7 +9,7 @@ const CampaignInformation = () => {
           <textarea className="w-full border p-2 rounded" placeholder="Enter Campaign Description"></textarea>
         </div>
 
-        {/* Add more fields for Campaign Information */}
+        
       </form>
     </div>
   );
