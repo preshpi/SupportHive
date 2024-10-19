@@ -9,8 +9,8 @@ import {
 } from "../../types/auth/createAccount";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { startTransition } from "react";
 import { auth } from "../../firebase";
+import { toast } from "sonner";
 
 const CreateAccount = () => {
   const {
@@ -39,11 +39,26 @@ const CreateAccount = () => {
         email,
         password
       );
+
       const user = userCredential.user;
-      console.log(user);
+      const { uid, email: userEmail, emailVerified } = user;
+
+      if (uid) {
+        const userData = {
+          uid,
+          firstname,
+          lastname,
+          email: userEmail,
+          gender,
+          emailVerified: emailVerified,
+        };
+      }
+
+      toast.success("Account created successfully");
+
       reset();
     } catch (error) {
-      console.log(error);
+      toast.error("An error occurred");
     }
   };
   return (
@@ -160,8 +175,9 @@ const CreateAccount = () => {
 
           <div className="mt-[32px] space-y-4">
             <Button
+              disabled={isSubmitting}
               onClick={handleSubmit(onSubmit)}
-              className="bg-normal-300 text-white text-sm"
+              className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Proceed
             </Button>
