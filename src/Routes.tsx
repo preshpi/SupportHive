@@ -8,6 +8,8 @@ import VerificationSuccessful from "./views/auth/VerificationSuccessful.js";
 import Login from "./views/auth/Login.js";
 import Dashboard from "./views/Dashboard/index.js";
 
+
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -27,6 +29,7 @@ const AppRoutes = () => {
           path="/Verification-successful"
           element={<VerificationSuccessful />}
         />
+       
       </Routes>
     </Router>
   );

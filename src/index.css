@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,3 +20,5 @@ body {
   -ms-overflow-style: none;  
   scrollbar-width: none;  
 }
+ 
+
