@@ -1,33 +1,45 @@
+import { useState } from "react";
 import Arrow from "../../assets/arrow icon.svg";
+import CampaignInput from "../CampaignInput";
 
-const ContactInformation = () => {
+const ContactInformation: React.FC = () => {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [number, setNumber] =useState("")
+
   return (
-    <div>
+    <div className="w-[70%]">
       <form>
         <div className="mb-4">
-          <label className="block text-sm font-semibold">Name</label>
-          <input
-            type="text"
-            className="w-full border p-2 rounded"
+          
+          <CampaignInput
+            label="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            
             placeholder="Enter Your Name"
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-semibold">Email Address</label>
-          <input
-            type="email"
-            className="w-full border p-2 rounded"
+          
+          <CampaignInput
+            label="Email Address"
+            
             placeholder="Enter Your Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-semibold">Phone Number</label>
-          <input
-            type="email"
-            className="w-full border p-2 rounded"
+          
+          <CampaignInput
+            label="Phone Number"
+            
             placeholder="Enter your phone number"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
           />
         </div>
       </form>
