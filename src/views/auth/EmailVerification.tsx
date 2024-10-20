@@ -1,8 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "./Layout";
 import { Button } from "../../components/Button";
+import { sendEmailVerification } from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const EmailVerification = () => {
+  const handleResendLink = async () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      try {
+        await sendEmailVerification(user);
+        toast.success("Verification email sent! Check your inbox.");
+      } catch (error) {
+        toast.error((error as { message: string }).message);
+      }
+    }
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = auth.currentUser;
+
+    if (user && user.emailVerified) {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <AuthLayout>
       <div className="flex gap-y-10 flex-col items-start mt-[90px] max-w-[440px] mx-auto">
@@ -24,7 +51,10 @@ const EmailVerification = () => {
         </p>
 
         <div className="space-y-4 w-full">
-          <Button className="bg-normal-300 text-white text-sm ">
+          <Button
+            onClick={handleResendLink}
+            className="bg-normal-300 text-white text-sm "
+          >
             Resend Link
           </Button>
           <div className="text-sm flex items-center justify-center gap-x-1">

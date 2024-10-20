@@ -1,10 +1,12 @@
 import { ButtonProps } from "../types/components/button";
+import Loader from "./Loader";
 
 export function Button({
   children,
   className,
   onClick,
   disabled,
+  loading,
   ...props
 }: ButtonProps) {
   return (
@@ -18,7 +20,13 @@ export function Button({
       type="submit"
       className={`${className} rounded-md font-medium text-center disabled:hover:bg-opacity-100 hover:bg-opacity-85 transition-all duration-300 w-full py-4 px-4`}
     >
-      {children}
+      {loading ? (
+        <div className="flex items-center  justify-center gap-x-3">
+          <Loader /> {children}
+        </div>
+      ) : (
+        <span>{children}</span>
+      )}
     </button>
   );
 }

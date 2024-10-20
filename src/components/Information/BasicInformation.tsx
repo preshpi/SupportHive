@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import CampaignInput from '../CampaignInput';
+import React, { useState } from "react";
+import CampaignInput from "../CampaignInput";
 
 const BasicInformation: React.FC = () => {
-  const [campaignTitle, setCampaignTitle] = useState('');
-  const [country, setCountry] = useState('');
-  const [city, setCity] = useState('');
+  const [campaignTitle, setCampaignTitle] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
 
   return (
-    <div className='w-[60%]'>
+    <div className="w-[60%]">
       <CampaignInput
         label="Campaign Title"
         placeholder="Enter Campaign Title"

@@ -1,10 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import category from "../assets/icons/Category.svg";
 import chart from "../assets/icons/Chart.svg";
 import wallet from "../assets/icons/Wallet.svg";
 import settings from "../assets/icons/Setting.svg";
 import { IoClose } from "react-icons/io5";
-import { useAppContext } from "../context/sidebar";
+import { useAppContext } from "../context/sidebar.context";
+import { CiLogout } from "react-icons/ci";
+import { signOut } from "firebase/auth";
+import { logoutUser } from "../redux/slices/user.slice";
+import { useAppDispatch } from "../hook/redux.hook";
+import { auth } from "../firebase";
+import { toast } from "sonner";
 
 type TLinks = {
   name: string;
@@ -13,6 +19,8 @@ type TLinks = {
 };
 const Sidebar = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useAppContext();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const links: TLinks[] = [
     {
@@ -37,41 +45,70 @@ const Sidebar = () => {
     },
   ];
 
+  const handleLogout = async () => {
+    try {
+      // Sign out from Firebase
+      await signOut(auth);
+
+      // Clear localStorage or cookie if necessary
+      localStorage.removeItem("authToken");
+
+      // Dispatch logout action to reset the Redux state
+      dispatch(logoutUser());
+
+      // Redirect user to home page
+      navigate("/");
+      toast.success("Successfully signed out.");
+    } catch (error) {
+      toast.error((error as { message: string }).message);
+    }
+  };
+
   return (
     <>
       {isSideBarOpen && (
-        <aside className="h-full absolute lg:sticky w-[264px] bg-Dark-700 z-20 top-0">
-          <div className="px-6 py-10">
-            <div className="flex items-center justify-between">
-              <h1 className="text-white font-bold text-[20px] logo">
-                <Link to="/dashboard">SupportHive</Link>
-              </h1>
-              <button
-                onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-                className="text-white text-3xl"
-              >
-                <IoClose />
-              </button>
+        <aside className="h-full w-[284px] sticky overflow-hidden  bg-Dark-700 z-20 top-0">
+          <div className="px-6 py-10 flex flex-col items-center justify-between h-full">
+            <div>
+              <div className="flex items-center justify-between">
+                <h1 className="text-white font-bold text-[20px] logo">
+                  <Link to="/dashboard/overview">SupportHive</Link>
+                </h1>
+                <button
+                  onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+                  className="text-white text-3xl"
+                >
+                  <IoClose />
+                </button>
+              </div>
+
+              <ul className="flex gap-y-2 flex-col pt-10">
+                {links.map(({ name, path, icon }, index) => (
+                  <NavLink
+                    key={index}
+                    to={path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
+                        : " px-4 py-3 text-white"
+                    }
+                  >
+                    <li className="flex items-center gap-x-2">
+                      <img src={icon} alt={"g"} className="mr-4" />
+                      {name}
+                    </li>
+                  </NavLink>
+                ))}
+              </ul>
             </div>
 
-            <ul className="flex gap-y-2 flex-col pt-10">
-              {links.map(({ name, path, icon }, index) => (
-                <NavLink
-                  key={index}
-                  to={path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
-                      : " px-4 py-3 text-white"
-                  }
-                >
-                  <li className="flex items-center gap-x-2">
-                    <img src={icon} alt={"g"} className="mr-4" />
-                    {name}
-                  </li>
-                </NavLink>
-              ))}
-            </ul>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-x-3 justify- w-full font-bold text-white text-base"
+            >
+              <CiLogout />
+              Log out
+            </button>
           </div>
         </aside>
       )}

@@ -12,18 +12,47 @@ import Dashboardlayout from "./views/Dashboard/layout.js";
 import Campaigns from "./views/Dashboard/Campaigns.js";
 import Transactions from "./views/Dashboard/Transactions.js";
 import Settings from "./views/Dashboard/Settings.js";
+import ProtectedRoute from "./views/auth/ProtectedRoute.js";
+import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         {/* dashboard */}
-
         <Route element={<Dashboardlayout />}>
-          <Route path="/dashboard/overview" element={<Overview />} />
-          <Route path="/dashboard/campaigns" element={<Campaigns />} />
-          <Route path="/dashboard/transactions" element={<Transactions />} />
-          <Route path="/dashboard/settings" element={<Settings />} />
+          <Route
+            path="/dashboard/overview"
+            element={
+              <ProtectedRoute>
+                <Overview />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/campaigns"
+            element={
+              <ProtectedRoute>
+                <Campaigns />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/transactions"
+            element={
+              <ProtectedRoute>
+                <Transactions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
         {/* Auth Routes */}
@@ -37,9 +66,10 @@ const AppRoutes = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/Verification-successful"
+          path="/email-verified-success"
           element={<VerificationSuccessful />}
         />
+        <Route path="/handle-action" element={<HandleFirebaseAction />} />
 
         {/* landing page */}
         <Route path="/" element={<LandingPage />} />

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
 import AuthLayout from "./Layout";
@@ -8,6 +8,9 @@ import {
   ResetPasswordSchema,
   TResetPassword,
 } from "../../types/auth/reset-password";
+import { toast } from "sonner";
+import { auth } from "../../firebase";
+import { confirmPasswordReset } from "firebase/auth";
 
 const ResetPassword = () => {
   const {
@@ -17,9 +20,24 @@ const ResetPassword = () => {
     formState: { errors, isSubmitting },
   } = useForm<TResetPassword>({ resolver: zodResolver(ResetPasswordSchema) });
 
-  const onSubmit = (data: TResetPassword) => {
-    console.log(data, "datatta");
-    reset();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Parse the query string to get the oobCode
+  const queryParams = new URLSearchParams(location.search);
+  const oobCode = queryParams.get("oobCode");
+
+  const onSubmit = async (data: TResetPassword) => {
+    if (oobCode) {
+      try {
+        await confirmPasswordReset(auth, oobCode, data.newPassword);
+        reset();
+        toast.success("Password reset successfully! You can now log in.");
+        navigate("/login"); // Redirect to your login page or wherever you prefer
+      } catch (error) {
+        toast.error((error as { message: string }).message);
+      }
+    }
   };
   return (
     <AuthLayout>
@@ -48,7 +66,7 @@ const ResetPassword = () => {
             <div className="flex flex-col gap-y-1">
               <Input
                 label="Confirm Password"
-                id="new-password"
+                id="confirm-password"
                 {...register("confirmPassword")}
                 autoComplete="on"
                 type="password"
@@ -67,13 +85,15 @@ const ResetPassword = () => {
           <div className="mt-[32px] space-y-4">
             <Button
               onClick={handleSubmit(onSubmit)}
-              className="bg-normal-300 text-white text-sm "
+              disabled={isSubmitting}
+              loading={isSubmitting}
+              className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Proceed
             </Button>
             <div className="text-sm flex items-center justify-center gap-x-2">
               <p className="text-black">Don't have an account?</p>
-              <Link to="/" className="text-normal-300 underline">
+              <Link to="/signup" className="text-normal-300 underline">
                 {" "}
                 Create Account
               </Link>

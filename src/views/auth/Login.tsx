@@ -1,12 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "./Layout";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
 import { useForm } from "react-hook-form";
 import { LoginSchema, TLogin } from "../../types/auth/login";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "sonner";
+import { getUserOnSanity } from "../../utils/requests/user.request";
+import { useAppDispatch } from "../../hook/redux.hook";
+import { config } from "../../helpers/config";
+import Cookies from "js-cookie";
+import { getErrorMessage } from "../../utils/errorMapping";
+import { useState } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -14,12 +25,36 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm<TLogin>({ resolver: zodResolver(LoginSchema) });
 
-  const onSubmit = (data: TLogin) => {
-    if (data.email !== "test@gmail.com" || data.password !== "password123") {
-      console.log("Incorrect email or password.");
-      return;
+  const onSubmit = async (data: TLogin) => {
+    const { email, password } = data;
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      const { uid } = user;
+
+      if (uid) {
+        const sanityFetched = await getUserOnSanity({ email, dispatch });
+        if (sanityFetched?.success) {
+          toast.success("Login Successful");
+          reset();
+          Cookies.set(config.key.userId, uid);
+          const getLastPageVisit = Cookies.get(config.key.lastPath);
+          if (getLastPageVisit) {
+            navigate(getLastPageVisit);
+            return;
+          }
+          navigate("/dashboard/overview");
+        }
+      }
+    } catch (err: any) {
+      const errMsg = getErrorMessage(err?.code);
+      toast.error(errMsg);
     }
-    reset();
   };
 
   return (
@@ -62,7 +97,7 @@ const Login = () => {
               )}
             </div>
 
-            <button className="flex items-end justify-end text-sm w-full">
+            <button className="flex items-end justify-end text-sm w-full hover:underline transition-all duration-300">
               <Link to="/forgot-password">Forgot Password?</Link>
             </button>
           </div>
@@ -70,14 +105,16 @@ const Login = () => {
           <div className="mt-[32px] space-y-4">
             <Button
               onClick={handleSubmit(onSubmit)}
-              className="bg-normal-300 text-white text-sm"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+              className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Proceed
             </Button>
 
             <div className="text-sm flex items-center justify-center gap-x-2">
               <p className="text-black">Don't have an account?</p>
-              <Link to="/" className="text-normal-300 underline">
+              <Link to="/signup" className="text-normal-300 underline">
                 {" "}
                 Create Account
               </Link>

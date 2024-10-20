@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
 import AuthLayout from "./Layout";
@@ -8,8 +8,18 @@ import {
   TcreateAccountSchema,
 } from "../../types/auth/createAccount";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+import { toast } from "sonner";
+import { createUserOnSanity } from "../../utils/requests/user.request";
+import { useAppDispatch } from "../../hook/redux.hook";
 
 const CreateAccount = () => {
+  const router = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -19,9 +29,48 @@ const CreateAccount = () => {
     resolver: zodResolver(createAccountSchema),
   });
 
-  const onSubmit = (data: TcreateAccountSchema) => {
-    console.log(data, "datatta");
-    reset();
+  const onSubmit = async (data: TcreateAccountSchema) => {
+    const { firstname, lastname, gender, email, terms, password } = data;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      const { uid, email: userEmail, emailVerified } = user;
+
+      if (uid) {
+        const userData = {
+          uid,
+          firstname,
+          lastname,
+          email: userEmail,
+          gender,
+          terms,
+          emailVerified: emailVerified,
+        };
+
+        const res = await createUserOnSanity({ userData, dispatch, router });
+
+        if (res?.success) {
+          // Send email verification
+          await sendEmailVerification(user);
+
+          // Notify the user and redirect to email verification page
+          toast.success("Account created! Please verify your email.");
+          reset();
+
+          // Redirect to the email verification page
+          router("/email-verification");
+          reset();
+        }
+      }
+    } catch (error) {
+      toast.error((error as { message: string }).message);
+    }
   };
   return (
     <AuthLayout>
@@ -137,8 +186,10 @@ const CreateAccount = () => {
 
           <div className="mt-[32px] space-y-4">
             <Button
+              disabled={isSubmitting}
+              loading={isSubmitting}
               onClick={handleSubmit(onSubmit)}
-              className="bg-normal-300 text-white text-sm"
+              className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Proceed
             </Button>
