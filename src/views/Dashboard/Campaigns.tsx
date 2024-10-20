@@ -13,7 +13,8 @@ const CampaignForm: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className=' h-[100vh] no-scrollbar overflow-y-auto '>
+
       <Tabs
         tabs={[
           "Basic Information",
@@ -24,6 +25,7 @@ const CampaignForm: React.FC = () => {
         onTabChange={handleTabChange}
       />
 
+      
       <div className="mt-6">
         {activeTab === 0 && <BasicInformation />}
         {activeTab === 1 && <CampaignInformation />}
