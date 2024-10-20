@@ -86,6 +86,7 @@ const ResetPassword = () => {
             <Button
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
+              loading={isSubmitting}
               className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Proceed

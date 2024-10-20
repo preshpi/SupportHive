@@ -72,7 +72,7 @@ const Sidebar = () => {
             <div>
               <div className="flex items-center justify-between">
                 <h1 className="text-white font-bold text-[20px] logo">
-                  <Link to="/dashboard">SupportHive</Link>
+                  <Link to="/dashboard/overview">SupportHive</Link>
                 </h1>
                 <button
                   onClick={() => setIsSideBarOpen(!isSideBarOpen)}

@@ -22,6 +22,7 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from "firebase/auth";
+import { getInitials } from "../../utils/userInitials";
 const Settings = () => {
   const { tab, setTab } = useSettingsTab();
   const dispatch = useAppDispatch();
@@ -108,6 +109,9 @@ const Settings = () => {
     }
   };
 
+  const { firstname, lastname } = userDetails.userDetails;
+  const initials = getInitials(firstname, lastname);
+
   const {
     register: registerSecurity,
     handleSubmit: handleSubmitSecurity,
@@ -174,63 +178,76 @@ const Settings = () => {
         </button>
       </div>
 
-      <div className="pt-10">
+      <div className="pt-8">
         {tab === 0 && (
-          <form className="flex flex-col max-w-[440px] gap-y-6 gap-x-4">
-            <div className="flex gap-4">
-              <div className="flex flex-col gap-y-1">
-                <Input
-                  label="First Name"
-                  id="first-name"
-                  {...register("firstname")}
-                  placeholder="Enter first name"
-                  type="text"
-                  autoComplete="on"
-                />
-                {errors.firstname && (
-                  <span className="text-red-500 text-sm">{`${errors.firstname.message}`}</span>
-                )}
+          <>
+            <div className="flex items-center gap-x-4 ">
+              <div className="bg-Dark-600 text-white w-[60px] h-[60px] flex items-center justify-center rounded-full">
+                <p>{initials}</p>
+              </div>
+              <div className="flex gap-x-3 items-center">
+                <p className="text-[#101828] text-[24px] font-semibold">
+                  {firstname} {lastname}
+                </p>
+              </div>
+            </div>
+            <form className="flex flex-col max-w-[440px] gap-y-6 gap-x-4 pt-8">
+              <div className="flex gap-4">
+                <div className="flex flex-col gap-y-1">
+                  <Input
+                    label="First Name"
+                    id="first-name"
+                    {...register("firstname")}
+                    placeholder="Enter first name"
+                    type="text"
+                    autoComplete="on"
+                  />
+                  {errors.firstname && (
+                    <span className="text-red-500 text-sm">{`${errors.firstname.message}`}</span>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-y-1">
+                  <Input
+                    label="Last Name"
+                    {...register("lastname")}
+                    id="last-name"
+                    placeholder="Enter last name"
+                    type="text"
+                    autoComplete="on"
+                  />
+                  {errors.lastname && (
+                    <span className="text-red-500 text-sm">{`${errors.lastname.message}`}</span>
+                  )}
+                </div>
               </div>
 
               <div className="flex flex-col gap-y-1">
                 <Input
-                  label="Last Name"
-                  {...register("lastname")}
-                  id="last-name"
-                  placeholder="Enter last name"
-                  type="text"
+                  label="Email Address"
+                  {...register("email")}
+                  id="email"
+                  placeholder="Enter email address"
+                  type="email"
                   autoComplete="on"
                 />
-                {errors.lastname && (
-                  <span className="text-red-500 text-sm">{`${errors.lastname.message}`}</span>
+
+                {errors.email && (
+                  <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
                 )}
               </div>
-            </div>
-
-            <div className="flex flex-col gap-y-1">
-              <Input
-                label="Email Address"
-                {...register("email")}
-                id="email"
-                placeholder="Enter email address"
-                type="email"
-                autoComplete="on"
-              />
-
-              {errors.email && (
-                <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
-              )}
-            </div>
-            <div className="max-w-[160px]">
-              <Button
-                disabled={isSubmitting}
-                onClick={handleSubmit(onSubmit)}
-                className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                Save Changes{" "}
-              </Button>
-            </div>
-          </form>
+              <div className="max-w-[200px]">
+                <Button
+                  disabled={isSubmitting}
+                  loading={isSubmitting}
+                  onClick={handleSubmit(onSubmit)}
+                  className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Save Changes{" "}
+                </Button>
+              </div>
+            </form>{" "}
+          </>
         )}
 
         {tab === 1 && (
@@ -280,11 +297,12 @@ const Settings = () => {
                 <span className="text-red-500 text-sm">{`${errorSecurity.confirmPassword.message}`}</span>
               )}
             </div>
-            <div className="max-w-[160px]">
+            <div className="max-w-[200px] ">
               <Button
                 disabled={isSubmittingSecurity}
                 onClick={handleSubmitSecurity(onSecuritySubmit)}
-                className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                loading={isSubmittingSecurity}
+                className="bg-normal-300 w-full  text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Save Changes{" "}
               </Button>

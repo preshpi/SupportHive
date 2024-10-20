@@ -13,11 +13,11 @@ import { useAppDispatch } from "../../hook/redux.hook";
 import { config } from "../../helpers/config";
 import Cookies from "js-cookie";
 import { getErrorMessage } from "../../utils/errorMapping";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const {
     register,
     handleSubmit,
@@ -106,6 +106,7 @@ const Login = () => {
             <Button
               onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
+              loading={isSubmitting}
               className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Proceed

@@ -63,6 +63,7 @@ const ForgotPassword = () => {
           <div className="mt-[32px] space-y-4">
             <Button
               disabled={isSubmitting}
+              loading={isSubmitting}
               onClick={handleSubmit(onSubmit)}
               className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
