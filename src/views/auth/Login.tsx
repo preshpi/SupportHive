@@ -8,9 +8,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "sonner";
+import { getUserOnSanity } from "../../utils/requests/user.request";
+import { useAppDispatch } from "../../hook/redux.hook";
+import { config } from "../../helpers/config";
+import Cookies from "js-cookie";
+import { getErrorMessage } from "../../utils/errorMapping";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -20,14 +27,33 @@ const Login = () => {
 
   const onSubmit = async (data: TLogin) => {
     const { email, password } = data;
-    console.log(data);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success("User signed in successfully!");
-      reset();
-      navigate("/dashboard/overview");
-    } catch (err) {
-      toast.error("An error occurred");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const user = userCredential.user;
+      const { uid } = user;
+
+      if (uid) {
+        const sanityFetched = await getUserOnSanity({ email, dispatch });
+        if (sanityFetched?.success) {
+          toast.success("Login Successful");
+          reset();
+          Cookies.set(config.key.userId, uid);
+          const getLastPageVisit = Cookies.get(config.key.lastPath);
+          if (getLastPageVisit) {
+            navigate(getLastPageVisit);
+            return;
+          }
+          navigate("/dashboard");
+        }
+      }
+    } catch (err: any) {
+      const errMsg = getErrorMessage(err?.code);
+      toast.error(errMsg);
     }
   };
 
@@ -71,7 +97,7 @@ const Login = () => {
               )}
             </div>
 
-            <button className="flex items-end justify-end text-sm w-full">
+            <button className="flex items-end justify-end text-sm w-full hover:underline transition-all duration-300">
               <Link to="/forgot-password">Forgot Password?</Link>
             </button>
           </div>

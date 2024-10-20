@@ -1,10 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import category from "../assets/icons/Category.svg";
 import chart from "../assets/icons/Chart.svg";
 import wallet from "../assets/icons/Wallet.svg";
 import settings from "../assets/icons/Setting.svg";
 import { IoClose } from "react-icons/io5";
-import { useAppContext } from "../context/sidebar";
+import { useAppContext } from "../context/sidebar.context";
+import { CiLogout } from "react-icons/ci";
+import { signOut } from "firebase/auth";
+import { logoutUser } from "../redux/slices/user.slice";
+import { useAppDispatch } from "../hook/redux.hook";
+import { auth } from "../firebase";
+import { toast } from "sonner";
 
 type TLinks = {
   name: string;
@@ -13,11 +19,13 @@ type TLinks = {
 };
 const Sidebar = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useAppContext();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const links: TLinks[] = [
     {
       name: "Dashboard",
-      path: "/dashboard/overview",
+      path: "/dashboard",
       icon: category,
     },
     {
@@ -36,6 +44,25 @@ const Sidebar = () => {
       icon: settings,
     },
   ];
+
+  const handleLogout = async () => {
+    try {
+      // Sign out from Firebase
+      await signOut(auth);
+
+      // Clear localStorage or cookie if necessary
+      localStorage.removeItem("authToken");
+
+      // Dispatch logout action to reset the Redux state
+      dispatch(logoutUser());
+
+      // Redirect user to home page
+      navigate("/");
+      toast.success("Successfully signed out.");
+    } catch (error) {
+      toast.error((error as { message: string }).message);
+    }
+  };
 
   return (
     <>
@@ -71,6 +98,14 @@ const Sidebar = () => {
                 </NavLink>
               ))}
             </ul>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-x-3 justify-center text-white text-base mt-[120px] w-full"
+            >
+              <CiLogout />
+              Log out
+            </button>
           </div>
         </aside>
       )}

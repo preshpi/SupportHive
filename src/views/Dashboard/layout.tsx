@@ -1,9 +1,20 @@
 import Sidebar from "../../components/Sidebar";
 import Topbar from "../../components/Topbar";
-import { Outlet } from "react-router-dom";
-import { AppProvider } from "../../context/sidebar";
+import { Outlet, useNavigate } from "react-router-dom";
+import { AppProvider } from "../../context/sidebar.context";
+import { useEffect } from "react";
+import { auth } from "../../firebase";
 
 const Dashboardlayout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = auth.currentUser;
+
+    if (user && !user.emailVerified) {
+      navigate("/email-verification");
+    }
+  }, [navigate]);
   return (
     <AppProvider>
       <main className="w-full h-screen flex">

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button";
 import Input from "../../components/Inputs";
 import AuthLayout from "./Layout";
@@ -8,11 +8,18 @@ import {
   TcreateAccountSchema,
 } from "../../types/auth/createAccount";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 import { toast } from "sonner";
+import { createUserOnSanity } from "../../utils/requests/user.request";
+import { useAppDispatch } from "../../hook/redux.hook";
 
 const CreateAccount = () => {
+  const router = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -23,15 +30,7 @@ const CreateAccount = () => {
   });
 
   const onSubmit = async (data: TcreateAccountSchema) => {
-    const {
-      firstname,
-      lastname,
-      gender,
-      email,
-      terms,
-      password,
-      confirmPassword,
-    } = data;
+    const { firstname, lastname, gender, email, terms, password } = data;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -50,15 +49,27 @@ const CreateAccount = () => {
           lastname,
           email: userEmail,
           gender,
+          terms,
           emailVerified: emailVerified,
         };
+
+        const res = await createUserOnSanity({ userData, dispatch, router });
+
+        if (res?.success) {
+          // Send email verification
+          await sendEmailVerification(user);
+
+          // Notify the user and redirect to email verification page
+          toast.success("Account created! Please verify your email.");
+          reset();
+
+          // Redirect to the email verification page
+          router("/email-verification");
+          reset();
+        }
       }
-
-      toast.success("Account created successfully");
-
-      reset();
     } catch (error) {
-      toast.error("An error occurred");
+      toast.error((error as { message: string }).message);
     }
   };
   return (
