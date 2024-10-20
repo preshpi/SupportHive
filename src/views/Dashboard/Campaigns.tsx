@@ -12,27 +12,23 @@ const CampaignForm: React.FC = () => {
   };
 
   return (
-    <div>
-      
+    <div className=' h-[100vh] no-scrollbar overflow-y-auto '>
+
       <Tabs
         tabs={['Basic Information', 'Campaign Information', 'Contact Information']}
         activeTab={activeTab}
         onTabChange={handleTabChange}
       />
 
-      
+
       <div className="mt-6">
         {activeTab === 0 && <BasicInformation />}
         {activeTab === 1 && <CampaignInformation />}
         {activeTab === 2 && <ContactInformation />}
       </div>
 
-      
-      <div className="flex justify-end mt-4">
-        <button className="px-4 py-2 bg-green-600 text-white rounded">
-          Next
-        </button>
-      </div>
+
+     
     </div>
   );
 };
