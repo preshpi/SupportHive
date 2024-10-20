@@ -8,7 +8,7 @@ const ContactInformation: React.FC = () => {
   const [number, setNumber] =useState("")
 
   return (
-    <div className="w-[70%]">
+    <div className="lg:w-[70%]">
       <form>
         <div className="mb-4">
           
