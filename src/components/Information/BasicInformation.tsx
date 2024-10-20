@@ -3,34 +3,34 @@
 const BasicInformation= () => {
   return (
     <div>
-      <h3 className="text-xl mb-4">Basic Information</h3>
+      
       <form>
         <div className="mb-4">
-          <label className="block text-sm">Campaign Title</label>
+          <label className="block text-sm font-semibold">Campaign Title</label>
           <input type="text" className="w-full border p-2 rounded" placeholder="Enter Campaign Title" />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm">Country</label>
+          <label className="block text-sm font-semibold">Country</label>
           <input type="text" className="w-full border p-2 rounded" placeholder="Campaign Country" />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm">City</label>
+          <label className="block text-sm font-semibold">City</label>
           <input type="text" className="w-full border p-2 rounded" placeholder="Enter City" />
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm">Campaign Category</label>
+          <label className="block text-sm font-semibold">Campaign Category</label>
           <div>
             <label className="mr-4">
-              <input type="radio" name="category" value="Healthcare" className="mr-2" /> Healthcare
+              <input type="radio" name="category" value="Healthcare" className="mr-2 font-semibold" /> Healthcare
             </label>
             <label className="mr-4">
-              <input type="radio" name="category" value="Education" className="mr-2" /> Education
+              <input type="radio" name="category" value="Education" className="mr-2 font-semibold" /> Education
             </label>
             <label>
-              <input type="radio" name="category" value="Other" className="mr-2" /> Other
+              <input type="radio" name="category" value="Other" className="mr-2 font-semibold" /> Other
             </label>
           </div>
         </div>
