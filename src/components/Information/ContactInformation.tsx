@@ -15,7 +15,7 @@ const ContactInformation = () => {
           <input type="email" className="w-full border p-2 rounded" placeholder="Enter Contact Email" />
         </div>
 
-        {/* Add more fields for Contact Information */}
+       
       </form>
     </div>
   );
