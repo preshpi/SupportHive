@@ -92,7 +92,7 @@ const ResetPassword = () => {
             </Button>
             <div className="text-sm flex items-center justify-center gap-x-2">
               <p className="text-black">Don't have an account?</p>
-              <Link to="/" className="text-normal-300 underline">
+              <Link to="/signup" className="text-normal-300 underline">
                 {" "}
                 Create Account
               </Link>

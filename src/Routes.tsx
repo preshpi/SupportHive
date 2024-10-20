@@ -13,6 +13,7 @@ import Campaigns from "./views/Dashboard/Campaigns.js";
 import Transactions from "./views/Dashboard/Transactions.js";
 import Settings from "./views/Dashboard/Settings.js";
 import ProtectedRoute from "./views/auth/ProtectedRoute.js";
+import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
 
 const AppRoutes = () => {
   return (
@@ -21,7 +22,7 @@ const AppRoutes = () => {
         {/* dashboard */}
         <Route element={<Dashboardlayout />}>
           <Route
-            path="/dashboard"
+            path="/dashboard/overview"
             element={
               <ProtectedRoute>
                 <Overview />
@@ -65,9 +66,10 @@ const AppRoutes = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/Verification-successful"
+          path="/email-verified-success"
           element={<VerificationSuccessful />}
         />
+        <Route path="/handle-action" element={<HandleFirebaseAction />} />
 
         {/* landing page */}
         <Route path="/" element={<LandingPage />} />

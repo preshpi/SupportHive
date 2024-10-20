@@ -48,7 +48,7 @@ const Login = () => {
             navigate(getLastPageVisit);
             return;
           }
-          navigate("/dashboard");
+          navigate("/dashboard/overview");
         }
       }
     } catch (err: any) {

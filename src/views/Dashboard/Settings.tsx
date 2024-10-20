@@ -16,6 +16,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useAppDispatch } from "../../hook/redux.hook";
 import { updateUserProfile as updateUserProfileAction } from "../../redux/slices/user.slice";
+import { auth } from "../../firebase";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
+} from "firebase/auth";
 const Settings = () => {
   const { tab, setTab } = useSettingsTab();
   const dispatch = useAppDispatch();
@@ -111,9 +117,34 @@ const Settings = () => {
     resolver: zodResolver(securitySchema),
   });
 
-  const onSecuritySubmit = (data: TsecuritySchema) => {
-    console.log(data);
-    resetSecurity();
+  const onSecuritySubmit = async (data: TsecuritySchema) => {
+    const user = auth.currentUser;
+
+    if (user) {
+      try {
+        // Reauthenticate user with current password before allowing password change
+        const credential = EmailAuthProvider.credential(
+          user?.email || "",
+          data.currentPassword
+        );
+
+        await reauthenticateWithCredential(user, credential);
+
+        // Ensure the new password matches the confirm password
+        if (data.password !== data.confirmPassword) {
+          toast.error("New password and confirm password do not match");
+          return;
+        }
+
+        // Update the password
+        await updatePassword(user, data.password);
+
+        toast.success("Password updated successfully!");
+        resetSecurity();
+      } catch (error) {
+        toast.error((error as { message: string }).message);
+      }
+    }
   };
 
   return (

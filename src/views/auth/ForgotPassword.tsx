@@ -9,7 +9,7 @@ import {
 } from "../../types/auth/forgotPassword";
 import { auth } from "../../firebase";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = () => {
@@ -70,6 +70,10 @@ const ForgotPassword = () => {
             </Button>
           </div>
         </form>
+        <Link to="/login" className="text-normal-300 text-center  underline">
+          {" "}
+          Back to login
+        </Link>
       </div>
     </AuthLayout>
   );

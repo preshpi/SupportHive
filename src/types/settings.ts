@@ -8,7 +8,7 @@ export const updateProfileSchema = z.object({
     .string({ required_error: "Last Name is required" })
     .min(1, "Last Name is required"),
 
-  email: z.string().email().optional().or(z.literal("")),
+  email: z.string().email(),
 });
 
 export type TupdateProfileSchema = z.infer<typeof updateProfileSchema>;

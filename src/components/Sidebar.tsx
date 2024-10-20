@@ -25,7 +25,7 @@ const Sidebar = () => {
   const links: TLinks[] = [
     {
       name: "Dashboard",
-      path: "/dashboard",
+      path: "/dashboard/overview",
       icon: category,
     },
     {
@@ -67,41 +67,43 @@ const Sidebar = () => {
   return (
     <>
       {isSideBarOpen && (
-        <aside className="h-full w-[284px]  bg-Dark-700 z-20 top-0">
-          <div className="px-6 py-10">
-            <div className="flex items-center justify-between">
-              <h1 className="text-white font-bold text-[20px] logo">
-                <Link to="/dashboard">SupportHive</Link>
-              </h1>
-              <button
-                onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-                className="text-white text-3xl"
-              >
-                <IoClose />
-              </button>
-            </div>
-
-            <ul className="flex gap-y-2 flex-col pt-10">
-              {links.map(({ name, path, icon }) => (
-                <NavLink
-                  to={path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
-                      : " px-4 py-3 text-white"
-                  }
+        <aside className="h-full w-[284px] sticky overflow-hidden  bg-Dark-700 z-20 top-0">
+          <div className="px-6 py-10 flex flex-col items-center justify-between h-full">
+            <div>
+              <div className="flex items-center justify-between">
+                <h1 className="text-white font-bold text-[20px] logo">
+                  <Link to="/dashboard">SupportHive</Link>
+                </h1>
+                <button
+                  onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+                  className="text-white text-3xl"
                 >
-                  <li className="flex items-center gap-x-2">
-                    <img src={icon} alt={"g"} className="mr-4" />
-                    {name}
-                  </li>
-                </NavLink>
-              ))}
-            </ul>
+                  <IoClose />
+                </button>
+              </div>
+
+              <ul className="flex gap-y-2 flex-col pt-10">
+                {links.map(({ name, path, icon }) => (
+                  <NavLink
+                    to={path}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
+                        : " px-4 py-3 text-white"
+                    }
+                  >
+                    <li className="flex items-center gap-x-2">
+                      <img src={icon} alt={"g"} className="mr-4" />
+                      {name}
+                    </li>
+                  </NavLink>
+                ))}
+              </ul>
+            </div>
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-x-3 justify-center text-white text-base mt-[120px] w-full"
+              className="flex items-center gap-x-3 justify- w-full font-bold text-white text-base"
             >
               <CiLogout />
               Log out
