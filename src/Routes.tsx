@@ -12,6 +12,7 @@ import Dashboardlayout from "./views/Dashboard/layout.js";
 import Campaigns from "./views/Dashboard/Campaigns.js";
 import Transactions from "./views/Dashboard/Transactions.js";
 import Settings from "./views/Dashboard/Settings.js";
+import Creator from "./components/campaign/Creator.js";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
           <Route path="/dashboard/campaigns" element={<Campaigns />} />
           <Route path="/dashboard/transactions" element={<Transactions />} />
           <Route path="/dashboard/settings" element={<Settings />} />
+          <Route path="/dashboard/campaigns/creator" element={<Creator />} />
         </Route>
 
         {/* Auth Routes */}
