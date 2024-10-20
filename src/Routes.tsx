@@ -15,6 +15,7 @@ import Settings from "./views/Dashboard/Settings.js";
 import ProtectedRoute from "./views/auth/ProtectedRoute.js";
 import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
 
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -37,6 +38,9 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
+          
+          
+
           <Route
             path="/dashboard/transactions"
             element={

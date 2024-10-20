@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Location from '../../assets/Location.svg';
 import Category from '../../assets/Category.svg';
 import Time from '../../assets/Time Circle.svg';
