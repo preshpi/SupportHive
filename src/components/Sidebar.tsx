@@ -82,32 +82,24 @@ const Sidebar = () => {
                 </button>
               </div>
 
-              <ul className="flex gap-y-2 flex-col pt-10">
-                {links.map(({ name, path, icon }) => (
-                  <NavLink
-                    to={path}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
-                        : " px-4 py-3 text-white"
-                    }
-                  >
-                    <li className="flex items-center gap-x-2">
-                      <img src={icon} alt={"g"} className="mr-4" />
-                      {name}
-                    </li>
-                  </NavLink>
-                ))}
-              </ul>
-            </div>
-
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-x-3 justify- w-full font-bold text-white text-base"
-            >
-              <CiLogout />
-              Log out
-            </button>
+            <ul className="flex gap-y-2 flex-col pt-10">
+              {links.map(({ name, path, icon }, index) => (
+                <NavLink
+                  key={index}
+                  to={path}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
+                      : " px-4 py-3 text-white"
+                  }
+                >
+                  <li className="flex items-center gap-x-2">
+                    <img src={icon} alt={"g"} className="mr-4" />
+                    {name}
+                  </li>
+                </NavLink>
+              ))}
+            </ul>
           </div>
         </aside>
       )}

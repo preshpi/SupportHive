@@ -41,7 +41,7 @@ const Mobilize = () => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="group transform transition-transform duration-300 hover:scale-105 shadow rounded-lg hover:shadow-lg"
+            className="group transform transition-transform duration-300 hover:scale-105 shadow hover:shadow-lg"
           >
             <img src={item.img} alt={item.title} className="w-full h-full" />
           </div>
