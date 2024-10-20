@@ -7,6 +7,10 @@ import {
   forgtPasswordSchema,
   TforgotPasswordSchema,
 } from "../../types/auth/forgotPassword";
+import { auth } from "../../firebase";
+import { toast } from "sonner";
+import { Link, useNavigate } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = () => {
   const {
@@ -18,9 +22,16 @@ const ForgotPassword = () => {
     resolver: zodResolver(forgtPasswordSchema),
   });
 
-  const onSubmit = (data: TforgotPasswordSchema) => {
-    console.log(data, "datatta");
-    reset();
+  const navigate = useNavigate();
+  const onSubmit = async (data: TforgotPasswordSchema) => {
+    try {
+      await sendPasswordResetEmail(auth, data.email);
+      reset();
+      toast.success("Check your email for the password reset link!");
+      navigate("/reset-password-confirm"); // Redirect to reset-password confirm screen
+    } catch (error) {
+      toast.error((error as { message: string }).message);
+    }
   };
 
   return (
@@ -51,13 +62,18 @@ const ForgotPassword = () => {
 
           <div className="mt-[32px] space-y-4">
             <Button
+              disabled={isSubmitting}
               onClick={handleSubmit(onSubmit)}
-              className="bg-normal-300 text-white text-sm "
+              className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Recover Password
             </Button>
           </div>
         </form>
+        <Link to="/login" className="text-normal-300 text-center  underline">
+          {" "}
+          Back to login
+        </Link>
       </div>
     </AuthLayout>
   );

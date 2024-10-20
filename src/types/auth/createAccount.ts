@@ -18,10 +18,9 @@ export const createAccountSchema = z
         message: "You must accept the terms and conditions",
       }),
     password: z.string().min(8, "Password must be at least 8 characters"),
-    phone: z.string().min(8, "Phone number must be at least 8 characters"),
     confirmPassword: z
-      .string({ required_error: "Confirm Password is required" })
-      .min(10, "Confirm Password is required"),
+      .string()
+      .min(8, "Confirm Password must be at least 8 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password must match",
