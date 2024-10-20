@@ -15,13 +15,13 @@ const BasicInformation: React.FC = () => {
         onChange={(e) => setCampaignTitle(e.target.value)}
       />
       <CampaignInput
-        label="Country"
+        label="Campaign Country"
         placeholder="Enter Country"
         value={country}
         onChange={(e) => setCountry(e.target.value)}
       />
       <CampaignInput
-        label="City"
+        label="Campaign City"
         placeholder="Enter City"
         value={city}
         onChange={(e) => setCity(e.target.value)}
