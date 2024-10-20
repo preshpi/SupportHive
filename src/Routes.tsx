@@ -14,6 +14,7 @@ import Transactions from "./views/Dashboard/Transactions.js";
 import Settings from "./views/Dashboard/Settings.js";
 import ProtectedRoute from "./views/auth/ProtectedRoute.js";
 import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
+import Creator from "./components/campaign/Creator.js";
 
 const AppRoutes = () => {
   return (

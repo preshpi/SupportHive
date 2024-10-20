@@ -3,6 +3,8 @@ import Tabs from '../../UI/TabComponent/tabs';
 import BasicInformation from '../../components/Information/BasicInformation';
 import CampaignInformation from '../../components/Information/CampaignInformation';
 import ContactInformation from '../../components/Information/ContactInformation';
+import Creator from '../../components/campaign/Creator';
+
 
 const CampaignForm: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -25,15 +27,15 @@ const CampaignForm: React.FC = () => {
         {activeTab === 0 && <BasicInformation />}
         {activeTab === 1 && <CampaignInformation />}
         {activeTab === 2 && <ContactInformation />}
-      </div>
+       </div>
 
+       <div>
+       <Creator />
+       </div>
       
-      <div className="flex justify-end mt-4">
-        <button className="px-4 py-2 bg-green-600 text-white rounded">
-          Next
-        </button>
+
       </div>
-    </div>
+    
   );
 };
 
