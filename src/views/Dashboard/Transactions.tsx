@@ -67,7 +67,7 @@ const Transactions: React.FC = () => {
   }, [page]);  
 
   return (
-    <div className="w-full">
+    <div className="w-full py-10">
       <div className='flex justify-between'>
         <div>
       <h1 className='font-bold text-2xl'>Transactions</h1>

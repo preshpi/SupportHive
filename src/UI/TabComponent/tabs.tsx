@@ -12,7 +12,7 @@ const Tabs: React.FC<TabProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div>
       
-      <div className="flex border-b lg:w-[70%] pt-5">
+      <div className="flex  lg:w-[70%] pt-5">
         {tabs.map((tab, index) => (
           <button
             key={index}
