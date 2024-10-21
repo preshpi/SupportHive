@@ -8,9 +8,9 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="flex-grow h-full w-[60%] overflow-hidden lg:px-0 px-5">
         <div className="h-full overflow-y-auto no-scrollbar">
           <div className="lg:px-[64px] pt-[56px]">
-            <h1 className="text-normal-500 font-bold text-[20px] logo">
-              <Link to="/">SupportHive</Link>
-            </h1>
+            <Link to="/">
+              <img src="/Logo.svg" alt="Logo" />
+            </Link>
           </div>
 
           {children}
