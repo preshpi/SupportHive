@@ -45,8 +45,8 @@ export const createCampaign = async (data: createCampaignProps) => {
     };
 
     // Save to Sanity
-    const result = await client.create(campaignDoc);
-    toast.success("Campaign created:", result);
+    await client.create(campaignDoc);
+    toast.success("Campaign created");
   } catch (error) {
     toast.error((error as { message: string }).message);
   }

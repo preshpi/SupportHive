@@ -35,6 +35,7 @@ export default {
           {title: 'Emergency Assistance', value: 'Emergency Assistance'},
           {title: 'Community Development', value: 'Community Development'},
           {title: 'Career', value: 'Career'},
+          {title: 'Other', value: 'Other'},
         ],
         layout: 'radio',
       },

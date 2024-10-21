@@ -19,6 +19,7 @@ export const campaignSchema = z.object({
       "Emergency Assistance",
       "Community Development",
       "Career",
+      "other",
     ],
     { required_error: "Campaign Category is required" }
   ),
@@ -33,10 +34,9 @@ export const campaignSchema = z.object({
       (val) => val > new Date(),
       "Campaign End Date must be after the Start Date"
     ),
-  raiseMoneyFor: z.string().min(200, "What do you want to raise money for?"),
-  importance: z.string().min(200, "Why is this campaign important to you?"),
-  impact: z.string().min(200, "What impact will this campaign have?"),
-  // images: z.instanceof(File).optional(),
+  raiseMoneyFor: z.string().min(200, "must be at least 200 words"),
+  importance: z.string().min(200, "must be at least 200 words"),
+  impact: z.string().min(200, "must be at least 200 words"),
   images: z
     .any()
     .refine(
@@ -51,8 +51,9 @@ export const campaignSchema = z.object({
     .any()
     .refine(
       (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max image size is 5MB.`
+      `Max document size is 5MB.`
     ),
+
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone Number must be at least 10 characters"),
@@ -67,15 +68,16 @@ export type createCampaignProps = {
   category:
     | "Education"
     | "Health"
+    | "other"
     | "Emergency Assistance"
     | "Community Development"
-    | "Career"; // Radio select
+    | "Career";
   description: string;
   goalAmount: string;
   startDate: Date;
   endDate: Date;
-  raiseMoneyFor: string;
   importance: string;
+  raiseMoneyFor: string;
   impact: string;
   images?: File[];
   supportingDocuments?: File[];

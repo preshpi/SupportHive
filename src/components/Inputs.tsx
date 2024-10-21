@@ -81,6 +81,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
             rows={rows}
             cols={cols}
+            ref={ref as React.Ref<HTMLTextAreaElement>}
             disabled={disabled}
             placeholder={placeholder}
             maxLength={maxLength}
