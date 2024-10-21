@@ -1,4 +1,3 @@
-"use client";
 import { fetchAllCampaigns } from "../../../supporthive/sanity.query";
 import Icon from "../../assets/campaign icon.svg";
 import AllCampaignsTab from "../../components/campaign/AllCampaigns";

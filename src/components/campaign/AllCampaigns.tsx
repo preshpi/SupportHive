@@ -10,6 +10,7 @@ import CampaignCard from "./CampaignCard";
 import OngoingCampaigns from "./alcampaign";
 import Icon from "../../assets/campaign icon.svg";
 import { useAppContext } from "../../context/createCampaign.context";
+import CampaignForm from "./CampaignForm";
 
 const AllCampaignsTab = () => {
   const [activeStatusTab, setActiveStatusTab] = useState(0);
@@ -59,36 +60,46 @@ const AllCampaignsTab = () => {
   }, [activeStatusTab]);
 
   return (
-    <div className="py-10 w-full">
-      <div>
-        <p className="font-bold text-[20px]">
-          All your Campaigns in one place!
-        </p>
-      </div>
+    <>
+      {showForm ? (
+        <CampaignForm hideForm={handleHideForm} />
+      ) : (
+        <div className="py-10 w-full">
+          <div>
+            <p className="font-bold text-[20px]">
+              All your Campaigns in one place!
+            </p>
+          </div>
 
-      <Tabs
-        tabs={["All", "Approved", "Pending", "Rejected"]}
-        activeTab={activeStatusTab}
-        onTabChange={handleStatusTabChange}
-      />
+          <Tabs
+            tabs={["All", "Approved", "Pending", "Rejected"]}
+            activeTab={activeStatusTab}
+            onTabChange={handleStatusTabChange}
+          />
 
-      <div className="flex flex-col lg:flex-row justify-between">
-        <div className="mt-6 lg:w-[60%]">
-          {activeStatusTab === 0 && <div></div>}
-          {activeStatusTab === 1 && <p>Showing approved campaigns...</p>}
-          {activeStatusTab === 2 && <p>Showing pending campaigns...</p>}
-          {activeStatusTab === 3 && <p>Showing rejected campaigns...</p>}
+          <div className="flex flex-col lg:flex-row justify-between">
+            <div className="mt-6 lg:w-[60%]">
+              {activeStatusTab === 0 && <div></div>}
+              {activeStatusTab === 1 && <p>Showing approved campaigns...</p>}
+              {activeStatusTab === 2 && <p>Showing pending campaigns...</p>}
+              {activeStatusTab === 3 && <p>Showing rejected campaigns...</p>}
+            </div>
+
+            <button
+              onClick={handleShowForm}
+              className="flex gap-5 bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]"
+            >
+              Create Campaign
+              <img src={Icon} alt="" />
+            </button>
+
+            {/* <div className="lg:w-[40%]">
+        <OngoingCampaigns />
+      </div> */}
+          </div>
         </div>
-
-        <button className="flex gap-5 bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]">
-          Create Campaign
-          <img src={Icon} alt="" />
-        </button>
-        {/* <div className="lg:w-[40%]">
-          <OngoingCampaigns />
-        </div> */}
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
