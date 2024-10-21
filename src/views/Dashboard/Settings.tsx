@@ -155,7 +155,7 @@ const Settings = () => {
     <div>
       <h3 className="font-bold text-[24px] mt-10">Settings</h3>
 
-      <div className="flex items-center border-b pt-[32px] gap-x-6">
+      <div className="flex items-center  pt-[32px] gap-x-6">
         <button
           onClick={() => handleChangeTab("profile", 0)}
           className={`text-[16px] p-2 ${
@@ -178,7 +178,7 @@ const Settings = () => {
         </button>
       </div>
 
-      <div className="pt-8">
+      <div className="py-8">
         {tab === 0 && (
           <>
             <div className="flex items-center gap-x-4 ">

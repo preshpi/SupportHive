@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
 import CampaignInput from '../CampaignInput';
+import Arrow from "../../assets/arrow icon.svg";
+import { FaDownload } from 'react-icons/fa';
 
-const CampaignInformation: React.FC = () => {
+interface CampaignInformationProps {
+  onNext: () => void; 
+}
+
+const CampaignInformation: React.FC<CampaignInformationProps> = ({ onNext }) => {
   const [description, setDescription] = useState('');
   const [goalAmount, setGoalAmount] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -10,14 +16,11 @@ const CampaignInformation: React.FC = () => {
   const [importance, setImportance] = useState('');
   const [impact, setImpact] = useState('');
 
-
   const [images, setImages] = useState<File[]>([]);
   const [documents, setDocuments] = useState<File[]>([]);
 
-
   const imageInputRef = useRef<HTMLInputElement>(null);
   const documentInputRef = useRef<HTMLInputElement>(null);
-
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -32,7 +35,7 @@ const CampaignInformation: React.FC = () => {
   };
 
   return (
-    <div className="w-[70%]">
+    <div className="lg:w-[70%] pb-10">
       <CampaignInput
         label="Campaign Description"
         placeholder="Write Here"
@@ -45,36 +48,36 @@ const CampaignInformation: React.FC = () => {
         value={goalAmount}
         onChange={(e) => setGoalAmount(e.target.value)}
       />
-      <div className="flex justify-between gap-10">
+      <div className="flex lg:flex-row flex-col justify-between lg:gap-10">
         <CampaignInput
           label="Campaign Start Date"
           placeholder="DD/MM/YY"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="w-[50%]"
+          className="lg:w-[50%]"
         />
         <CampaignInput
           label="Campaign End Date"
           placeholder="DD/MM/YY"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className="w-[50%]"
+          className="lg:w-[50%]"
         />
       </div>
-      <div className="flex justify-between w-full gap-10">
+      <div className="flex lg:flex-row flex-col justify-between w-full lg:gap-10">
         <CampaignInput
           label="What do you want to raise money for?"
           placeholder="Write Here"
           value={fundraisingReason}
           onChange={(e) => setFundraisingReason(e.target.value)}
-          className="w-[50%]"
+          className="lg:w-[50%]"
         />
         <CampaignInput
           label="Why is this campaign important to you?"
           placeholder="Write Here"
           value={importance}
           onChange={(e) => setImportance(e.target.value)}
-          className="w-[50%]"
+          className="lg:w-[50%]"
         />
       </div>
       <CampaignInput
@@ -84,14 +87,15 @@ const CampaignInformation: React.FC = () => {
         onChange={(e) => setImpact(e.target.value)}
       />
 
-      <div className="flex justify-between">
+      <div className="flex lg:flex-row flex-col justify-between">
         <div className="mt-4">
           <label className="block text-black font-bold mb-2">Have Images related to your Campaign?</label>
           <button
-            onClick={() => imageInputRef.current?.click()} // Trigger file input click
-            className="text-green-500"
+            onClick={() => imageInputRef.current?.click()}
+            className="text-green-500 flex gap-2 items-center"
           >
             Upload Now
+            <FaDownload />
           </button>
           <input
             type="file"
@@ -115,9 +119,10 @@ const CampaignInformation: React.FC = () => {
           <label className="block text-black font-bold mb-2">Supporting documents</label>
           <button
             onClick={() => documentInputRef.current?.click()}
-            className="text-green-500"
+            className="text-green-500 flex gap-2 items-center"
           >
             Upload Now
+            <FaDownload />
           </button>
           <input
             type="file"
@@ -139,7 +144,13 @@ const CampaignInformation: React.FC = () => {
       </div>
 
       <div className="mt-8 justify-end flex">
-        <button className="bg-green-600 text-white px-6 py-2 rounded-md">Next</button>
+        <button
+          className="bg-green-600 text-white px-6 py-2 rounded-md flex items-center"
+          onClick={onNext} 
+        >
+          Next
+          <img src={Arrow} alt="Next Arrow" className="ml-2 hover:text-[#28A745]" />
+        </button>
       </div>
     </div>
   );
