@@ -92,7 +92,7 @@ Ensure you have these prerequisites installed and set up on your system before p
 
 - <a href=""> Egwuenu Faith </a>
 - <a href=""> Azeezat </a>
-- <a href=""> Lady Ruth </a>
+- <a href="https://github.com/Ladyruth"> Lady Ruth </a>
 
 
 # License
