@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { fetchAllCampaigns } from "../../../supporthive/sanity.query";
 import { toast } from "sonner";
 import { fetchCampaign } from "../../types/campaign";
+import { client } from "../../../supporthive/sanity.cli";
 
 const Creator = () => {
   const [campaigns, setCampaigns] = useState<fetchCampaign[]>([]);
@@ -36,7 +37,18 @@ const Creator = () => {
     loadCampaigns();
   }, []); //
 
-  // if (loading) return <p>Loading campaigns...</p>;
+  if (loading) return <p>Loading campaigns...</p>;
+
+  // Function to delete a campaign from Sanity
+  const handleDeleteCampaign = async (campaignId: string) => {
+    try {
+      // Delete the campaign from Sanity
+      await client.delete(campaignId); // Use the campaign's _id as the ID to delete
+      setCampaigns(campaigns.filter((campaign) => campaign._id !== campaignId)); // Update local state
+    } catch (error) {
+      toast.error((error as { message: string }).message);
+    }
+  };
 
   return (
     <div>
@@ -135,14 +147,13 @@ const Creator = () => {
             </div>
           </div>
 
-          <div className="flex mt-7 flex-wrap">
-            <div className="flex gap-2 py-2 px-10 border-2 border-[#CA200D] mb-24 hover:bg-[#CA200D] flex-wrap">
-              <a href="" className="text-[#CA200D] hover:text-[#ffff]">
-                Delete Campaign
-              </a>
-              <img src={Delete} alt="" />
-            </div>
-          </div>
+          <button
+            onClick={() => handleDeleteCampaign(campaign._id)}
+            className="flex gap-2 py-2 px-10 border rounded-lg border-[#CA200D] mb-24 hover:bg-[#CA200D] hover:text-white items-center mt-[48px] flex-wrap"
+          >
+            Delete Campaign
+            <img src={Delete} alt="" />
+          </button>
 
           <div className="mb-10">
             <h1 className="text-center font-bold text-2xl">GALLERY</h1>

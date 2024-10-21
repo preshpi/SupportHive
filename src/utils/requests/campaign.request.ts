@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { client } from "../../../supporthive/sanity.cli";
 import { createCampaignProps } from "../../types/campaign";
+import { fetchAllCampaigns } from "../../../supporthive/sanity.query";
 
 export const createCampaign = async (data: createCampaignProps) => {
   const sanityId = data.userId;
@@ -46,6 +47,16 @@ export const createCampaign = async (data: createCampaignProps) => {
     // Save to Sanity
     const result = await client.create(campaignDoc);
     toast.success("Campaign created:", result);
+  } catch (error) {
+    toast.error((error as { message: string }).message);
+  }
+};
+
+export const fetchCampaign = async () => {
+  try {
+    const fetchedCampaigns = await fetchAllCampaigns(); // Assuming this returns an array of campaigns
+    console.log(fetchedCampaigns);
+    return fetchedCampaigns; // Return the fetched campaigns
   } catch (error) {
     toast.error((error as { message: string }).message);
   }
