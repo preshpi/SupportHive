@@ -33,15 +33,15 @@ const Mobilize = () => {
     },
   ];
   return (
-    <div className="px-5 lg:px-10">
-      <h1 className="font-extrabold text-4xl">
+    <div className="px-5 lg:px-10 lg:mt-[100px] mt-[80px]">
+      <h1 className="font-extrabold lg:text-4xl md:text-4xl text-3xl">
         Mobilize <span className="text-[#28A745]">Resources</span> for
       </h1>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 justify-center items-center gap-10 p-3 mt-[48px]">
         {data.map((item, index) => (
           <div
             key={index}
-            className="group transform transition-transform duration-300 hover:scale-105 shadow hover:shadow-lg"
+            className="group transform transition-transform duration-300 hover:scale-105"
           >
             <img src={item.img} alt={item.title} className="w-full h-full" />
           </div>

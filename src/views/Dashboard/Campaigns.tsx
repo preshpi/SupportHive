@@ -223,4 +223,4 @@ const CampaignForm: React.FC = () => {
   );
 };
 
-export default CampaignForm;
+export default Campaigns;

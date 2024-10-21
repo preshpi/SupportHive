@@ -2,6 +2,14 @@
 
 SupportHive is a community-based crowdfunding platform designed to empower individuals and organizations to create campaigns, Whether it's a school fundraiser, a community development project, supporting less privileged children, unemployed graduates, or providing emergency assistance, SupportHive enables users to easily raise funds, and track progress in a transparent and accessible way. 
 
+**Demo:**
+
+<img width="1280" alt="Screenshot 2024-10-21 at 9 25 18 AM" src="https://github.com/user-attachments/assets/b0cae03a-0309-433b-9d97-4a08f872f260">
+
+
+- Visit this website: https://support-hive.vercel.app/
+- Check Figma Design: https://www.figma.com/design/cFBRfD9pGk81EbVgud8Fdn/SupportHive?node-id=0-1&t=v43DdWriBvalCcOy-1
+
 **Key Features:**
 - Create Campaigns: Individuals and organizations can create campaigns for various causes.
 - Secure Donations: Integrated with Paystack for secure and reliable payment processing.
@@ -14,11 +22,7 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 - Database: Sanity 
 - Backend: Firebase (Authentication, API)
 - Payments: Paystack for secure online payments
-
-**Demo:**
-
-Visit this website: https://support-hive.vercel.app/
-
+  
 # Getting Started
 
 Here’s how to set up the project locally.
@@ -76,6 +80,19 @@ Ensure you have these prerequisites installed and set up on your system before p
    ```
 
 9. **Open a Pull Request**: Finally, open a pull request in the original [SupportHive repository](https://github.com/preshpi/SupportHive/pulls)
+
+# Contributors
+
+## Developers
+<a href="https://github.com/preshpi/SupportHive/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=preshpi/SupportHive" />
+</a>
+
+## Product designers
+
+- <a href=""> Egwuenu Faith </a>
+- <a href=""> Azeezat </a>
+- <a href=""> Lady Ruth </a>
 
 
 # License

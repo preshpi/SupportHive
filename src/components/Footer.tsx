@@ -7,7 +7,7 @@ import YoutubeIcon from "../icons/YoutubeIcon";
 
 const Footer = () => {
   return (
-    <div className="bg-[#013B0F] flex flex-col gap-10 w-full  justify-center items-center h-[270px]">
+    <div className="bg-[#013B0F] flex flex-col gap-10 w-full  mt-[50px] justify-center items-center h-[270px]">
       <div className="border-t border-[#98A2B3] w-full"></div>
       <div>
         <img src={FooterLogo} alt="" />

@@ -11,11 +11,16 @@ import { logoutUser } from "../redux/slices/user.slice";
 import { useAppDispatch } from "../hook/redux.hook";
 import { auth } from "../firebase";
 import { toast } from "sonner";
+import { TbArrowsTransferUp, TbLayoutDashboardFilled } from "react-icons/tb";
+import { IconType } from "react-icons/lib";
+import { MdCampaign } from "react-icons/md";
+import { IoMdSettings } from "react-icons/io";
+import React from "react";
 
 type TLinks = {
   name: string;
   path: string;
-  icon: string;
+  icon: IconType;
 };
 const Sidebar = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useAppContext();
@@ -26,22 +31,22 @@ const Sidebar = () => {
     {
       name: "Dashboard",
       path: "/dashboard/overview",
-      icon: category,
+      icon: TbLayoutDashboardFilled,
     },
     {
       name: "Campaigns",
       path: "/dashboard/campaigns",
-      icon: chart,
+      icon: MdCampaign,
     },
     {
       name: "Transactions",
       path: "/dashboard/transactions",
-      icon: wallet,
+      icon: TbArrowsTransferUp,
     },
     {
       name: "Settings",
       path: "/dashboard/settings",
-      icon: settings,
+      icon: IoMdSettings,
     },
   ];
 
@@ -67,13 +72,13 @@ const Sidebar = () => {
   return (
     <>
       {isSideBarOpen && (
-        <aside className="h-full w-[284px] sticky overflow-hidden  bg-Dark-700 z-20 top-0">
+        <aside className="h-full lg:w-[300px] w-[264px] absolute lg:sticky overflow-hidden  bg-Dark-700 z-20 top-0">
           <div className="px-6 py-10 flex flex-col items-center justify-between h-full">
             <div>
-              <div className="flex items-center justify-between">
-                <h1 className="text-white font-bold text-[20px] logo">
-                  <Link to="/dashboard/overview">SupportHive</Link>
-                </h1>
+              <div className="flex items-center justify-between w-full gap-x-4">
+                <Link to="/dashboard/overview">
+                  <img src="/Logo3.svg" alt="Logo" />
+                </Link>
                 <button
                   onClick={() => setIsSideBarOpen(!isSideBarOpen)}
                   className="text-white text-3xl"
@@ -89,12 +94,12 @@ const Sidebar = () => {
                     to={path}
                     className={({ isActive }) =>
                       isActive
-                        ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 hover:rounded-xl transition-all justify-center xl:justify-start"
-                        : " px-4 py-3 text-white"
+                        ? "bg-white text-normal-300 rounded-lg border border-Light-200 items-center flex flex-row px-4 py-3 cursor-pointer  hover:bg-white hover:text-normal-300 transition-all justify-start"
+                        : " px-4 py-3 text-white flex items-center flex-row  justify-start"
                     }
                   >
                     <li className="flex items-center gap-x-2">
-                      <img src={icon} alt={"g"} className="mr-4" />
+                      {React.createElement(icon)}
                       {name}
                     </li>
                   </NavLink>
@@ -106,7 +111,7 @@ const Sidebar = () => {
               onClick={handleLogout}
               className="flex items-center gap-x-3 justify- w-full font-bold text-white text-base"
             >
-              <CiLogout />
+              <CiLogout className="text-base text-white" />
               Log out
             </button>
           </div>
