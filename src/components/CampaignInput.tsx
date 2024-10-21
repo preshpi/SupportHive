@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface CampaignInputProps {
   label: string;
@@ -8,12 +8,16 @@ interface CampaignInputProps {
   className?: string;
 }
 
-const CampaignInput: React.FC<CampaignInputProps> = ({ label, placeholder, value, onChange, className }) => {
+const CampaignInput: React.FC<CampaignInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  className,
+}) => {
   return (
-    <div className={`mb-4 ${className || ''}`}>
-      <label className="block text-black font-bold mb-2">
-        {label}
-      </label>
+    <div className={`mb-4 ${className || ""}`}>
+      <label className="block text-black font-bold mb-2">{label}</label>
       <input
         type="text"
         placeholder={placeholder}

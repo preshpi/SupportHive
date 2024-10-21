@@ -13,7 +13,6 @@ import { useAppDispatch } from "../../hook/redux.hook";
 import { config } from "../../helpers/config";
 import Cookies from "js-cookie";
 import { getErrorMessage } from "../../utils/errorMapping";
-import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();

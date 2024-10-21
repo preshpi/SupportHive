@@ -40,7 +40,7 @@ export const createUserOnSanity = async ({
         gender: res.gender,
         terms: res.terms,
         emailVerified: res.emailVerified,
-      })
+      }),
     );
 
     // Handle routing
@@ -82,7 +82,7 @@ export const getUserOnSanity = async ({
         gender: user.gender,
         terms: user.terms,
         emailVerified: user.emailVerified,
-      })
+      }),
     );
   }
   return { success: true };

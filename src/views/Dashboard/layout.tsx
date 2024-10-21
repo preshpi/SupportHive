@@ -4,7 +4,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AppProvider } from "../../context/sidebar.context";
 import { useEffect } from "react";
 import { auth } from "../../firebase";
-import { Toaster } from "sonner";
 
 const Dashboardlayout = () => {
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ const Dashboardlayout = () => {
           </div>
         </div>
       </main>
-      <Toaster position="top-right" richColors />
     </AppProvider>
   );
 };

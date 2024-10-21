@@ -1,155 +1,201 @@
-import React, { useState, useRef } from 'react';
-import CampaignInput from '../CampaignInput';
+import React from "react";
 import Arrow from "../../assets/arrow icon.svg";
-import { FaDownload } from 'react-icons/fa';
+import { useFormContext } from "react-hook-form";
+import Input from "../Inputs";
 
 interface CampaignInformationProps {
-  onNext: () => void; 
+  onNext: () => void;
 }
 
-const CampaignInformation: React.FC<CampaignInformationProps> = ({ onNext }) => {
-  const [description, setDescription] = useState('');
-  const [goalAmount, setGoalAmount] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [fundraisingReason, setFundraisingReason] = useState('');
-  const [importance, setImportance] = useState('');
-  const [impact, setImpact] = useState('');
-
-  const [images, setImages] = useState<File[]>([]);
-  const [documents, setDocuments] = useState<File[]>([]);
-
-  const imageInputRef = useRef<HTMLInputElement>(null);
-  const documentInputRef = useRef<HTMLInputElement>(null);
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages(Array.from(e.target.files));
-    }
+const CampaignInformation: React.FC<CampaignInformationProps> = ({
+  onNext,
+}) => {
+  const {
+    register,
+    formState: { errors },
+    trigger,
+  } = useFormContext();
+  const handleNext = async () => {
+    const isValid = await trigger([
+      "description",
+      "goalAmount",
+      "startDate",
+      "endDate",
+      "raiseMoneyFor",
+      "importance",
+      "impact",
+      "images",
+      "supportingDocuments",
+    ]);
+    if (isValid) onNext();
   };
 
-  const handleDocumentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setDocuments(Array.from(e.target.files));
-    }
-  };
+  // const [images, setImages] = useState<File[]>([]);
+  // const [documents, setDocuments] = useState<File[]>([]);
+
+  // const imageInputRef = useRef<HTMLInputElement>(null);
+  // const documentInputRef = useRef<HTMLInputElement>(null);
+
+  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setImages(Array.from(e.target.files));
+  //   }
+  // };
+
+  // const handleDocumentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setDocuments(Array.from(e.target.files));
+  //   }
+  // };
 
   return (
-    <div className="lg:w-[70%] pb-10">
-      <CampaignInput
-        label="Campaign Description"
-        placeholder="Write Here"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-      <CampaignInput
-        label="Campaign Goal Amount"
-        placeholder="Enter Amount"
-        value={goalAmount}
-        onChange={(e) => setGoalAmount(e.target.value)}
-      />
+    <div className="lg:w-[60%]  gap-y-6 flex flex-col pb-10">
+      <div className="flex flex-col gap-y-1">
+        <Input
+          label="Campaign Description"
+          {...register("description")}
+          id="campaign-description"
+          placeholder="Enter Campaign Description"
+          type="text"
+          autoComplete="on"
+        />
+        {errors.description && (
+          <span className="text-red-500 text-sm">{`${errors.description.message}`}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-y-1">
+        <Input
+          label="Campaign Goal Amount"
+          {...register("goalAmount")}
+          id="campaign-goalAmount"
+          placeholder="Enter Goal Amount"
+          type="text"
+          autoComplete="on"
+        />
+        {errors.goalAmount && (
+          <span className="text-red-500 text-sm">{`${errors.goalAmount.message}`}</span>
+        )}
+      </div>
+
       <div className="flex lg:flex-row flex-col justify-between lg:gap-10">
-        <CampaignInput
-          label="Campaign Start Date"
-          placeholder="DD/MM/YY"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="lg:w-[50%]"
-        />
-        <CampaignInput
-          label="Campaign End Date"
-          placeholder="DD/MM/YY"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="lg:w-[50%]"
-        />
-      </div>
-      <div className="flex lg:flex-row flex-col justify-between w-full lg:gap-10">
-        <CampaignInput
-          label="What do you want to raise money for?"
-          placeholder="Write Here"
-          value={fundraisingReason}
-          onChange={(e) => setFundraisingReason(e.target.value)}
-          className="lg:w-[50%]"
-        />
-        <CampaignInput
-          label="Why is this campaign important to you?"
-          placeholder="Write Here"
-          value={importance}
-          onChange={(e) => setImportance(e.target.value)}
-          className="lg:w-[50%]"
-        />
-      </div>
-      <CampaignInput
-        label="What impact will this campaign have?"
-        placeholder="Write Here"
-        value={impact}
-        onChange={(e) => setImpact(e.target.value)}
-      />
-
-      <div className="flex lg:flex-row flex-col justify-between">
-        <div className="mt-4">
-          <label className="block text-black font-bold mb-2">Have Images related to your Campaign?</label>
-          <button
-            onClick={() => imageInputRef.current?.click()}
-            className="text-green-500 flex gap-2 items-center"
-          >
-            Upload Now
-            <FaDownload />
-          </button>
-          <input
-            type="file"
-            ref={imageInputRef}
-            accept="image/*"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleImageUpload}
+        <div className="flex flex-col gap-y-1 w-full">
+          <Input
+            label="Campaign Goal startDate"
+            {...register("startDate")}
+            id="campaign-startDate"
+            placeholder="DD/MM/YY"
+            type="date"
+            autoComplete="on"
           />
-
-          {images.length > 0 && (
-            <ul className="mt-2">
-              {images.map((file, index) => (
-                <li key={index}>{file.name}</li>
-              ))}
-            </ul>
+          {errors.startDate && (
+            <span className="text-red-500 text-sm">{`${errors.startDate.message}`}</span>
           )}
         </div>
-
-        <div className="mt-4">
-          <label className="block text-black font-bold mb-2">Supporting documents</label>
-          <button
-            onClick={() => documentInputRef.current?.click()}
-            className="text-green-500 flex gap-2 items-center"
-          >
-            Upload Now
-            <FaDownload />
-          </button>
-          <input
-            type="file"
-            ref={documentInputRef}
-            accept=".pdf,.doc,.docx"
-            multiple
-            style={{ display: 'none' }}
-            onChange={handleDocumentUpload}
+        <div className="flex flex-col gap-y-1 w-full">
+          <Input
+            label="Campaign Goal end Date"
+            {...register("endDate")}
+            id="campaign-endDate"
+            placeholder="DD/MM/YY"
+            type="date"
+            autoComplete="on"
           />
-
-          {documents.length > 0 && (
-            <ul className="mt-2">
-              {documents.map((file, index) => (
-                <li key={index}>{file.name}</li>
-              ))}
-            </ul>
+          {errors.endDate && (
+            <span className="text-red-500 text-sm">{`${errors.endDate.message}`}</span>
           )}
         </div>
+      </div>
+      <div className="flex flex-col gap-y-1 w-full">
+        <label
+          htmlFor=""
+          className="text-left font-light capitalize text-black text-[14px]"
+        >
+          What do you want to raise money for?{" "}
+          <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          id="campaign-raiseMoney"
+          {...register("raiseMoneyFor")}
+          className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
+        ></textarea>
+
+        {errors.raiseMoneyFor && (
+          <span className="text-red-500 text-sm">{`${errors.raiseMoneyFor.message}`}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-y-1 w-full">
+        <label
+          className="text-left font-light capitalize text-black text-[14px]"
+          htmlFor=""
+        >
+          Why is this campaign important to you?{" "}
+          <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
+          id="campaign-important"
+          {...register("importance")}
+        ></textarea>
+        {errors.importance && (
+          <span className="text-red-500 text-sm">{`${errors.importance.message}`}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-y-1">
+        <label
+          htmlFor=""
+          className="text-left font-light capitalize text-black text-[14px]"
+        >
+          What impact will this campaign have?{" "}
+          <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
+          id="campaign-impact"
+          {...register("impact")}
+        ></textarea>
+
+        {errors.impact && (
+          <span className="text-red-500 text-sm">{`${errors.impact.message}`}</span>
+        )}
+      </div>
+      <div className="mt-4">
+        <label className="block text-black font-bold mb-2">
+          Have Images related to your Campaign?
+        </label>
+
+        <input type="file" accept="image/*" {...register("images")} multiple />
+        {errors.images && (
+          <span className="text-red-500">
+            {errors.images?.message?.toString()}
+          </span>
+        )}
+      </div>
+
+      <div className="mt-4">
+        <label className="block text-black font-bold mb-2">
+          Supporting documents
+        </label>
+
+        <input
+          type="file"
+          accept=".pdf, .doc, .docx, .ppt, .pptx"
+          {...register("supportingDocuments")}
+          multiple
+        />
+        {errors.supportingDocuments && (
+          <span className="text-red-500">
+            {errors.supportingDocuments?.message?.toString()}
+          </span>
+        )}
       </div>
 
       <div className="mt-8 justify-end flex">
         <button
           className="bg-green-600 text-white px-6 py-2 rounded-md flex items-center"
-          onClick={onNext} 
+          onClick={handleNext}
         >
           Next
-          <img src={Arrow} alt="Next Arrow" className="ml-2 hover:text-[#28A745]" />
+          <img src={Arrow} alt="arrow" className="ml-2 hover:text-[#28A745]" />
         </button>
       </div>
     </div>
