@@ -20,8 +20,8 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
     const progress = (raisedAmount / goalAmount) * 100;
 
     return (
-        <div className="border rounded-lg p-4 mb-4 shadow-sm">
-            <img src={imageUrl} alt={title} className="w-full h-48 object-cover rounded-md mb-2" />
+        <div className="border border-green-500 rounded-lg p-4 mb-4 shadow-sm ">
+            <img src={imageUrl} alt={title} className="w-full object-cover rounded-md mb-2" />
             <h3 className="font-bold text-lg">{title}</h3>
             <p>{description}</p>
             <div className="mt-2">
@@ -32,7 +32,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
                 <p className="mt-1 text-sm">{`₦${raisedAmount.toLocaleString()} Raised`}</p>
                 <p className="text-red-500 text-xs">{`Expires in ${daysLeft} days`}</p>
             </div>
-            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-md">
+            <button className="mt-4 text-green-500 px-4 py-2 rounded-md w-full border border-green-500 ">
                 View Project
             </button>
         </div>
