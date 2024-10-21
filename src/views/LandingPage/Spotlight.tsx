@@ -20,28 +20,27 @@ const SpotLightCard: React.FC<SpotLightCardProps> = ({
   description,
 }) => {
   return (
-    <Link to="">
-      <div className="bg-white border border-[#F9F9F9] rounded-lg py-2 px-5  group transform transition-transform duration-300 hover:scale-105 shadow-md hover:shadow-lg">
-        <div className="">
-          <img
-            src={image}
-            alt={name}
-            className="w-full lg:w-[366px] h-[271px] rounded-lg"
-          />
-        </div>
-        <p className="font-semibold text-[20px]">{name}</p>
-        <p className="text-black/80 text-[16px] py-2">{description}</p>
-        <p className="text-[14px] py-1">
-          By{" "}
-          <span className="semi-bold text-[#28A745]">
-            community Health Initiatives
-          </span>
-        </p>
+    <div className="bg-white border border-[#F9F9F9] rounded-lg py-2 px-5  group transform transition-transform duration-300 shadow-sm hover:shadow-md">
+      <div className="">
+        <img
+          src={image}
+          alt={name}
+          className="w-full lg:w-[366px] h-[271px] rounded-lg transform transition-transform duration-300 hover:scale-105"
+        />
+      </div>
+      <p className="font-semibold text-[20px]">{name}</p>
+      <p className="text-black/80 text-[16px] py-2">{description}</p>
+      <p className="text-[14px] py-1">
+        By{" "}
+        <span className="semi-bold text-[#28A745]">
+          community Health Initiatives
+        </span>
+      </p>
 
-        <div className="w-full bg-gray-200 rounded-full h-[5px] my-2">
-          <div className="bg-[#28A745] h-full rounded-full" />
-        </div>
-        {/* <div className="slidecontainer">
+      <div className="w-full bg-gray-200 rounded-full h-[5px] my-2">
+        <div className="bg-[#28A745] h-full rounded-full" />
+      </div>
+      {/* <div className="slidecontainer">
           <input
             type="range"
             name="price"
@@ -52,10 +51,9 @@ const SpotLightCard: React.FC<SpotLightCardProps> = ({
             className="slider "
           />
         </div> */}
-        <p className="text-[16px] font-semibold py-2">{price}</p>
-        <span className="text-[12px] text-[#838383]">{per}</span>
-      </div>
-    </Link>
+      <p className="text-[16px] font-semibold py-2">{price}</p>
+      <span className="text-[12px] text-[#838383]">{per}</span>
+    </div>
   );
 };
 
@@ -88,65 +86,15 @@ const Spotlight = () => {
       image: Spotlight3,
       per: "raised",
     },
-
-    // {
-    //   id: 2,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
-
-    // {
-    //   id: 3,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
-
-    // {
-    //   id: 4,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
-
-    // {
-    //   id: 5,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
-
-    // {
-    //   id: 6,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
-    // {
-    //   id: 7,
-    //   name: "Product Name 2",
-    //   price: "N14,050 ",
-
-    //   image: "/Aspect Ratio.svg",
-    //   per: "Per slot",
-    // },
   ];
 
   return (
-    <div className="px-5 lg:px-10">
+    <section
+      id="browseCampaigns"
+      className="px-5 lg:px-10 lg:mt-[100px] mt-[80px]"
+    >
       <h1 className="text-[40px] font-bold">In the Spotlight</h1>
-      <div className="grid grid-cols-1 gap-4 my-5 py-5 w-full no-scrollbar overflow-x-auto lg:grid-cols-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 my-5 py-5 w-full no-scrollbar overflow-x-auto lg:grid-cols-3 md:grid-cols-2">
         {spotItems.map((campaign) => (
           <SpotLightCard
             key={campaign.id}
@@ -158,7 +106,7 @@ const Spotlight = () => {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
