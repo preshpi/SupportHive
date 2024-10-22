@@ -23,7 +23,6 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { getInitials } from "../../utils/userInitials";
-import CreateVirtualAccount from "../../paystack/createVirtualAccount";
 const Settings = () => {
   const { tab, setTab } = useSettingsTab();
   const dispatch = useAppDispatch();
@@ -38,10 +37,7 @@ const Settings = () => {
         setTab(1);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
         break;
-      case "DVA":
-        setTab(2);
-        localStorage.setItem("selectedTabIndex", tabIndex.toString());
-        break;
+
       default:
         setTab(0);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
@@ -181,16 +177,6 @@ const Settings = () => {
         >
           Security
         </button>
-        <button
-          onClick={() => handleChangeTab("DVA", 2)}
-          className={`text-[16px] p-2 ${
-            tab === 2
-              ? "text-normal-500 font-medium border-b-2 border-normal-500"
-              : "text-[#777777]"
-          } `}
-        >
-          Link Account
-        </button>
       </div>
 
       <div className="py-8">
@@ -324,8 +310,6 @@ const Settings = () => {
             </div>
           </form>
         )}
-
-        {tab == 2 && <CreateVirtualAccount />}
       </div>
     </div>
   );

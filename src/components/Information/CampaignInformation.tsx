@@ -30,24 +30,6 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
     if (isValid) onNext();
   };
 
-  // const [images, setImages] = useState<File[]>([]);
-  // const [documents, setDocuments] = useState<File[]>([]);
-
-  // const imageInputRef = useRef<HTMLInputElement>(null);
-  // const documentInputRef = useRef<HTMLInputElement>(null);
-
-  // const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files) {
-  //     setImages(Array.from(e.target.files));
-  //   }
-  // };
-
-  // const handleDocumentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files) {
-  //     setDocuments(Array.from(e.target.files));
-  //   }
-  // };
-
   return (
     <div className="lg:w-[60%]  gap-y-6 flex flex-col pb-10">
       <div className="flex flex-col gap-y-1">
@@ -159,11 +141,15 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
         )}
       </div>
       <div className="mt-4">
-        <label className="block text-black font-bold mb-2">
-          Have Images related to your Campaign?
-        </label>
-
-        <input type="file" accept="image/*" {...register("images")} multiple />
+        <Input
+          label=" Have Images related to your Campaign?"
+          type="file"
+          id="campaign-images"
+          autoComplete="on"
+          accept="image/*"
+          {...register("images")}
+          multiple
+        />
         {errors.images && (
           <span className="text-red-500">
             {errors.images?.message?.toString()}

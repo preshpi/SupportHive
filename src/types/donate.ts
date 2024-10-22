@@ -11,3 +11,10 @@ export const donationSchema = z.object({
 });
 
 export type TDonationSchema = z.infer<typeof donationSchema>;
+
+export type donateSchema = {
+  amount: any;
+  email: string;
+  subAccountId: string;
+  userId: string;
+};

@@ -7,21 +7,16 @@ import { createCampaign } from "../../utils/requests/campaign.request";
 import { RootState } from "../../redux/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-interface ContactInformationProps {
-  hideForm: () => void; // Add hideForm as a prop
-}
-
-const ContactInformation: React.FC<ContactInformationProps> = ({
-  hideForm,
-}) => {
+const ContactInformation = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useFormContext<TCampaignSchema>();
   const [banks, setBanks] = useState<{ name: string; code: string }[]>([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const userDetails = useSelector((state: RootState) => state.user);
 
@@ -29,7 +24,6 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
 
   useEffect(() => {
     const fetchBanks = async () => {
-      setLoading(true);
       try {
         const response = await axios.get("https://api.paystack.co/bank", {
           headers: {
@@ -39,8 +33,6 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
         setBanks(response.data.data);
       } catch (error) {
         console.error("Error fetching banks:", error);
-      } finally {
-        setLoading(false); // Stop loading
       }
     };
 
@@ -100,7 +92,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
       await createCampaign(campaignData);
     }
 
-    // hideForm();
+    navigate("/dashboard/campaigns");
   };
 
   return (

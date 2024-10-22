@@ -59,7 +59,7 @@ export const campaignSchema = z.object({
   phone: z.string().min(10, "Phone Number must be at least 10 characters"),
   bank: z.string().min(1, "bank code is required"),
   accountNumber: z.string().min(1, "account number is required"),
-  subAccountId: z.number().optional(),
+  subAccountId: z.string().optional(),
 });
 
 export type TCampaignSchema = z.infer<typeof campaignSchema>;
@@ -98,8 +98,6 @@ export interface fetchCampaign {
   importance: string;
   createdBy: {
     _id: string;
-    firstname: string;
-    lastname: string;
     email: string;
   };
   title: string;
@@ -116,4 +114,30 @@ export interface fetchCampaign {
   bank: string | undefined;
   accountNumber: string | undefined;
   subAccountId?: string;
+  name?: string;
+  phone?: string;
+  images?: Image[];
+  supportingDocuments?: FileDocument[];
+}
+
+interface ImageAsset {
+  _ref: string;
+  _type: "reference";
+}
+
+interface Image {
+  _type: "image";
+  _key: string;
+  asset: ImageAsset;
+}
+
+interface FileAsset {
+  _ref: string;
+  _type: "reference";
+}
+
+interface FileDocument {
+  _type: "file";
+  _key: string;
+  asset: FileAsset;
 }
