@@ -33,7 +33,7 @@ const How = () => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="rounded-lg border-[#28A745] bg-Light-50 border shadow  text-[#000000] px-3 py-4 group transform transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+            className="rounded-lg border-[#28A745] bg-Light-50 border shadow  text-[#000000] px-3 py-4 group transform transition-transform duration-300 cursor-pointer hover:scale-105 hover:shadow-lg"
           >
             <img src={item.img} alt="icon" className="mb-3" />
             <h1 className="text-black font-extrabold text-2xl mb-3">

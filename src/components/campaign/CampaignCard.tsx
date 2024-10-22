@@ -22,7 +22,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
   const progress = (raisedAmount / goalAmount) * 100;
 
   return (
-    <div className="border border-green-500 rounded-lg p-4 mb-4 shadow-sm h-[300px]">
+    <div className="border border-green-500 rounded-lg p-4 mb-4 shadow-sm ">
       <img
         src={imageUrl}
         alt={title}
