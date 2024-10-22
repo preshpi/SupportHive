@@ -1,3 +1,4 @@
+
 import {client} from './sanity.cli'
 const userQuery = `*[_type == "user" && uid == $uid][0] {
     _id,
@@ -139,3 +140,34 @@ export const fetchRejectedCampaigns = async () => {
     return []
   }
 }
+
+export const fetchCampaignById = async (id: string | undefined) => {
+  const query = `*[_type == "campaign" && _id == "${id}"]{
+    _id,
+    title,
+    country,
+    city,
+    category,
+    description,
+    goalAmount,
+    startDate,
+    endDate,
+    raiseMoneyFor,
+    importance,
+    impact,
+    status,
+    createdBy->{
+      _id,
+      name,
+      email
+    }
+  }`;
+
+  try {
+    const campaign = await client.fetch(query);
+    return campaign[0]; // Return the first (and only) result
+  } catch (error) {
+    console.error('Error fetching campaign by ID:', error);
+    return null;
+  }
+};

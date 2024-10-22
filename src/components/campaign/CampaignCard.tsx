@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 interface CampaignCardProps {
     title: string;
@@ -7,6 +9,7 @@ interface CampaignCardProps {
     raisedAmount: number;
     daysLeft: number;
     imageUrl: string;
+     _id: string | undefined
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({
@@ -16,6 +19,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
     raisedAmount,
     daysLeft,
     imageUrl,
+    _id,
 }) => {
     const progress = (raisedAmount / goalAmount) * 100;
 
@@ -32,9 +36,12 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
                 <p className="mt-1 text-sm">{`₦${raisedAmount.toLocaleString()} Raised`}</p>
                 <p className="text-red-500 text-xs">{`Expires in ${daysLeft} days`}</p>
             </div>
+            
+            <Link to={`/dashboard/campaign/${_id}`}>
             <button className="mt-4 text-green-500 px-4 py-2 rounded-md w-full border border-green-500 ">
                 View Project
             </button>
+            </Link>
         </div>
     );
 };
