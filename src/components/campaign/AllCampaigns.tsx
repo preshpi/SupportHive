@@ -35,9 +35,9 @@ type Campaign = {
 
 const AllCampaignsTab = () => {
   const [activeStatusTab, setActiveStatusTab] = useState(0);
-  const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
-  const [pendingCampaigns, setPendingCampaigns] = useState<Campaign[]>([]);
-  const [rejectedCampaigns, setRejectedCampaigns] = useState<Campaign[]>([]);
+  // const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
+  // const [pendingCampaigns, setPendingCampaigns] = useState<Campaign[]>([]);
+  // const [rejectedCampaigns, setRejectedCampaigns] = useState<Campaign[]>([]);
   const [allCampaigns, setAllCampaigns] = useState<Campaign[]>([]);
   const { showForm, setShowForm } = useAppContext();
 
@@ -55,15 +55,17 @@ const AllCampaignsTab = () => {
         const allCampaigns = await fetchAllCampaigns();
         console.log(allCampaigns);
         setAllCampaigns(allCampaigns);
-      } else if (activeStatusTab === 1) {
-        const approvedCampaigns = await fetchApprovedCampaigns();
-        setApprovedCampaigns(approvedCampaigns);
-      } else if (activeStatusTab === 2) {
-        const pendingCampaigns = await fetchPendingCampaigns();
-        setPendingCampaigns(pendingCampaigns);
-      } else if (activeStatusTab === 3) {
-        const rejectedCampaigns = await fetchRejectedCampaigns();
-        setRejectedCampaigns(rejectedCampaigns);
+
+        // } else if (activeStatusTab === 1) {
+        //   const approvedCampaigns = await fetchApprovedCampaigns();
+        //   setApprovedCampaigns(approvedCampaigns);
+        // } else if (activeStatusTab === 2) {
+        //   const pendingCampaigns = await fetchPendingCampaigns();
+        //   setPendingCampaigns(pendingCampaigns);
+        // } else if (activeStatusTab === 3) {
+        //   const rejectedCampaigns = await fetchRejectedCampaigns();
+        //   setRejectedCampaigns(rejectedCampaigns);
+        // }
       }
     };
 
@@ -72,34 +74,39 @@ const AllCampaignsTab = () => {
 
   return (
     <div className="py-10 w-full">
-      <div>
-        <p className="font-bold text-[20px]">
-          All your Campaigns in one place!
-        </p>
+      <div className="flex justify-between items-center flex-col lg:flex-row md:flex-row">
+        <p className="font-bold text-[20px]">Campaigns</p>
+        <button
+          onClick={handleShowForm}
+          className="flex gap-5 items-center bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]"
+        >
+          Create Campaign
+          <img src={Icon} alt="" />
+        </button>
       </div>
 
-      <Tabs
+      {/* <Tabs
         tabs={["All", "Approved", "Pending", "Rejected"]}
         activeTab={activeStatusTab}
         onTabChange={handleStatusTabChange}
-      />
+      /> */}
 
       <div className="flex flex-col lg:flex-row justify-between">
-        <div className="mt-6 lg:w-[70%] grid grid-cols-2 gap-8">
-          {activeStatusTab === 0 &&
-            allCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign._id}
-                title={campaign.title}
-                description={campaign.description}
-                goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
-                daysLeft={2}
-                imageUrl={campaignImage}
-              />
-            ))}
+        <div className="mt-6 lg:w-[100%] grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8 ">
+          {allCampaigns.map((campaign) => (
+            <CampaignCard
+              _id={campaign._id}
+              key={campaign._id}
+              title={campaign.title}
+              description={campaign.description}
+              goalAmount={campaign.goalAmount}
+              raisedAmount={0} // Replace with actual data if available
+              daysLeft={2}
+              imageUrl={campaignImage}
+            />
+          ))}
 
-          {activeStatusTab === 1 &&
+          {/* {activeStatusTab === 1 &&
             approvedCampaigns.map((campaign) => (
               <CampaignCard
                 key={campaign._id}
@@ -110,9 +117,9 @@ const AllCampaignsTab = () => {
                 daysLeft={2}
                 imageUrl={campaignImage}
               />
-            ))}
+            ))} */}
 
-          {activeStatusTab === 2 &&
+          {/* {activeStatusTab === 2 &&
             pendingCampaigns.map((campaign) => (
               <CampaignCard
                 key={campaign._id}
@@ -123,9 +130,9 @@ const AllCampaignsTab = () => {
                 daysLeft={2}
                 imageUrl=""
               />
-            ))}
+            ))} */}
 
-          {activeStatusTab === 3 &&
+          {/* {activeStatusTab === 3 &&
             rejectedCampaigns.map((campaign) => (
               <CampaignCard
                 key={campaign._id}
@@ -136,16 +143,7 @@ const AllCampaignsTab = () => {
                 daysLeft={2}
                 imageUrl={campaignImage}
               />
-            ))}
-        </div>
-        <div>
-          <button
-            onClick={handleShowForm}
-            className="flex gap-5 bg-[#28A745] items-center px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]"
-          >
-            Create Campaign
-            <img src={Icon} alt="" />
-          </button>
+            ))} */}
         </div>
       </div>
     </div>

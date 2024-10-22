@@ -45,13 +45,7 @@ const Campaigns = () => {
             You do not have any active campaign. Click the <br />
             <span>button below to create one.</span>
           </p>
-          <button
-            onClick={handleShowForm}
-            className="flex gap-5 bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]"
-          >
-            Create Campaign
-            <img src={Icon} alt="" />
-          </button>
+          
         </div>
       ) : (
         <div>

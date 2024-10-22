@@ -14,6 +14,7 @@ import Transactions from "./views/Dashboard/Transactions.js";
 import Settings from "./views/Dashboard/Settings.js";
 import ProtectedRoute from "./views/auth/ProtectedRoute.js";
 import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
+import CampaignDetails from "./components/campaign/CampaignDetails.js";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,16 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute>
                 <Campaigns />
+              </ProtectedRoute>
+            }
+          />
+<Route path="*" element={<p>404 Not Found</p>} />
+<Route
+      
+      caseSensitive={false} path="/dashboard/campaign/:id"
+            element={
+              <ProtectedRoute>
+                <CampaignDetails />
               </ProtectedRoute>
             }
           />
