@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import AuthSidebar from "./AuthSidebar";
-import { Toaster } from "sonner";
 
 const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -19,7 +18,6 @@ const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="h-full w-[40%] hidden lg:block">
         <AuthSidebar />
       </div>
-      <Toaster position="top-right" richColors />
     </main>
   );
 };

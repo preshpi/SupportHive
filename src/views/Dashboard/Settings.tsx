@@ -37,6 +37,7 @@ const Settings = () => {
         setTab(1);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
         break;
+
       default:
         setTab(0);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
@@ -155,7 +156,7 @@ const Settings = () => {
     <div>
       <h3 className="font-bold text-[24px] mt-10">Settings</h3>
 
-      <div className="flex items-center  pt-[32px] gap-x-6">
+      <div className="flex items-center  pt-[32px] border-b border-gray-100 gap-x-6">
         <button
           onClick={() => handleChangeTab("profile", 0)}
           className={`text-[16px] p-2 ${
