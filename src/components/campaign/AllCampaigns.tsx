@@ -93,7 +93,7 @@ const AllCampaignsTab = () => {
                 title={campaign.title}
                 description={campaign.description}
                 goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
+                raisedAmount={0} 
                 daysLeft={2}
                 imageUrl={campaignImage}
               
@@ -121,7 +121,7 @@ const AllCampaignsTab = () => {
                 title={campaign.title}
                 description={campaign.description}
                 goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
+                raisedAmount={0} 
                 daysLeft={2}
                 imageUrl=""
               />
