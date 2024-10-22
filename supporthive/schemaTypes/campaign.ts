@@ -115,7 +115,7 @@ export default {
     {
       name: 'subAccountId',
       title: 'subAccount Id',
-      type: 'number',
+      type: 'string',
     },
     {
       name: 'status',

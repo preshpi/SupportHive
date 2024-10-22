@@ -90,7 +90,7 @@ export type createCampaignProps = {
   userId: string | undefined;
   bank: string | undefined;
   accountNumber: string | undefined;
-  subAccountId?: number;
+  subAccountId?: string;
 };
 
 export interface fetchCampaign {
@@ -115,5 +115,5 @@ export interface fetchCampaign {
   raiseMoneyFor: string;
   bank: string | undefined;
   accountNumber: string | undefined;
-  subAccountId?: number;
+  subAccountId?: string;
 }

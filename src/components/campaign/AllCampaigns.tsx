@@ -34,16 +34,8 @@ type Campaign = {
 };
 
 const AllCampaignsTab = () => {
-  const [activeStatusTab, setActiveStatusTab] = useState(0);
-  // const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
-  // const [pendingCampaigns, setPendingCampaigns] = useState<Campaign[]>([]);
-  // const [rejectedCampaigns, setRejectedCampaigns] = useState<Campaign[]>([]);
   const [allCampaigns, setAllCampaigns] = useState<Campaign[]>([]);
-  const { showForm, setShowForm } = useAppContext();
-
-  const handleStatusTabChange = (index: number) => {
-    setActiveStatusTab(index);
-  };
+  const { setShowForm } = useAppContext();
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -51,29 +43,16 @@ const AllCampaignsTab = () => {
 
   useEffect(() => {
     const getCampaigns = async () => {
-      if (activeStatusTab === 0) {
-        const allCampaigns = await fetchAllCampaigns();
-        console.log(allCampaigns);
-        setAllCampaigns(allCampaigns);
-
-        // } else if (activeStatusTab === 1) {
-        //   const approvedCampaigns = await fetchApprovedCampaigns();
-        //   setApprovedCampaigns(approvedCampaigns);
-        // } else if (activeStatusTab === 2) {
-        //   const pendingCampaigns = await fetchPendingCampaigns();
-        //   setPendingCampaigns(pendingCampaigns);
-        // } else if (activeStatusTab === 3) {
-        //   const rejectedCampaigns = await fetchRejectedCampaigns();
-        //   setRejectedCampaigns(rejectedCampaigns);
-        // }
-      }
+      const allCampaigns = await fetchApprovedCampaigns();
+      console.log(allCampaigns);
+      setAllCampaigns(allCampaigns);
     };
 
     getCampaigns();
-  }, [activeStatusTab]);
+  }, []);
 
   return (
-    <div className="py-10 w-full">
+    <div className="py-5 w-full">
       <div className="flex justify-between items-center flex-col lg:flex-row md:flex-row">
         <p className="font-bold text-[20px]">Campaigns</p>
         <button
@@ -84,12 +63,6 @@ const AllCampaignsTab = () => {
           <img src={Icon} alt="" />
         </button>
       </div>
-
-      {/* <Tabs
-        tabs={["All", "Approved", "Pending", "Rejected"]}
-        activeTab={activeStatusTab}
-        onTabChange={handleStatusTabChange}
-      /> */}
 
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="mt-6 lg:w-[100%] grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8 ">
@@ -105,45 +78,6 @@ const AllCampaignsTab = () => {
               imageUrl={campaignImage}
             />
           ))}
-
-          {/* {activeStatusTab === 1 &&
-            approvedCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign._id}
-                title={campaign.title}
-                description={campaign.description}
-                goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
-                daysLeft={2}
-                imageUrl={campaignImage}
-              />
-            ))} */}
-
-          {/* {activeStatusTab === 2 &&
-            pendingCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign._id}
-                title={campaign.title}
-                description={campaign.description}
-                goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
-                daysLeft={2}
-                imageUrl=""
-              />
-            ))} */}
-
-          {/* {activeStatusTab === 3 &&
-            rejectedCampaigns.map((campaign) => (
-              <CampaignCard
-                key={campaign._id}
-                title={campaign.title}
-                description={campaign.description}
-                goalAmount={campaign.goalAmount}
-                raisedAmount={0} // Replace with actual data if available
-                daysLeft={2}
-                imageUrl={campaignImage}
-              />
-            ))} */}
         </div>
       </div>
     </div>
