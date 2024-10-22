@@ -25,7 +25,7 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
       "importance",
       "impact",
       "images",
-      "supportingDocuments",
+      "bank",
     ]);
     if (isValid) onNext();
   };

@@ -103,6 +103,21 @@ export default {
       type: 'string',
     },
     {
+      name: 'bank',
+      title: 'Bank code',
+      type: 'string',
+    },
+    {
+      name: 'accountNumber',
+      title: 'Account Number',
+      type: 'string',
+    },
+    {
+      name: 'subAccountId',
+      title: 'subAccount Id',
+      type: 'number',
+    },
+    {
       name: 'status',
       title: 'Campaign Status',
       type: 'string',

@@ -45,5 +45,11 @@ export default {
       title: 'Terms and Conditions Accepted',
       type: 'boolean',
     },
+    // {
+    //   name: 'campaigns',
+    //   title: 'Campaigns',
+    //   type: 'reference',
+    //   to: [{type: 'Campaign'}],
+    // },
   ],
 }

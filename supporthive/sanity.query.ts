@@ -30,6 +30,9 @@ export const fetchAllCampaigns = async () => {
     importance,
     impact,
     status,
+    subAccountId,
+    bank,
+    accountNumber,
     createdBy->{
       _id,
       firstname,
@@ -61,6 +64,7 @@ export const fetchApprovedCampaigns = async () => {
     raiseMoneyFor,
     importance,
     impact,
+    subAccountId,
     status,
     createdBy->{
       _id,
