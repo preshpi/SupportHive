@@ -20,12 +20,12 @@ const SpotLightCard: React.FC<SpotLightCardProps> = ({
   description,
 }) => {
   return (
-    <div className="bg-white border border-[#F9F9F9] rounded-lg py-2 px-5  group transform transition-transform duration-300 shadow-sm hover:shadow-md">
+    <div className="bg-white border border-[#F9F9F9] rounded-lg py-2 px-5  transform transition-transform duration-300 hover:scale-105 shadow-sm hover:shadow-md">
       <div className="">
         <img
           src={image}
           alt={name}
-          className="w-full lg:w-[366px] h-[271px] rounded-lg transform transition-transform duration-300 hover:scale-105"
+          className="w-full lg:w-[366px] h-[271px] rounded-lg"
         />
       </div>
       <p className="font-semibold text-[20px]">{name}</p>
