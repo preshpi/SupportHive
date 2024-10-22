@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Tabs from "../../UI/TabComponent/tabs";
 import BasicInformation from "../Information/BasicInformation";
 import CampaignInformation from "../Information/CampaignInformation";
@@ -7,25 +7,19 @@ import { FormProvider, useForm } from "react-hook-form";
 import { campaignSchema, TCampaignSchema } from "../../types/campaign";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-interface CampaignFormProps {
-  hideForm: () => void;
-}
-
-const CampaignForm: React.FC<CampaignFormProps> = ({ hideForm }) => {
+const CampaignForm = () => {
   const [activeTab, setActiveTab] = useState(0);
-
   const handleTabChange = (index: number) => {
     setActiveTab(index);
   };
 
   const methods = useForm<TCampaignSchema>({
     resolver: zodResolver(campaignSchema),
-    // mode: "onChange",
   });
 
   return (
-    <FormProvider {...methods}>
-      <div className="">
+    <>
+      <FormProvider {...methods}>
         <Tabs
           tabs={[
             "Basic Information",
@@ -36,17 +30,19 @@ const CampaignForm: React.FC<CampaignFormProps> = ({ hideForm }) => {
           onTabChange={handleTabChange}
         />
 
-        <div className="mt-6">
-          {activeTab === 0 && (
-            <BasicInformation onNext={() => setActiveTab(1)} />
-          )}
-          {activeTab === 1 && (
-            <CampaignInformation onNext={() => setActiveTab(2)} />
-          )}
-          {activeTab === 2 && <ContactInformation hideForm={hideForm} />}
+        <div className="flex justify-between">
+          <div className="mt-6 w-full">
+            {activeTab === 0 && (
+              <BasicInformation onNext={() => setActiveTab(1)} />
+            )}
+            {activeTab === 1 && (
+              <CampaignInformation onNext={() => setActiveTab(2)} />
+            )}
+            {activeTab === 2 && <ContactInformation />}
+          </div>
         </div>
-      </div>
-    </FormProvider>
+      </FormProvider>
+    </>
   );
 };
 
