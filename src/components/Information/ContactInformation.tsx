@@ -13,7 +13,7 @@ import ConfirmationModal from "../../UI/Modal/CustomModal";
 const ContactInformation = () => {
   const { register, formState: { errors }, handleSubmit } = useFormContext<TCampaignSchema>();
   const [banks, setBanks] = useState<{ name: string; code: string; }[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const navigate = useNavigate();
 
   const userDetails = useSelector((state: RootState) => state.user);
@@ -82,7 +82,7 @@ const ContactInformation = () => {
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
-    handleSubmit(onSubmit)(); // Submit form after confirmation
+    handleSubmit(onSubmit)(); 
   };
 
   return (
@@ -92,6 +92,8 @@ const ContactInformation = () => {
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleModalConfirm}
       />
+
+      {/* Name Input */}
       <div className="flex flex-col gap-y-1">
         <Input
           label="Name"
@@ -103,11 +105,75 @@ const ContactInformation = () => {
         />
         {errors.name && <span className="text-red-500 text-sm">{`${errors.name.message}`}</span>}
       </div>
-      {/* Add other inputs */}
+
+     
+      <div className="flex w-full gap-4">
+        <div className="flex flex-col gap-y-1 w-full">
+          <Input
+            label="Email Address"
+            {...register("email")}
+            placeholder="Enter your Email Address"
+            type="text"
+            id="email"
+            autoComplete="on"
+          />
+          {errors.email && <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>}
+        </div>
+
+        <div className="flex flex-col gap-y-1 w-full">
+          <Input
+            label="Phone Number"
+            {...register("phone")}
+            placeholder="Enter your phone number"
+            type="text"
+            id="number"
+            autoComplete="on"
+          />
+          {errors.phone && <span className="text-red-500 text-sm">{`${errors.phone.message}`}</span>}
+        </div>
+      </div>
+
+     
+      <div className="flex w-full gap-4">
+        <div className="flex flex-col gap-y-1 w-full">
+          <Input
+            label="Account Number"
+            {...register("accountNumber")}
+            placeholder="Enter your account number"
+            type="text"
+            id="number"
+            autoComplete="on"
+          />
+          {errors.accountNumber && <span className="text-red-500 text-sm">{`${errors.accountNumber.message}`}</span>}
+        </div>
+
+        <div className="flex flex-col gap-y-1 w-full">
+          <label className="text-left font-light capitalize text-black text-[14px]">
+            Select Your Bank <span className="text-red-500">*</span>
+          </label>
+          <select
+            id="bank"
+            {...register("bank")}
+            className="w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light focus:ring-1 ring-black outline-none"
+          >
+            <option value="" disabled>
+              Select option
+            </option>
+            {banks.map((bank, index) => (
+              <option key={index} value={bank.code}>
+                {bank.name}
+              </option>
+            ))}
+          </select>
+          {errors.bank && <span className="text-red-500 text-sm">{`${errors.bank.message}`}</span>}
+        </div>
+      </div>
+
+     
       <div className="flex gap-7 w-full items-center mt-5">
         <div className="w-[200px]">
           <Button
-            onClick={() => setIsModalOpen(true)} // Open the modal on submit
+            onClick={() => setIsModalOpen(true)} 
             className="bg-normal-300 w-full text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <span>Submit</span>
