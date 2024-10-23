@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-interface CampaignCardProps {
+export interface CampaignCardProps {
   title: string;
   description: string;
   goalAmount: number;

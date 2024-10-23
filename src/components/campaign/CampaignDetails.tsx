@@ -23,8 +23,6 @@ function CampaignDetails() {
       try {
         setLoading(true);
         const data = await fetchCampaignById(id);
-        console.log(data);
-
         setCampaign(data);
         setLoading(false);
       } catch (error) {

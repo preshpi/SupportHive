@@ -1,23 +1,7 @@
 import axios from "axios";
-import { client } from "../../../supporthive/sanity.cli";
+import { toast } from "sonner";
 
 export const fetchUserTransactions = async (userId: string | undefined) => {
-  console.log(userId);
-
-  if (!userId) {
-    console.log("User ID is undefined");
-    return;
-  }
-
-  const query = `*[_type == "user" && _id == $_id][0]`;
-
-  const checkSanityId = await client.fetch(query, { _id: userId });
-
-  if (!checkSanityId) {
-    console.log("user not found");
-    return;
-  }
-
   const url = `https://api.paystack.co/transaction`;
   const headers = {
     Authorization: `Bearer ${process.env.VITE_PAYSTACK_SECRET_KEY}`,
@@ -36,6 +20,38 @@ export const fetchUserTransactions = async (userId: string | undefined) => {
 
     return userTransactions;
   } catch (error) {
-    console.error("Error fetching user transactions:", error);
+    toast.error((error as { message: string }).message);
+  }
+};
+
+export const calculateTotalDonationForUser = async (
+  userId: string | undefined
+) => {
+  try {
+    const userTransactions = await fetchUserTransactions(userId);
+
+    // Calculate total donation amount for the user
+    const totalAmount = userTransactions.reduce(
+      (acc: number, transaction: any) => {
+        return acc + transaction.amount;
+      },
+      0
+    );
+
+    return totalAmount / 100; // Convert kobo to Naira
+  } catch (error) {
+    toast.error((error as { message: string }).message);
+    return 0;
+  }
+};
+
+export const getTotalDonors = async (userId: string | undefined) => {
+  try {
+    const userTransactions = await fetchUserTransactions(userId);
+    const donors: number = userTransactions.length;
+
+    return donors;
+  } catch (error) {
+    toast.error((error as { message: string }).message);
   }
 };

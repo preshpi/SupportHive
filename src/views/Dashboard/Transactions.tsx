@@ -3,6 +3,7 @@ import { fetchUserTransactions } from "../../utils/requests/transactions.request
 import TransactionTable from "../../components/Transaction/table";
 import { useAppSelector } from "../../hook/redux.hook";
 import { RootState } from "../../redux/store";
+import { toast } from "sonner";
 
 interface Transaction {
   id: number;
@@ -34,9 +35,9 @@ const Transactions = () => {
           const transactionList = await fetchUserTransactions(sanityID);
           setTransactions(transactionList);
         }
-      } catch (err) {
+      } catch (error) {
         setError("Failed to fetch transactions.");
-        console.log(err);
+        toast.error((error as { message: string }).message);
       } finally {
         setLoading(false);
       }

@@ -8,6 +8,7 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const ContactInformation = () => {
   const {
@@ -32,7 +33,7 @@ const ContactInformation = () => {
         });
         setBanks(response.data.data);
       } catch (error) {
-        console.error("Error fetching banks:", error);
+        toast.error((error as { message: string }).message);
       }
     };
 
@@ -60,7 +61,7 @@ const ContactInformation = () => {
       );
       return response.data.data;
     } catch (error) {
-      console.error("Error creating sub-account");
+      toast.error((error as { message: string }).message);
     }
   };
 

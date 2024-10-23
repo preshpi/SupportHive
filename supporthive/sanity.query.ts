@@ -1,4 +1,6 @@
 import {client} from './sanity.cli'
+import {toast} from 'sonner'
+
 const userQuery = `*[_type == "user" && uid == $uid][0] {
     _id,
     uid,
@@ -45,7 +47,7 @@ export const fetchAllCampaigns = async () => {
     const campaigns = await client.fetch(query)
     return campaigns
   } catch (error) {
-    console.error('Error fetching campaigns:', error)
+    toast.error((error as {message: string}).message)
     return []
   }
 }
@@ -77,7 +79,7 @@ export const fetchApprovedCampaigns = async () => {
     const approvedCampaigns = await client.fetch(query)
     return approvedCampaigns
   } catch (error) {
-    console.error('Error fetching approved campaigns:', error)
+    toast.error((error as {message: string}).message)
     return []
   }
 }
@@ -108,7 +110,7 @@ export const fetchPendingCampaigns = async () => {
     const pendingCampaigns = await client.fetch(query)
     return pendingCampaigns
   } catch (error) {
-    console.error('Error fetching approved campaigns:', error)
+    toast.error((error as {message: string}).message)
     return []
   }
 }
@@ -139,7 +141,7 @@ export const fetchRejectedCampaigns = async () => {
     const rejectedCampaigns = await client.fetch(query)
     return rejectedCampaigns
   } catch (error) {
-    console.error('Error fetching approved campaigns:', error)
+    toast.error((error as {message: string}).message)
     return []
   }
 }
@@ -174,7 +176,7 @@ export const fetchCampaignById = async (id: string | undefined) => {
     const campaign = await client.fetch(query)
     return campaign[0] // Return the first (and only) result
   } catch (error) {
-    console.error('Error fetching campaign by ID:', error)
+    toast.error((error as {message: string}).message)
     return null
   }
 }

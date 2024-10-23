@@ -1,19 +1,77 @@
+import { useEffect, useState } from "react";
+import { useAppSelector } from "../../hook/redux.hook";
+import { RootState } from "../../redux/store";
+import { toast } from "sonner";
+import {
+  calculateTotalDonationForUser,
+  getTotalDonors,
+} from "../../utils/requests/transactions.request";
+import NumberFormat from "../../utils/numberFormat";
+import { getTotalCampaigns } from "../../utils/requests/campaign.request";
+
 export const OverviewCards = ({
   title,
   amount,
+  number,
 }: {
   title: string;
-  amount: string;
+  amount?: number | null;
+  number?: number | null;
 }) => {
   return (
     <div className="flex flex-col w-full border border-[#EEEEEE] bg-[#FAFAFA] rounded-lg p-4 gap-y-[27px]">
       <h3 className="text-[#777777] text-[16px] ">{title}</h3>
-      <p className="text-[24px] font-bold">{amount}</p>
+
+      {amount ? (
+        <NumberFormat
+          className="text-[24px] font-semibold"
+          value={amount ?? "N/A"}
+        />
+      ) : (
+        <p className="text-[24px] font-semibold">{number ?? "N/A"}</p>
+      )}
     </div>
   );
 };
-
+//TODO:: Add skeleton loading
 const Overview = () => {
+  const [totalAmount, setTotalAmount] = useState<number | undefined>();
+  const [totalDonors, setTotalDonors] = useState<number | undefined>();
+  const [totalCampaigns, setTotalCampaigns] = useState<number | undefined>();
+  const [loading, setLoading] = useState(true);
+
+  const userDetails = useAppSelector((state: RootState) => state.user);
+  const userId = userDetails.userDetails._id;
+
+  useEffect(() => {
+    const getTotalAmount = async () => {
+      try {
+        if (userId) {
+          const response = await Promise.allSettled([
+            calculateTotalDonationForUser(userId),
+            getTotalDonors(userId),
+            getTotalCampaigns(userId),
+          ]);
+          setTotalAmount(
+            response[0].status === "fulfilled" ? response[0].value : undefined
+          );
+          setTotalDonors(
+            response[1].status === "fulfilled" ? response[1].value : undefined
+          );
+          setTotalCampaigns(
+            response[2].status === "fulfilled" ? response[2].value : undefined
+          );
+        }
+      } catch (error) {
+        toast.error((error as { message: string }).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getTotalAmount();
+  }, [userId]);
+
   return (
     <main className="w-full py-10">
       <div className="w-full">
@@ -28,9 +86,9 @@ const Overview = () => {
           {/* <div className="bg-[red] w-24 h-8 rounded-md"></div> */}
         </div>
         <div className="pt-[24px] w-full flex lg:flex-row flex-col  items-center gap-6">
-          <OverviewCards title="Total Donations" amount="N100,000.00" />
-          <OverviewCards title="Total Donors" amount="3" />
-          <OverviewCards title="Total Donations" amount="30" />
+          <OverviewCards title="Total Donations" amount={totalAmount} />
+          <OverviewCards title="Total Donors" number={totalDonors} />
+          <OverviewCards title="Total Campaigns" number={totalCampaigns} />
         </div>
       </div>
       <div className="w-full pt-[24px] gap-5 flex items-center justify-center">

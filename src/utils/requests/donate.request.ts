@@ -1,5 +1,6 @@
 import axios from "axios";
 import { donateSchema } from "../../types/donate";
+import { toast } from "sonner";
 
 export const handlePaymentInitialization = async (
   campaignData: donateSchema
@@ -28,6 +29,6 @@ export const handlePaymentInitialization = async (
 
     window.location.href = authorization_url;
   } catch (error) {
-    console.error("Payment initialization error: ", error);
+    toast.error((error as { message: string }).message);
   }
 };
