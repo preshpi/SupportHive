@@ -42,6 +42,9 @@ export const createCampaign = async (data: createCampaignProps) => {
       name: data.name,
       email: data.email,
       phone: data.phone,
+      bank: data.bank,
+      accountNumber: data.accountNumber,
+      subAccountId: data.subAccountId,
     };
 
     // Save to Sanity

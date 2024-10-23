@@ -3,7 +3,7 @@ import { FiMenu } from "react-icons/fi";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { getInitials } from "../utils/userInitials";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useAppContext();
@@ -12,21 +12,28 @@ const Topbar = () => {
   const { firstname, lastname } = userDetails.userDetails;
   const initials = getInitials(firstname, lastname); // Get initials
 
+  const navigate = useNavigate();
+  const handleGOBack = () => {
+    navigate(-1);
+  };
   return (
     <div className="py-4 px-8 border-b border-[#E0E2E5]">
-      <div
-        className={`flex items-center w-full ${
-          isSideBarOpen ? "justify-end" : "justify-between"
-        } `}
-      >
-        {!isSideBarOpen && (
-          <button
-            className="bg-normal-300 text-white p-2 rounded-md"
-            onClick={() => setIsSideBarOpen(!isSideBarOpen)}
-          >
-            <FiMenu />
+      <div className="flex items-center w-full justify-between ">
+        <div className="flex items-center gap-x-3">
+          {!isSideBarOpen && (
+            <button
+              className="bg-normal-300 text-white p-2 rounded-md"
+              onClick={() => setIsSideBarOpen(!isSideBarOpen)}
+            >
+              <FiMenu />
+            </button>
+          )}
+          <button onClick={handleGOBack} className="text-base fontmedium">
+            {" "}
+            Go back
           </button>
-        )}
+        </div>
+
         <Link to="/dashboard/settings">
           <div className="flex items-center gap-x-8">
             {/* <div className="bg-[#F9FAFB] p-3 rounded-full">

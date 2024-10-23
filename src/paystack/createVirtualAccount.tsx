@@ -33,6 +33,8 @@ const CreateVirtualAccount = () => {
             Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}`,
           },
         });
+        console.log(response.data.data);
+
         setBanks(response.data.data);
       } catch (error) {
         console.error("Error fetching banks:", error);
@@ -74,15 +76,13 @@ const CreateVirtualAccount = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}`,
+            Authorization: `Bearer ${process.env.VITE_PAYSTACK_SECRET_KEY}`,
             "Content-Type": "application/json",
           },
         }
       );
-      return response.data.data; // Paystack will return customer details, including the customer ID
     } catch (error) {
       console.error("Error registering customer with Paystack:", error);
-      throw error;
     }
   };
 

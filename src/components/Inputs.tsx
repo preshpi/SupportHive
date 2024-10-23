@@ -26,6 +26,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       maxLength,
       autoComplete,
       options,
+      multiple,
+      accept,
     },
     ref
   ) => {
@@ -57,6 +59,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               pattern={pattern}
               placeholder={placeholder}
               disabled={disabled}
+              multiple={multiple}
+              accept={accept}
               onChange={onChange}
               {...additionalAttributes}
             />
