@@ -8,8 +8,6 @@ import {
 } from "../../utils/requests/transactions.request";
 import NumberFormat from "../../utils/numberFormat";
 import { getTotalCampaigns } from "../../utils/requests/campaign.request";
-
-import React, { useEffect, useState } from "react";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
 
 type Campaign = {
@@ -47,6 +45,7 @@ const Overview = () => {
   const [totalDonors, setTotalDonors] = useState<number | undefined>();
   const [totalCampaigns, setTotalCampaigns] = useState<number | undefined>();
   const [loading, setLoading] = useState(true);
+  const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
 
   const userDetails = useAppSelector((state: RootState) => state.user);
   const userId = userDetails.userDetails._id;
@@ -79,9 +78,6 @@ const Overview = () => {
 
     getTotalAmount();
   }, [userId]);
-
-  const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getApprovedCampaigns = async () => {
