@@ -11,12 +11,33 @@ import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { CiUser } from "react-icons/ci";
 import { Button } from "../Button";
-import { urlFor } from "../../../supporthive/sanity.cli";
+import { client, urlFor } from "../../../supporthive/sanity.cli";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 function CampaignDetails() {
   const { id } = useParams();
   const [campaign, setCampaign] = useState<fetchCampaign>();
   const [loading, setLoading] = useState(false);
+
+  const userDetails = useSelector((state: RootState) => state.user);
+  const userId = userDetails.userDetails._id;
+
+  const handleDelete = async () => {
+    try {
+      const campaignId = campaign?._id;
+
+      if (campaignId) {
+        await client.delete(campaignId);
+      } else {
+        toast.error("Campaign ID is undefined");
+      }
+      toast.success("Campaign deleted successfully");
+      navigate("/dashboard/campaigns");
+    } catch (error) {
+      toast.error("Error deleting campaign");
+    }
+  };
 
   useEffect(() => {
     const getCampaignDetail = async () => {
@@ -49,7 +70,7 @@ function CampaignDetails() {
           <div className="fetchingSpinner "></div>
         </div>
       ) : (
-        <div className="py-10">
+        <div className="pt-6 pb-10">
           <div>
             <div>
               <h1 className="mt-5 font-extrabold text-2xl">
@@ -164,14 +185,21 @@ function CampaignDetails() {
             </div> */}
             </div>
           </div>
-
-          <div className="max-w-[300px] mx-auto">
+          <div className="flex pt-6 gap-5 max-w-[400px] mx-auto w-full justify-center">
             <Button
               onClick={handleDonation}
               className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Donate
             </Button>
+            {userId && (
+              <Button
+                onClick={() => handleDelete()}
+                className="hover:bg-[#CA200D] text-[#CA200D] bg-transparent border-[#CA200D]  border-2 hover:text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Delete Campaign
+              </Button>
+            )}
           </div>
         </div>
       )}

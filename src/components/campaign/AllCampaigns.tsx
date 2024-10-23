@@ -5,7 +5,7 @@ import campaignImage from "../../../public/campaign.svg";
 import { Link } from "react-router-dom";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
 
-type Campaign = {
+export type Campaign = {
   _id: string;
   title: string;
   country: string;
@@ -45,12 +45,12 @@ const AllCampaignsTab = () => {
     <div className="py-5 w-full">
       <div className="flex justify-between items-center flex-col lg:flex-row md:flex-row">
         <div className="mr-60">
-        <p className="font-bold text-[20px] " >Campaigns</p>
+          <p className="font-bold text-[20px] ">Campaigns</p>
         </div>
         <Link to={"/dashboard/campaigns/create"}>
           <button className="flex gap-5 justify-center items-center bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]  ml-40">
             Create Campaign
-            <img src={Icon} alt=""  className="bg-[#28A745]"/>
+            <img src={Icon} alt="" className="bg-[#28A745]" />
           </button>
         </Link>
       </div>

@@ -39,7 +39,6 @@ export const OverviewCards = ({
     </div>
   );
 };
-//TODO:: Add skeleton loading
 const Overview = () => {
   const [totalAmount, setTotalAmount] = useState<number | undefined>();
   const [totalDonors, setTotalDonors] = useState<number | undefined>();

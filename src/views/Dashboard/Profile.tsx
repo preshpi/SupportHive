@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import CampaignCard, {
-  CampaignCardProps,
-} from "../../components/campaign/CampaignCard";
 import {
   userAllCampaigns,
   userApprovedCampaigns,
@@ -15,11 +12,23 @@ import {
   userRejectedCampaigns,
 } from "../../utils/requests/campaign.request";
 import { toast } from "sonner";
+import CampaignCard, {
+  CampaignCardProps,
+} from "../../components/campaign/CampaignCard";
+
+export const CampaignSkeleton = () => {
+  return (
+    <div className="animate-pulse w-full">
+      <div className="bg-gray-50 h-40 w-full mb-4 rounded-lg"></div>
+      <div className="h-6 bg-gray-50 mb-2 rounded"></div>
+      <div className="h-4 bg-gray-50 w-3/4 rounded"></div>
+    </div>
+  );
+};
 
 const Profile = () => {
-  const userDetails = useSelector((state: RootState) => state.user); // Get user details from Redux store
+  const userDetails = useSelector((state: RootState) => state.user);
   const userId = userDetails.userDetails._id;
-
   const { firstname, lastname } = userDetails.userDetails;
 
   const [timeOnSupportHive, setTimeOnSupportHive] = useState<string>();
@@ -47,7 +56,7 @@ const Profile = () => {
   const [activeStatusTab, setActiveStatusTab] = useState(0);
   const [approvedCampaigns, setApprovedCampaigns] = useState<
     CampaignCardProps[]
-  >([]); // State to store approved campaigns
+  >([]);
   const [pendingCampaigns, setPendingCampaigns] = useState<CampaignCardProps[]>(
     []
   );
@@ -55,6 +64,12 @@ const Profile = () => {
     CampaignCardProps[]
   >([]);
   const [allCampaigns, setAllCampaign] = useState<CampaignCardProps[]>([]);
+
+  //loading states
+  const [loadingAll, setLoadingAll] = useState(false);
+  const [loadingApproved, setLoadingApproved] = useState(false);
+  const [loadingPending, setLoadingPending] = useState(false);
+  const [loadingRejected, setLoadingRejected] = useState(false);
 
   const handleChangeTab = (tabName: string, tabIndex: number) => {
     switch (tabName) {
@@ -90,26 +105,35 @@ const Profile = () => {
 
   useEffect(() => {
     const getCampaigns = async () => {
-      try {
-        if (userId) {
+      if (userId) {
+        try {
           if (activeStatusTab === 0) {
+            setLoadingAll(true);
             const allCampaigns = await userAllCampaigns(userId);
             setAllCampaign(allCampaigns);
+            setLoadingAll(false);
           } else if (activeStatusTab === 1) {
+            setLoadingApproved(true);
             const approvedCampaigns = await userApprovedCampaigns(userId);
             setApprovedCampaigns(approvedCampaigns);
+            setLoadingApproved(false);
           } else if (activeStatusTab === 2) {
+            setLoadingPending(true);
             const pendingCampaigns = await userPendingCampaigns(userId);
             setPendingCampaigns(pendingCampaigns);
+            setLoadingPending(false);
           } else if (activeStatusTab === 3) {
+            setLoadingRejected(true);
             const rejectedCampaigns = await userRejectedCampaigns(userId);
             setRejectedCampaigns(rejectedCampaigns);
+            setLoadingRejected(false);
           }
+        } catch (error) {
+          toast.error((error as { message: string }).message);
         }
-      } catch (error) {
-        toast.error((error as { message: string }).message);
       }
     };
+
     getCampaigns();
   }, [activeStatusTab]);
 
@@ -126,7 +150,7 @@ const Profile = () => {
               @{firstname}
               {lastname}
             </p>
-            <p> ~ {timeOnSupportHive} on SupportHive </p>
+            <p> ~ {timeOnSupportHive ?? "N/A"} on SupportHive </p>
           </div>
         </div>
 
@@ -180,7 +204,16 @@ const Profile = () => {
             Rejected
           </button>
         </div>
-        {allCampaigns.length === 0 && activeStatusTab === 0 ? (
+
+        {loadingAll ? (
+          <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+            {Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <CampaignSkeleton key={index} />
+              ))}
+          </div>
+        ) : allCampaigns.length === 0 && activeStatusTab === 0 ? (
           <div className="text-center text-[#777777] w-full flex items-center justify-center h-full">
             <p className="w-full h-full">No campaign</p>
           </div>
@@ -193,7 +226,7 @@ const Profile = () => {
                   title={campaign.title}
                   description={campaign.description}
                   goalAmount={campaign.goalAmount}
-                  raisedAmount={0} // Replace with actual data if available
+                  raisedAmount={0}
                   daysLeft={2}
                   imageUrl={campaign.imageUrl}
                   _id={campaign._id}
@@ -202,9 +235,17 @@ const Profile = () => {
           </div>
         )}
 
-        {activeStatusTab === 1 && approvedCampaigns.length === 0 ? (
+        {loadingApproved ? (
+          <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+            {Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <CampaignSkeleton key={index} />
+              ))}
+          </div>
+        ) : activeStatusTab === 1 && approvedCampaigns.length === 0 ? (
           <div className="text-center text-[#777777] w-full flex items-center justify-center h-full">
-            <p className="w-full h-full">No approved campaigns</p>
+            <p className="w-full h-full">No approved campaign</p>
           </div>
         ) : (
           <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
@@ -224,10 +265,19 @@ const Profile = () => {
           </div>
         )}
 
-        {activeStatusTab === 2 &&
+        {loadingPending ? (
+          <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+            {Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <CampaignSkeleton key={index} />
+              ))}
+          </div>
+        ) : (
+          activeStatusTab === 2 &&
           (pendingCampaigns.length === 0 ? (
             <div className="text-center text-[#777777] w-full flex items-center justify-center h-full">
-              <p className="w-full h-full">No pending campaigns</p>
+              <p className="w-full h-full">No pending campaign</p>
             </div>
           ) : (
             <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
@@ -245,10 +295,20 @@ const Profile = () => {
                   />
                 ))}
             </div>
-          ))}
-        {activeStatusTab === 3 && rejectedCampaigns.length === 0 ? (
+          ))
+        )}
+
+        {loadingRejected ? (
+          <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+            {Array(3)
+              .fill(null)
+              .map((_, index) => (
+                <CampaignSkeleton key={index} />
+              ))}
+          </div>
+        ) : activeStatusTab === 3 && rejectedCampaigns.length === 0 ? (
           <div className="text-center text-[#777777] w-full flex items-center justify-center">
-            <p className="w-full">No pending campaigns</p>
+            <p className="w-full">No rejected campaign</p>
           </div>
         ) : (
           <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">

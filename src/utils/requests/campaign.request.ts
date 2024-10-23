@@ -120,3 +120,16 @@ export const userAllCampaigns = async (userId: string | undefined) => {
     toast.error((error as { message: string }).message);
   }
 };
+
+export const userDeletedCampaigns = async (userId: string | undefined) => {
+  try {
+    const deleteCampaigns = await fetchAllCampaigns();
+
+    const userDeleteCampaigns = deleteCampaigns.filter((campaign: any) => {
+      return campaign.createdBy._id === userId;
+    });
+    return userDeleteCampaigns;
+  } catch (error) {
+    toast.error((error as { message: string }).message);
+  }
+};
