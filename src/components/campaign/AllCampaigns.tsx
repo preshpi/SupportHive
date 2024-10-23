@@ -43,13 +43,14 @@ const AllCampaignsTab = () => {
 
   return (
     <div className="py-5 w-full">
-      <div className="flex justify-between items-center">
-        <p className="font-bold text-[20px]">Campaigns</p>
-
+      <div className="flex justify-between items-center flex-col lg:flex-row md:flex-row">
+        <div className="mr-60">
+        <p className="font-bold text-[20px] " >Campaigns</p>
+        </div>
         <Link to={"/dashboard/campaigns/create"}>
-          <button className="flex gap-5 items-center bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]">
+          <button className="flex gap-5 justify-center items-center bg-[#28A745] px-7 py-3 text-[#ffff] mt-5 border-2 border-[#28A745] rounded-xl hover:bg-[#ffff] hover:text-[#28A745]  ml-40">
             Create Campaign
-            <img src={Icon} alt="" />
+            <img src={Icon} alt=""  className="bg-[#28A745]"/>
           </button>
         </Link>
       </div>
@@ -66,7 +67,7 @@ const AllCampaignsTab = () => {
               title={campaign.title}
               description={campaign.description}
               goalAmount={campaign.goalAmount}
-              raisedAmount={0}
+              raisedAmount={50000}
               daysLeft={2}
               imageUrl={campaignImage}
             />
