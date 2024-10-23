@@ -49,7 +49,7 @@ const Donate = () => {
         reset();
       }
     } catch (error) {
-      console.log((error as { message: string }).message);
+      toast.error((error as { message: string }).message);
     }
   };
   return (

@@ -18,7 +18,7 @@ export function Button({
       disabled={disabled}
       {...props}
       type="submit"
-      className={`${className} rounded-md font-medium text-center disabled:hover:bg-opacity-100 hover:bg-opacity-85 transition-all duration-300 w-full py-4 px-4`}
+      className={`${className} rounded-md font-medium text-center disabled:hover:bg-opacity-100 hover:bg-opacity-85 transition-all duration-300 w-full py-3 px-3 lg:px-4`}
     >
       {loading ? (
         <div className="flex items-center  justify-center gap-x-3">

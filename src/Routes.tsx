@@ -17,6 +17,7 @@ import HandleFirebaseAction from "./components/HandleFirebaseAction.js";
 import CampaignDetails from "./components/campaign/CampaignDetails.js";
 import CreateCampaigns from "./components/campaign/CreateCampaigns.js";
 import Donate from "./components/donate/donate.js";
+import Profile from "./views/Dashboard/Profile.js";
 
 const AppRoutes = () => {
   return (
@@ -80,6 +81,14 @@ const AppRoutes = () => {
             element={
               <ProtectedRoute>
                 <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

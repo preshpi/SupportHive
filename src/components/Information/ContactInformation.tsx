@@ -8,12 +8,17 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import ConfirmationModal from "../../UI/Modal/CustomModal";
 
 const ContactInformation = () => {
-  const { register, formState: { errors }, handleSubmit } = useFormContext<TCampaignSchema>();
-  const [banks, setBanks] = useState<{ name: string; code: string; }[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useFormContext<TCampaignSchema>();
+  const [banks, setBanks] = useState<{ name: string; code: string }[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const userDetails = useSelector((state: RootState) => state.user);
@@ -27,7 +32,7 @@ const ContactInformation = () => {
         });
         setBanks(response.data.data);
       } catch (error) {
-        console.error("Error fetching banks:", error);
+        toast.error((error as { message: string }).message);
       }
     };
     fetchBanks();
@@ -42,15 +47,19 @@ const ContactInformation = () => {
     };
 
     try {
-      const response = await axios.post("https://api.paystack.co/subaccount", subAccountData, {
-        headers: {
-          Authorization: `Bearer ${process.env.VITE_PAYSTACK_SECRET_KEY}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "https://api.paystack.co/subaccount",
+        subAccountData,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.VITE_PAYSTACK_SECRET_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       return response.data.data;
     } catch (error) {
-      console.error("Error creating sub-account");
+      toast.error((error as { message: string }).message);
     }
   };
 
@@ -63,7 +72,11 @@ const ContactInformation = () => {
       startDate,
       endDate,
       userId: sanityID,
-      images: data.images ? (Array.isArray(data.images) ? data.images : [data.images]) : [],
+      images: data.images
+        ? Array.isArray(data.images)
+          ? data.images
+          : [data.images]
+        : [],
       supportingDocuments: data.supportingDocuments
         ? Array.isArray(data.supportingDocuments)
           ? data.supportingDocuments
@@ -82,7 +95,7 @@ const ContactInformation = () => {
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
-    handleSubmit(onSubmit)(); 
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -103,10 +116,11 @@ const ContactInformation = () => {
           id="name"
           autoComplete="on"
         />
-        {errors.name && <span className="text-red-500 text-sm">{`${errors.name.message}`}</span>}
+        {errors.name && (
+          <span className="text-red-500 text-sm">{`${errors.name.message}`}</span>
+        )}
       </div>
 
-     
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -117,7 +131,9 @@ const ContactInformation = () => {
             id="email"
             autoComplete="on"
           />
-          {errors.email && <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>}
+          {errors.email && (
+            <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-y-1 w-full">
@@ -129,11 +145,12 @@ const ContactInformation = () => {
             id="number"
             autoComplete="on"
           />
-          {errors.phone && <span className="text-red-500 text-sm">{`${errors.phone.message}`}</span>}
+          {errors.phone && (
+            <span className="text-red-500 text-sm">{`${errors.phone.message}`}</span>
+          )}
         </div>
       </div>
 
-     
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -144,7 +161,9 @@ const ContactInformation = () => {
             id="number"
             autoComplete="on"
           />
-          {errors.accountNumber && <span className="text-red-500 text-sm">{`${errors.accountNumber.message}`}</span>}
+          {errors.accountNumber && (
+            <span className="text-red-500 text-sm">{`${errors.accountNumber.message}`}</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-y-1 w-full">
@@ -165,15 +184,16 @@ const ContactInformation = () => {
               </option>
             ))}
           </select>
-          {errors.bank && <span className="text-red-500 text-sm">{`${errors.bank.message}`}</span>}
+          {errors.bank && (
+            <span className="text-red-500 text-sm">{`${errors.bank.message}`}</span>
+          )}
         </div>
       </div>
 
-     
       <div className="flex gap-7 w-full items-center mt-5">
         <div className="w-[200px]">
           <Button
-            onClick={() => setIsModalOpen(true)} 
+            onClick={() => setIsModalOpen(true)}
             className="bg-normal-300 w-full text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <span>Submit</span>

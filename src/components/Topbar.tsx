@@ -40,9 +40,9 @@ const Topbar = () => {
             <VscBellDot className="text-[#667085]" />
           </div> */}
             <div className="flex gap-x-3 items-center">
-              <p className="text-[#101828] text-[16px] font-semibold">
+              {/* <p className="text-[#101828] text-[16px] font-semibold">
                 {firstname} {lastname}
-              </p>
+              </p> */}
               <div className="bg-Dark-600 text-white w-[40px] h-[40px] flex items-center justify-center rounded-full">
                 <p>{initials}</p>
               </div>

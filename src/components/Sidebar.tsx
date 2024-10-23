@@ -1,11 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import category from "../assets/icons/Category.svg";
-import chart from "../assets/icons/Chart.svg";
-import wallet from "../assets/icons/Wallet.svg";
-import settings from "../assets/icons/Setting.svg";
 import { IoClose } from "react-icons/io5";
 import { useAppContext } from "../context/sidebar.context";
-import { CiLogout } from "react-icons/ci";
+import { CiLogout, CiUser } from "react-icons/ci";
 import { signOut } from "firebase/auth";
 import { logoutUser } from "../redux/slices/user.slice";
 import { useAppDispatch } from "../hook/redux.hook";
@@ -47,6 +43,11 @@ const Sidebar = () => {
       name: "Settings",
       path: "/dashboard/settings",
       icon: IoMdSettings,
+    },
+    {
+      name: "Profile",
+      path: "/dashboard/profile",
+      icon: CiUser,
     },
   ];
 
