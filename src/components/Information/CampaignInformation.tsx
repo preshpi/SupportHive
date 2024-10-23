@@ -31,7 +31,7 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
   };
 
   return (
-    <div className="lg:w-[60%]  gap-y-6 flex flex-col pb-10">
+    <div className="lg:w-[60%] gap-y-6 flex flex-col pb-10">
       <div className="flex flex-col gap-y-1">
         <Input
           label="Campaign Description"
