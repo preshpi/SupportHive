@@ -23,7 +23,7 @@ const HeroSection = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl mt-4 max-w-[600px] text-center">
+          <p className="text-lg md:text-xl mt-4 max-w-[600px] text-center mx-autoj">
             Discover an easy and effective way to raise funds for personal
             initiatives, charitable projects, and friends in need.
           </p>
