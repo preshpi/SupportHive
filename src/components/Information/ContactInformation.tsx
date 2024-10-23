@@ -8,7 +8,6 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import ConfirmationModal from "../../UI/Modal/CustomModal";
 
 const ContactInformation = () => {
@@ -17,10 +16,11 @@ const ContactInformation = () => {
     formState: { errors },
     handleSubmit,
   } = useFormContext<TCampaignSchema>();
-  const [banks, setBanks] = useState<{ name: string; code: string }[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
 
+  const [banks, setBanks] = useState<{ name: string; code: string; }[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [campaignData, setCampaignData] = useState<TCampaignSchema | null>(null); 
+  const navigate = useNavigate();
   const userDetails = useSelector((state: RootState) => state.user);
   const sanityID = userDetails.userDetails._id;
 
@@ -28,19 +28,22 @@ const ContactInformation = () => {
     const fetchBanks = async () => {
       try {
         const response = await axios.get("https://api.paystack.co/bank", {
-          headers: { Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}` },
+          headers: {
+            Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}`,
+          },
         });
         setBanks(response.data.data);
       } catch (error) {
-        toast.error((error as { message: string }).message);
+        console.error("Error fetching banks:", error);
       }
     };
+
     fetchBanks();
   }, []);
 
   const createSubAccount = async (data: TCampaignSchema) => {
     const subAccountData = {
-      business_name: data.title,
+      business_name: data.title, 
       settlement_bank: data.bank,
       account_number: data.accountNumber,
       percentage_charge: 10,
@@ -59,54 +62,53 @@ const ContactInformation = () => {
       );
       return response.data.data;
     } catch (error) {
-      toast.error((error as { message: string }).message);
+      console.error("Error creating sub-account");
     }
   };
 
-  const onSubmit = async (data: TCampaignSchema) => {
-    const startDate = new Date(data.startDate);
-    const endDate = new Date(data.endDate);
+ 
+  const handleConfirmSubmit = async () => {
+    if (!campaignData || !sanityID) return;
 
-    const campaignData = {
-      ...data,
+    const startDate = new Date(campaignData.startDate);
+    const endDate = new Date(campaignData.endDate);
+
+    const campaignPayload = {
+      ...campaignData,
       startDate,
       endDate,
       userId: sanityID,
-      images: data.images
-        ? Array.isArray(data.images)
-          ? data.images
-          : [data.images]
+      images: campaignData.images
+        ? Array.isArray(campaignData.images)
+          ? campaignData.images
+          : [campaignData.images]
         : [],
-      supportingDocuments: data.supportingDocuments
-        ? Array.isArray(data.supportingDocuments)
-          ? data.supportingDocuments
-          : [data.supportingDocuments]
+      supportingDocuments: campaignData.supportingDocuments
+        ? Array.isArray(campaignData.supportingDocuments)
+          ? campaignData.supportingDocuments
+          : [campaignData.supportingDocuments]
         : [],
     };
 
-    if (sanityID) {
-      const subAccount = await createSubAccount(campaignData);
-      campaignData.subAccountId = subAccount.subaccount_code;
-      await createCampaign(campaignData);
-    }
+    
+    const subAccount = await createSubAccount(campaignPayload);
+    campaignPayload.subAccountId = subAccount.subaccount_code;
+    await createCampaign(campaignPayload);
 
+    
     navigate("/dashboard/campaigns");
+    setIsModalOpen(false); 
   };
 
-  const handleModalConfirm = () => {
-    setIsModalOpen(false);
-    handleSubmit(onSubmit)();
+  
+  const handleOpenModal = (data: TCampaignSchema) => {
+    setCampaignData(data); 
+    setIsModalOpen(true); 
   };
 
   return (
     <div className="lg:w-[60%] pb-10 space-y-5">
-      <ConfirmationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleModalConfirm}
-      />
-
-      {/* Name Input */}
+     
       <div className="flex flex-col gap-y-1">
         <Input
           label="Name"
@@ -120,7 +122,6 @@ const ContactInformation = () => {
           <span className="text-red-500 text-sm">{`${errors.name.message}`}</span>
         )}
       </div>
-
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -135,7 +136,6 @@ const ContactInformation = () => {
             <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
           )}
         </div>
-
         <div className="flex flex-col gap-y-1 w-full">
           <Input
             label="Phone Number"
@@ -150,7 +150,6 @@ const ContactInformation = () => {
           )}
         </div>
       </div>
-
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -165,7 +164,6 @@ const ContactInformation = () => {
             <span className="text-red-500 text-sm">{`${errors.accountNumber.message}`}</span>
           )}
         </div>
-
         <div className="flex flex-col gap-y-1 w-full">
           <label className="text-left font-light capitalize text-black text-[14px]">
             Select Your Bank <span className="text-red-500">*</span>
@@ -173,7 +171,7 @@ const ContactInformation = () => {
           <select
             id="bank"
             {...register("bank")}
-            className="w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light focus:ring-1 ring-black outline-none"
+            className="w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light  focus:ring-1 ring-black outline-none"
           >
             <option value="" disabled>
               Select option
@@ -190,16 +188,24 @@ const ContactInformation = () => {
         </div>
       </div>
 
+     
       <div className="flex gap-7 w-full items-center mt-5">
         <div className="w-[200px]">
           <Button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleSubmit(handleOpenModal)} 
             className="bg-normal-300 w-full text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <span>Submit</span>
           </Button>
         </div>
       </div>
+
+     
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)} 
+        onConfirm={handleConfirmSubmit} 
+      />
     </div>
   );
 };

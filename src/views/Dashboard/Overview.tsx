@@ -13,6 +13,7 @@ import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
 type Campaign = {
   _id: string;
   title: string;
+  description: string;
 };
 
 export const OverviewCards = ({
@@ -108,7 +109,7 @@ const Overview = () => {
         </div>
       </div>
 
-      {/* Ongoing Campaigns Section */}
+     
       <div className="w-full pt-[24px] gap-5 flex items-center justify-center">
         <div className="w-full h-full border border-[#D9D9D9] p-6 rounded-md">
           <div className="flex items-center justify-between">
@@ -131,7 +132,7 @@ const Overview = () => {
                     {campaign.title}
                   </p>
                   <p className="text-[#777777] text-sm">
-                    Donation to fund for non-governm...
+                   {campaign.description}
                   </p>
                 </div>
               ))
