@@ -95,7 +95,7 @@ const ContactInformation = () => {
 
   const handleModalConfirm = () => {
     setIsModalOpen(false);
-    handleSubmit(onSubmit)();
+    handleSubmit(onSubmit);
   };
 
   return (

@@ -10,7 +10,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }: ConfirmationModalProp
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-10">
             <div className="bg-white rounded-md p-6">
                 <h2 className="text-xl font-bold mb-4">Confirm Submission</h2>
                 <p>Are you sure you want to submit this campaign?</p>
