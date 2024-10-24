@@ -9,6 +9,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../UI/Modal/CustomModal";
+import { toast } from "sonner";
 
 const ContactInformation = () => {
   const {
@@ -102,8 +103,8 @@ const ContactInformation = () => {
       return;
     }
 
-    const campaignPayload = {
-      ...campaignData,
+    const campaignData = {
+      ...data,
       startDate,
       endDate,
       userId: sanityID,
@@ -218,11 +219,11 @@ const ContactInformation = () => {
         </div>
       </div>
 
-      <ConfirmationModal
+      {/* <ConfirmationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleConfirmSubmit}
-      />
+      /> */}
     </div>
   );
 };
