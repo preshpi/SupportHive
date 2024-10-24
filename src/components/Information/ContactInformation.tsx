@@ -8,8 +8,8 @@ import { RootState } from "../../redux/store";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import ConfirmationModal from "../../UI/Modal/CustomModal";
+import { toast } from "sonner";
 
 const ContactInformation = () => {
   const {
@@ -22,7 +22,6 @@ const ContactInformation = () => {
   const [banks, setBanks] = useState<{ name: string; code: string }[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-
   const userDetails = useSelector((state: RootState) => state.user);
   const sanityID = userDetails.userDetails._id;
 
@@ -30,13 +29,16 @@ const ContactInformation = () => {
     const fetchBanks = async () => {
       try {
         const response = await axios.get("https://api.paystack.co/bank", {
-          headers: { Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}` },
+          headers: {
+            Authorization: `Bearer ${process.env.VITE_PAYSTACK_KEY}`,
+          },
         });
         setBanks(response.data.data);
       } catch (error) {
-        toast.error((error as { message: string }).message);
+        console.error("Error fetching banks:", error);
       }
     };
+
     fetchBanks();
   }, []);
 
@@ -144,7 +146,6 @@ const ContactInformation = () => {
           <span className="text-red-500 text-sm">{`${errors.name.message}`}</span>
         )}
       </div>
-
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -159,7 +160,6 @@ const ContactInformation = () => {
             <span className="text-red-500 text-sm">{`${errors.email.message}`}</span>
           )}
         </div>
-
         <div className="flex flex-col gap-y-1 w-full">
           <Input
             label="Phone Number"
@@ -174,7 +174,6 @@ const ContactInformation = () => {
           )}
         </div>
       </div>
-
       <div className="flex w-full gap-4">
         <div className="flex flex-col gap-y-1 w-full">
           <Input
@@ -219,6 +218,12 @@ const ContactInformation = () => {
           </Button>
         </div>
       </div>
+
+      {/* <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmSubmit}
+      /> */}
     </div>
   );
 };

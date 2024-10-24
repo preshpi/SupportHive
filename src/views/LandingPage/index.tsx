@@ -9,7 +9,7 @@ import Spotlight from "./Spotlight";
 const LandingPage = () => {
   return (
     <div className="flex ">
-      <div className="overflow-x-auto min-h-screen w-full bg-[#F8FAFC] ">
+      <div className="overflow min-h-screen w-full bg-[#F8FAFC] ">
         <NavBar />
         <HeroSection />
         <How />

@@ -190,22 +190,6 @@ function CampaignDetails() {
                   />
                 ))}
               </div>
-
-              <div>
-                <h1 className="text-center font-bold text-2xl">Documents</h1>
-                {/* <div className="flex flex-wrap gap-5 justify-center">
-                  {campaign?.supportingDocuments?.map((doc, index) => (
-                   <a
-                   href={getDownloadLink(documentRef)}
-                   download={documentName} 
-                   target="_blank"
-                   rel="noopener noreferrer"
-                 >
-                   <button>Download</button>
-                 </a>
-                  ))}
-                </div> */}
-              </div>
             </div>
           </div>
           <div className="flex pt-6 gap-5 max-w-[400px] mx-auto w-full justify-center">
@@ -215,15 +199,16 @@ function CampaignDetails() {
             >
               Donate
             </Button>
-            {userId && (
-              <Button
-                onClick={() => handleDelete()}
-                className="hover:bg-[#CA200D] text-[#CA200D] bg-transparent border-[#CA200D]  border-2 hover:text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Delete Campaign
-              </Button>
-            )}
           </div>
+
+          {userId === campaign?._id && (
+            <Button
+              onClick={() => handleDelete()}
+              className="hover:bg-[#CA200D] text-[#CA200D] bg-transparent border-[#CA200D]  border-2 hover:text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Delete Campaign
+            </Button>
+          )}
         </div>
       )}
     </>
