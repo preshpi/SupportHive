@@ -17,4 +17,5 @@ export type donateSchema = {
   email: string;
   subAccountId: string;
   userId: string;
+  campaignId: string | undefined;
 };

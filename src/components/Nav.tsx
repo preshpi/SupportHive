@@ -28,32 +28,30 @@ const NavBar = () => {
             </button>
           </div>
 
-          <div className="hidden lg:flex gap-5 items-center">
-            <a href="#howItWorks">How it works</a>
-            <a href="#browseCampaigns">Browse Campaigns</a>
-            <Link to="/signup">
-              <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
-                Start a Campaign
-              </button>
-            </Link>
-          </div>
-        </div>
-
-        <div
-          className={`lg:hidden absolute w-full bg-white ${isOpen ? "block" : "hidden"}`}
-        >
-          <div className="flex flex-col gap-5 items-center py-5">
-            <a href="#howItWorks"> How it works</a>
-            <a href="#browseCampaigns"> Browse Campaigns</a>
-            <Link to="/signup">
-              <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
-                Start a Campaign
-              </button>
-            </Link>
-          </div>
+        <div className="hidden lg:flex gap-5 items-center">
+          <a href="#howItWorks">How it works</a>
+          <a href="#browseCampaigns">Browse Campaigns</a>
+          <Link to="/login">
+            <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
+              Create account
+            </button>
+          </Link>
         </div>
       </div>
 
+      <div
+        className={`lg:hidden absolute w-full bg-white ${isOpen ? "block" : "hidden"}`}
+      >
+        <div className="flex flex-col gap-5 items-center py-5">
+          <a href="#howItWorks"> How it works</a>
+          <a href="#browseCampaigns"> Browse Campaigns</a>
+          <Link to="/login">
+            <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
+              Create account
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

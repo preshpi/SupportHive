@@ -34,6 +34,8 @@ export const fetchAllCampaigns = async () => {
     status,
     subAccountId,
     bank,
+    images,
+    supportingDocuments,
     accountNumber,
     createdBy->{
       _id,
@@ -67,6 +69,8 @@ export const fetchApprovedCampaigns = async () => {
     importance,
     impact,
     subAccountId,
+    images,
+    supportingDocuments,
     status,
     createdBy->{
       _id,
@@ -98,6 +102,8 @@ export const fetchPendingCampaigns = async () => {
     raiseMoneyFor,
     importance,
     impact,
+    images,
+    supportingDocuments,
     status,
     createdBy->{
       _id,
@@ -130,6 +136,8 @@ export const fetchRejectedCampaigns = async () => {
     importance,
     impact,
     status,
+    images,
+    supportingDocuments,
     createdBy->{
       _id,
       name, 

@@ -15,6 +15,7 @@ interface TransactionTableProps {
   loading: boolean;
   data: Transaction[];
 }
+
 const TransactionTable: React.FC<TransactionTableProps> = ({
   loading,
   data,
@@ -36,7 +37,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
     <div className="overflow-x-auto">
       {loading ? (
         <div className="flex items-center justify-center h-screen">
-          <div className="fetchingSpinner "></div>
+          <div className="fetchingSpinner"></div>
         </div>
       ) : (
         <table className="min-w-full bg-white">
@@ -49,10 +50,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
               <th className="py-3 px-6">Date</th>
             </tr>
           </thead>
-
-          <>
-            <tbody className="text-gray-700 text-sm">
-              {data.map((transaction) => {
+          <tbody className="text-gray-700 text-sm">
+            {data.length > 0 ? (
+              data.map((transaction) => {
                 const { background, text } = getStatusBackgroundColor(
                   transaction.status
                 );
@@ -77,9 +77,15 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                     </td>
                   </tr>
                 );
-              })}
-            </tbody>
-          </>
+              })
+            ) : (
+              <tr>
+                <td colSpan={5} className="py-6 text-center text-gray-500">
+                  No active transactions
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       )}
     </div>

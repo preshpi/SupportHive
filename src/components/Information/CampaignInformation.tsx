@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Arrow from "../../assets/arrow icon.svg";
 import { useFormContext } from "react-hook-form";
 import Input from "../Inputs";
+import { toast } from "sonner";
 
 interface CampaignInformationProps {
   onNext: () => void;
@@ -25,9 +26,29 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
       "importance",
       "impact",
       "images",
-      "bank",
+      "supportingDocuments",
     ]);
-    if (isValid) onNext();
+    if (isValid) {
+      onNext();
+    } else {
+      toast.error(`Validation Errors: ${JSON.stringify(errors)}`); // Log errors to see the issues
+    }
+  };
+
+  interface CustomFormData {
+    name: string;
+    images: File[];
+  }
+
+  const [formData, setFormData] = useState<CustomFormData>({
+    name: "",
+    images: [],
+  });
+
+  const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []); // Convert FileList to an array
+
+    setFormData({ ...formData, images: files });
   };
 
   return (
@@ -93,7 +114,6 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
           className="text-left font-light capitalize text-black text-[14px]"
         >
           What do you want to raise money for?{" "}
-          <span className="text-red-500">*</span>
         </label>
         <textarea
           id="campaign-raiseMoney"
@@ -111,7 +131,6 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
           htmlFor=""
         >
           Why is this campaign important to you?{" "}
-          <span className="text-red-500">*</span>
         </label>
         <textarea
           className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
@@ -128,7 +147,6 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
           className="text-left font-light capitalize text-black text-[14px]"
         >
           What impact will this campaign have?{" "}
-          <span className="text-red-500">*</span>
         </label>
         <textarea
           className="w-full outline-none focus:ring-1 ring-black rounded-md border border-gray-100 bg-transparent px-4 py-4 text-[14px] font-light"
@@ -140,39 +158,38 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
           <span className="text-red-500 text-sm">{`${errors.impact.message}`}</span>
         )}
       </div>
-      <div className="mt-4">
-        <Input
-          label=" Have Images related to your Campaign?"
-          type="file"
-          id="campaign-images"
-          autoComplete="on"
-          accept="image/*"
-          {...register("images")}
-          multiple
-        />
-        {errors.images && (
-          <span className="text-red-500">
-            {errors.images?.message?.toString()}
-          </span>
-        )}
-      </div>
 
-      <div className="mt-4">
-        <label className="block text-black font-bold mb-2">
-          Supporting documents
-        </label>
+      <div className="flex flex-col gap-y-5">
+        <div className="mt-4">
+          <label className="block text-black font-bold mb-2">
+            Have images related to your Campaign?
+          </label>
+          <input
+            type="file"
+            accept=".jpg,.jpeg,.png"
+            id="images"
+            autoComplete="off"
+            multiple
+            {...register("images")}
+            onChange={handleImagesChange}
+          />
+        </div>
 
-        <input
-          type="file"
-          accept=".pdf, .doc, .docx, .ppt, .pptx"
-          {...register("supportingDocuments")}
-          multiple
-        />
-        {errors.supportingDocuments && (
-          <span className="text-red-500">
-            {errors.supportingDocuments?.message?.toString()}
-          </span>
-        )}
+        <div className="mt-4">
+          <label className="block text-black font-bold mb-2">
+            Have documents related to your Campaign?
+          </label>
+
+          <Input
+            type="file"
+            accept=".pdf,.doc,.docx"
+            id="supportingDocuments"
+            autoComplete="off"
+            multiple
+            additionalClasses="border-none"
+            {...register("supportingDocuments")}
+          />
+        </div>
       </div>
 
       <div className="mt-8 justify-end flex">

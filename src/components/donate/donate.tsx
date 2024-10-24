@@ -44,6 +44,7 @@ const Donate = () => {
           email: data.email,
           subAccountId: subAccount,
           userId: sanityID,
+          campaignId: id,
         };
         handlePaymentInitialization(donationData);
         reset();

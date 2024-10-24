@@ -24,6 +24,7 @@ export interface InputProps {
   maxLength?: number;
   readOnly?: boolean;
   options?: string[];
+  optionsKey?: { key: string; value: string }[];
   multiple?: boolean;
   accept?: string;
 }

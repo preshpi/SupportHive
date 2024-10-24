@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@paystack/inline-js": "^2.22.0",
     "@reduxjs/toolkit": "^2.3.0",
+    "@sanity/asset-utils": "^2.0.6",
     "@sanity/client": "^6.22.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.61.0",
@@ -39,6 +40,7 @@
     "sanity": "^3.61.0",
     "sonner": "^1.5.0",
     "typescript": "^5.6.3",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

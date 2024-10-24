@@ -24,18 +24,6 @@ export default {
       type: 'string',
     },
     {
-      name: 'gender',
-      title: 'Gender',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'Male', value: 'male'},
-          {title: 'Female', value: 'female'},
-          {title: 'Other', value: 'other'},
-        ],
-      },
-    },
-    {
       name: 'emailVerified',
       title: 'Email Verified',
       type: 'boolean',
@@ -45,11 +33,5 @@ export default {
       title: 'Terms and Conditions Accepted',
       type: 'boolean',
     },
-    // {
-    //   name: 'campaigns',
-    //   title: 'Campaigns',
-    //   type: 'reference',
-    //   to: [{type: 'Campaign'}],
-    // },
   ],
 }

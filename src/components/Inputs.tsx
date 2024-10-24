@@ -28,6 +28,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       options,
       multiple,
       accept,
+      optionsKey,
     },
     ref
   ) => {
@@ -36,9 +37,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex w-full flex-col gap-y-1">
         <label className="text-left font-light capitalize text-black text-[14px]">
-          {label} {label && <span className="text-red-500">*</span>}
+          {label}
         </label>
-        {!textarea && !options && (
+        {!textarea && !options && !optionsKey && (
           <div className="relative">
             <input
               name={name}
@@ -118,6 +119,38 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               ) => (
                 <option key={index} value={option}>
                   {option}
+                </option>
+              )
+            )}
+          </select>
+        )}
+
+        {optionsKey && (
+          <select
+            name={name}
+            id={id}
+            value={value}
+            ref={ref as React.Ref<HTMLSelectElement>}
+            className={`${
+              additionalClasses
+                ? additionalClasses + " w-full text-base"
+                : "w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light  focus:ring-1 ring-black outline-none"
+            }`}
+            required={required}
+            disabled={disabled}
+            onChange={onChange}
+            {...additionalAttributes}
+          >
+            <option value="" disabled>
+              {placeholder || "Select an option"}
+            </option>
+            {optionsKey.map(
+              (
+                option: { key: string; value: string },
+                index: number // Add typing here
+              ) => (
+                <option key={index} value={option.key}>
+                  {option.value}
                 </option>
               )
             )}
