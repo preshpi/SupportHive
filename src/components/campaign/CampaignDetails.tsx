@@ -192,14 +192,7 @@ function CampaignDetails() {
             >
               Donate
             </Button>
-            {userId && (
-              <Button
-                onClick={() => handleDelete()}
-                className="hover:bg-[#CA200D] text-[#CA200D] bg-transparent border-[#CA200D]  border-2 hover:text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Delete Campaign
-              </Button>
-            )}
+            
           </div>
         </div>
       )}

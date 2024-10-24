@@ -122,12 +122,12 @@ const Creator = () => {
       </div>
 
       <div className="flex  mt-7  flex-wrap">
-        <div className=" flex  gap-2 py-2 px-10 border-2 border-[#CA200D] mb-24 hover:bg-[#CA200D] flex-wrap">
+        {/* <div className=" flex  gap-2 py-2 px-10 border-2 border-[#CA200D] mb-24 hover:bg-[#CA200D] flex-wrap">
           <a href="" className="text-[#CA200D] hover:text-[#ffff]">
             Delete Campaign
           </a>
           <img src={Delete} alt="" />
-        </div>
+        </div> */}
       </div>
 
       <div className="mb-10">
