@@ -1,30 +1,35 @@
+import { urlFor } from "../../supporthive/sanity.cli";
+import { Image } from "../types/images";
 import NumberFormat from "../utils/numberFormat";
 
 type SpotLightCardProps = {
   title: string;
   description: string;
   goalAmount: number;
-  raisedAmount: number;
-  daysLeft: number;
-  imageUrl: string;
-  _id: string | undefined;
+  images: Image[];
+  raisedAmount: number | null;
 };
 
 export const SpotLightCard: React.FC<SpotLightCardProps> = ({
   title,
   description,
   goalAmount,
-  raisedAmount,
-  daysLeft,
-  imageUrl,
-  _id,
+  images,
 }) => {
+  // console.log(goalAmount, "goalAmount");
+
+  // const amount = raisedAmount && raisedAmount * 100;
+  // console.log(amount, "amount");
+
+  // const progressPercentage = ((raisedAmount ?? 0) / goalAmount) * 100;
+  // console.log(progressPercentage, "progressPercentage");
+
   return (
     <div className="bg-white border border-[#F9F9F9] space-y-2 rounded-lg p-4 group transform transition-transform duration-300 group-hover:shadow-lg shadow-sm">
       <img
-        src={imageUrl}
+        src={images ? urlFor(images[0]) : ""}
         alt={title}
-        className="w-[366px] h-[271px] rounded-lg group-hover:scale-105 transition-transform duration-300"
+        className="h-[300px] w-full rounded-lg group-hover:scale-105 transition-transform duration-300 object-cover"
       />
       <p className="font-semibold text-[20px]">{title}</p>
       <p className="text-black/80 text-[16px] line-clamp-2">{description}</p>
@@ -34,10 +39,18 @@ export const SpotLightCard: React.FC<SpotLightCardProps> = ({
           community Health Initiatives
         </span>
       </p>
-
-      <div className="w-full bg-gray-200 rounded-full h-[5px]">
-        <div className="bg-[#28A745] h-full rounded-full" />
-      </div>
+      {/* 
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={Math.min(progressPercentage, 100)}
+        className="w-60 h-[15px] appearance-none bg-gray-200 rounded-full my-2"
+        style={{
+          background: `linear-gradient(to right, #28A745 ${progressPercentage}%, #E5E7EB ${progressPercentage}%)`, // Green progress and gray for the rest
+        }}
+        disabled
+      /> */}
       <div className="flex items-center gap-x-2">
         <p>Goal amount - </p>
         <NumberFormat

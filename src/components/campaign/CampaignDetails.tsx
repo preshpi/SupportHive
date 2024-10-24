@@ -50,9 +50,9 @@ function CampaignDetails() {
     number | null
   >(null);
 
-  const progressPercentage = totalAmountForCampaign
-    ? (totalAmountForCampaign / (campaign?.goalAmount ?? 1)) * 100
-    : 0;
+  // const progressPercentage = totalAmountForCampaign
+  //   ? (totalAmountForCampaign / (campaign?.goalAmount ?? 1)) * 100
+  //   : 0;
 
   useEffect(() => {
     const getCampaignDetail = async () => {
@@ -134,11 +134,12 @@ function CampaignDetails() {
                       }
                     />
                   </div>
-                  <div className="w-60 bg-gray-200 rounded-full h-[15px] my-2">
-                    <div
-                      style={{ width: `${Math.min(progressPercentage, 100)}%` }} // Cap at 100%
-                    ></div>
-                  </div>
+                  {/* <div className="w-60 bg-gray-200 rounded-full h-[15px] my-2">
+        <div
+          className="bg-green-500 h-full rounded-full transition-width duration-300"
+          style={{ width: `${Math.min(progressPercentage, 100)}%` }} // Cap at 100%
+        ></div>
+      </div> */}
                 </div>
               </div>
             </div>
