@@ -4,7 +4,7 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 
 **Demo:**
 
-<img width="1278" alt="Screenshot 2024-10-22 at 11 45 50 AM" src="https://github.com/user-attachments/assets/e004a6dc-0c26-4ac1-83d0-ea10b10f0885">
+<img width="1279" alt="Screenshot 2024-10-24 at 12 06 47 PM" src="https://github.com/user-attachments/assets/2d237e0c-5dd7-4c8d-a543-b2ac6eba89ff">
 
 
 - Visit this website: https://support-hive.vercel.app/
