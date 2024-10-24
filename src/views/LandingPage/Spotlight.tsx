@@ -71,6 +71,7 @@ const Spotlight = () => {
               .slice(0, 3)
               .map((campaign) => (
                 <SpotLightCard
+                  _id={campaign._id}
                   key={campaign._id}
                   title={campaign.title}
                   description={campaign.description}
