@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CampaignCard from "../../components/campaign/CampaignCard";
 import campaignImage from "../../../public/campaign.svg";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
+import { Link } from "react-router-dom";
 
 type Campaign = {
   _id: string;
@@ -53,16 +54,18 @@ const Spotlight = () => {
             approvedCampaigns
               .slice(0, 3) 
               .map((campaign) => (
-                <CampaignCard
-                  _id={campaign._id}
-                  key={campaign._id}
-                  title={campaign.title}
-                  description={campaign.description}
-                  goalAmount={campaign.goalAmount}
-                  raisedAmount={0}
-                  daysLeft={2}
-                  imageUrl={campaignImage}
-                />
+                <Link to='/dashboard/campaign/${_id}'>
+                  <CampaignCard
+                    _id={campaign._id}
+                    key={campaign._id}
+                    title={campaign.title}
+                    description={campaign.description}
+                    goalAmount={campaign.goalAmount}
+                    raisedAmount={0}
+                    daysLeft={2}
+                    imageUrl={campaignImage}
+                  />
+               </Link>
               ))
           ) : (
             <p>No campaigns available.</p>
