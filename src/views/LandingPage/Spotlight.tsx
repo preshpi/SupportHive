@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import CampaignCard from "../../components/campaign/CampaignCard";
-import campaignImage from "../../../public/campaign.svg";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
 import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
 import { SpotLightCard } from "../../components/spolightCards";
+import { Image } from "../../types/images";
+import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
 
 type Campaign = {
   _id: string;
@@ -17,6 +17,7 @@ type Campaign = {
   endDate: string;
   raiseMoneyFor: string;
   importance: string;
+  images: Image[];
   impact: string;
   status: string;
   createdBy: {
@@ -30,12 +31,19 @@ type Campaign = {
 const Spotlight = () => {
   const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(false);
+  const [totalAmountForCampaign, setTotalAmountForCampaign] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     const getApprovedCampaigns = async () => {
       setLoading(true);
       const campaigns = await fetchApprovedCampaigns();
       setApprovedCampaigns(campaigns);
+      const totalAmount = await calculateTotalAmountForCampaign(campaigns._id);
+      setTotalAmountForCampaign(totalAmount);
+      console.log(campaigns);
+
       setLoading(false);
     };
 
@@ -63,14 +71,12 @@ const Spotlight = () => {
               .slice(0, 3)
               .map((campaign) => (
                 <SpotLightCard
-                  _id={campaign._id}
                   key={campaign._id}
                   title={campaign.title}
                   description={campaign.description}
                   goalAmount={campaign.goalAmount}
-                  raisedAmount={0}
-                  daysLeft={2}
-                  imageUrl={campaignImage}
+                  raisedAmount={totalAmountForCampaign}
+                  images={campaign.images}
                 />
               ))
           ) : (
