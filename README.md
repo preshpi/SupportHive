@@ -92,7 +92,7 @@ Ensure you have these prerequisites installed and set up on your system before p
 
 - <a href="https://github.com/faithegwuenu"> Egwuenu Faith </a>
 - <a href="https://github.com/TaiwoAzeezat"> Azeezat Funmilayo Taiwo </a>
-- <a href="https://github.com/Ladyruth"> Lady Ruth </a>
+- <a href="https://github.com/Ladyruth"> Ruth Ezeneche  </a>
 
 
 # License
