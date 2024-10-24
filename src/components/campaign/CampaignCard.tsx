@@ -34,8 +34,8 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
         className="w-full h-[150px] object-cover rounded-md"
       />
       <h3 className="font-bold text-lg">{title}</h3>
-      <p className="line-clamp-2 text-[#555657]">{description}</p>
-      <div className="space-y-2 flex items-center justify-between">
+      <p className="line-clamp-2 text-[#555657] ">{description}</p>
+      <div className="space-y-2 flex items-center justify-between border-t w-full border-gray-200">
         <div className="flex flex-col items-start gap-2">
           <p>Goal Amount</p>
           <NumberFormat value={goalAmount !== null ? goalAmount : "N/A"} />

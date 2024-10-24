@@ -32,10 +32,10 @@ export const OverviewCards = ({
       {amount ? (
         <NumberFormat
           className="text-[24px] font-semibold"
-          value={amount ?? "N/A"}
+          value={amount ?? "0"}
         />
       ) : (
-        <p className="text-[24px] font-semibold">{number ?? "N/A"}</p>
+        <p className="text-[24px] font-semibold">{number ?? "0"}</p>
       )}
     </div>
   );
@@ -109,7 +109,6 @@ const Overview = () => {
         </div>
       </div>
 
-     
       <div className="w-full pt-[24px] gap-5 flex items-center justify-center">
         <div className="w-full h-full border border-[#D9D9D9] p-6 rounded-md">
           <div className="flex items-center justify-between">
@@ -132,7 +131,7 @@ const Overview = () => {
                     {campaign.title}
                   </p>
                   <p className="text-[#777777] text-sm">
-                   {campaign.description}
+                    {campaign.description}
                   </p>
                 </div>
               ))

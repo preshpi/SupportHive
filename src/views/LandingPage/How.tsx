@@ -14,7 +14,7 @@ const How = () => {
       img: People,
       title: "Create your campaign",
       description:
-        "Tell your story, set your goal, and download our app to get started",
+        "Tell your story, set your goal, and  download our app to get started",
     },
     {
       img: Fund,
