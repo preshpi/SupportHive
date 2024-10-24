@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { urlFor } from "../../../supporthive/sanity.cli";
 
 export interface CampaignCardProps {
   title: string;
@@ -7,8 +8,18 @@ export interface CampaignCardProps {
   goalAmount: number;
   raisedAmount: number;
   daysLeft: number;
-  imageUrl: string;
+  images?: Image[];
   _id: string | undefined;
+}
+
+interface Image {
+  _type: "image";
+  _key: string;
+  asset: ImageAsset;
+}
+interface ImageAsset {
+  _ref: string;
+  _type: "reference";
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({
@@ -17,7 +28,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
   goalAmount,
   raisedAmount,
   daysLeft,
-  imageUrl,
+  images,
   _id,
 }) => {
   const progress = (raisedAmount / goalAmount) * 100;
@@ -26,9 +37,9 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
   return (
     <div className="border border-green-500 rounded-lg p-4 mb-4 flex flex-col gap-2 shadow-sm">
       <img
-        src={imageUrl}
+        src={images ? urlFor(images[0]) : ""}
         alt={title}
-        className="w-full object-cover rounded-md"
+        className="w-full h-[150px] object-cover rounded-md"
       />
       <h3 className="font-bold text-lg">{title}</h3>
       <p className="line-clamp-2 text-[#555657]">{description}</p>

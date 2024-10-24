@@ -20,6 +20,7 @@ export const handlePaymentInitialization = async (
     callback_url: "http://localhost:5001/dashboard/transactions",
     metadata: {
       userId: campaignData.userId,
+      campaignId: campaignData.campaignId,
     },
   };
 
