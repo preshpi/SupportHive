@@ -6,7 +6,13 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/png",
   "image/webp",
 ];
-const ACCEPTED_DOCUMENT_TYPES = ["flipdf", "doc", "docx", "ppt", "pptx"];
+const ACCEPTED_DOCUMENT_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-powerpoint",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+];
 
 export const campaignSchema = z.object({
   title: z.string().min(1, "Campaign Title is required"),
@@ -52,8 +58,11 @@ export const campaignSchema = z.object({
     .refine(
       (files) => files?.[0]?.size <= MAX_FILE_SIZE,
       `Max document size is 5MB.`
+    )
+    .refine(
+      (files) => ACCEPTED_DOCUMENT_TYPES.includes(files?.[0]?.type),
+      "Only flipdf, doc, docx, ppt, pptx formats are supported."
     ),
-
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone Number must be at least 10 characters"),
@@ -82,8 +91,8 @@ export type createCampaignProps = {
   importance: string;
   raiseMoneyFor: string;
   impact: string;
-  images?: File[];
-  supportingDocuments?: File[];
+  images: FileList;
+  supportingDocuments: FileList;
   name: string;
   email: string;
   phone: string;
@@ -91,6 +100,7 @@ export type createCampaignProps = {
   bank: string | undefined;
   accountNumber: string | undefined;
   subAccountId?: string;
+  status?: "pending" | "approved" | "rejected";
 };
 
 export interface fetchCampaign {
@@ -109,7 +119,7 @@ export interface fetchCampaign {
   description: string;
   startDate: string;
   country: string;
-  goalAmount: string;
+  goalAmount: any;
   raiseMoneyFor: string;
   bank: string | undefined;
   accountNumber: string | undefined;

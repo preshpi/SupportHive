@@ -4,6 +4,7 @@ import Icon from "../../assets/campaign icon.svg";
 import campaignImage from "../../../public/campaign.svg";
 import { Link } from "react-router-dom";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
+import { CampaignSkeleton } from "./CampaignLoader";
 
 export type Campaign = {
   _id: string;
@@ -55,8 +56,16 @@ const AllCampaignsTab = () => {
         </Link>
       </div>
       {loading ? (
-        <div className="flex items-center justify-center h-screen">
-          <div className="fetchingSpinner "></div>
+        <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <CampaignSkeleton key={index} />
+            ))}
+        </div>
+      ) : allCampaigns.length === 0 ? (
+        <div className="flex items-center justify-center h-[300px]">
+          <p className="text-[20px]">No Campaigns Available</p>
         </div>
       ) : (
         <div className="mt-6 lg:w-[100%] grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-8 ">

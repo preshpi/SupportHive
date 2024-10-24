@@ -16,7 +16,9 @@ const ContactInformation = () => {
     register,
     formState: { errors },
     handleSubmit,
+    trigger,
   } = useFormContext<TCampaignSchema>();
+
   const [banks, setBanks] = useState<{ name: string; code: string }[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ const ContactInformation = () => {
       business_name: data.title,
       settlement_bank: data.bank,
       account_number: data.accountNumber,
-      percentage_charge: 10,
+      percentage_charge: 30,
     };
 
     try {
@@ -59,29 +61,53 @@ const ContactInformation = () => {
       );
       return response.data.data;
     } catch (error) {
-      toast.error((error as { message: string }).message);
+      const errorResponse = error as {
+        response: {
+          data: {
+            status: boolean;
+            message: string;
+            meta: {
+              nextStep: string;
+            };
+            type: string;
+            code: string;
+          };
+        };
+      };
+
+      if (errorResponse.response.data.type === "validation_error") {
+        toast.error(
+          `${errorResponse.response.data.message}: ${errorResponse.response.data.meta.nextStep}`
+        );
+      } else {
+        toast.error(errorResponse.response.data.message);
+      }
     }
   };
 
   const onSubmit = async (data: TCampaignSchema) => {
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
+    const isValid = await trigger([
+      "bank",
+      "accountNumber",
+      "name",
+      "email",
+      "phone",
+    ]);
+
+    if (!isValid) {
+      toast.error(`Validation Errors: ${JSON.stringify(errors)}`); // Log errors to see the issues
+      return;
+    }
 
     const campaignData = {
       ...data,
       startDate,
       endDate,
       userId: sanityID,
-      images: data.images
-        ? Array.isArray(data.images)
-          ? data.images
-          : [data.images]
-        : [],
-      supportingDocuments: data.supportingDocuments
-        ? Array.isArray(data.supportingDocuments)
-          ? data.supportingDocuments
-          : [data.supportingDocuments]
-        : [],
+      images: data.images,
+      supportingDocuments: data.supportingDocuments,
     };
 
     if (sanityID) {
@@ -89,8 +115,7 @@ const ContactInformation = () => {
       campaignData.subAccountId = subAccount.subaccount_code;
       await createCampaign(campaignData);
     }
-
-    navigate("/dashboard/campaigns");
+    navigate("/dashboard/profile");
   };
 
   const handleModalConfirm = () => {
@@ -106,7 +131,6 @@ const ContactInformation = () => {
         onConfirm={handleModalConfirm}
       />
 
-      {/* Name Input */}
       <div className="flex flex-col gap-y-1">
         <Input
           label="Name"
@@ -166,24 +190,19 @@ const ContactInformation = () => {
           )}
         </div>
 
-        <div className="flex flex-col gap-y-1 w-full">
-          <label className="text-left font-light capitalize text-black text-[14px]">
-            Select Your Bank <span className="text-red-500">*</span>
-          </label>
-          <select
+        <div className="flex flex-col w-full gap-y-1">
+          <Input
+            label="Select Your Bank "
             id="bank"
             {...register("bank")}
-            className="w-full rounded-md border border-gray-100 bg-transparent px-4 py-4 text-base font-light focus:ring-1 ring-black outline-none"
-          >
-            <option value="" disabled>
-              Select option
-            </option>
-            {banks.map((bank, index) => (
-              <option key={index} value={bank.code}>
-                {bank.name}
-              </option>
-            ))}
-          </select>
+            placeholder="Select option"
+            type="select"
+            optionsKey={banks.map((bank) => ({
+              key: bank.code,
+              value: bank.name,
+            }))}
+            autoComplete="on"
+          />
           {errors.bank && (
             <span className="text-red-500 text-sm">{`${errors.bank.message}`}</span>
           )}
@@ -193,7 +212,7 @@ const ContactInformation = () => {
       <div className="flex gap-7 w-full items-center mt-5">
         <div className="w-[200px]">
           <Button
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleSubmit(onSubmit)}
             className="bg-normal-300 w-full text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <span>Submit</span>

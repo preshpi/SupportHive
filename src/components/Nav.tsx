@@ -30,9 +30,9 @@ const NavBar = () => {
         <div className="hidden lg:flex gap-5 items-center">
           <a href="#howItWorks">How it works</a>
           <a href="#browseCampaigns">Browse Campaigns</a>
-          <Link to="/signup">
+          <Link to="/login">
             <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
-              Start a Campaign
+              Create account
             </button>
           </Link>
         </div>
@@ -44,9 +44,9 @@ const NavBar = () => {
         <div className="flex flex-col gap-5 items-center py-5">
           <a href="#howItWorks"> How it works</a>
           <a href="#browseCampaigns"> Browse Campaigns</a>
-          <Link to="/signup">
+          <Link to="/login">
             <button className="w-fit text-white bg-[#28A745] p-3 rounded-[10px]">
-              Start a Campaign
+              Create account
             </button>
           </Link>
         </div>

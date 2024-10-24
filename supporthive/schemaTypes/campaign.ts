@@ -128,7 +128,7 @@ export default {
           {title: 'Rejected', value: 'rejected'},
         ],
       },
-      initialValue: 'pending', // When a user creates a campaign, it starts as pending
+      initialValue: 'pending',
     },
   ],
 }

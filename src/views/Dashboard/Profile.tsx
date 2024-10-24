@@ -15,19 +15,11 @@ import { toast } from "sonner";
 import CampaignCard, {
   CampaignCardProps,
 } from "../../components/campaign/CampaignCard";
-
-export const CampaignSkeleton = () => {
-  return (
-    <div className="animate-pulse w-full">
-      <div className="bg-gray-50 h-40 w-full mb-4 rounded-lg"></div>
-      <div className="h-6 bg-gray-50 mb-2 rounded"></div>
-      <div className="h-4 bg-gray-50 w-3/4 rounded"></div>
-    </div>
-  );
-};
+import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
 
 const Profile = () => {
   const userDetails = useSelector((state: RootState) => state.user);
+
   const userId = userDetails.userDetails._id;
   const { firstname, lastname } = userDetails.userDetails;
 
@@ -214,7 +206,7 @@ const Profile = () => {
               ))}
           </div>
         ) : allCampaigns.length === 0 && activeStatusTab === 0 ? (
-          <div className="text-center text-[#777777] w-full flex items-center justify-center h-full">
+          <div className="text-center mt-6 text-[#777777] w-full flex items-center justify-center h-full">
             <p className="w-full h-full">No campaign</p>
           </div>
         ) : (
@@ -228,7 +220,7 @@ const Profile = () => {
                   goalAmount={campaign.goalAmount}
                   raisedAmount={0}
                   daysLeft={2}
-                  imageUrl={campaign.imageUrl}
+                  images={campaign.images}
                   _id={campaign._id}
                 />
               ))}
@@ -258,7 +250,7 @@ const Profile = () => {
                   goalAmount={campaign.goalAmount}
                   raisedAmount={0}
                   daysLeft={2}
-                  imageUrl={campaign.imageUrl}
+                  images={campaign.images}
                   _id={campaign._id}
                 />
               ))}
@@ -290,7 +282,7 @@ const Profile = () => {
                     goalAmount={campaign.goalAmount}
                     raisedAmount={0}
                     daysLeft={2}
-                    imageUrl={campaign.imageUrl}
+                    images={campaign.images}
                     _id={campaign._id}
                   />
                 ))}
@@ -321,7 +313,7 @@ const Profile = () => {
                   goalAmount={campaign.goalAmount}
                   raisedAmount={0}
                   daysLeft={2}
-                  imageUrl={campaign.imageUrl}
+                  images={campaign.images}
                   _id={campaign._id}
                 />
               ))}
