@@ -6,9 +6,15 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 
 <img width="1279" alt="Screenshot 2024-10-24 at 12 06 47 PM" src="https://github.com/user-attachments/assets/2d237e0c-5dd7-4c8d-a543-b2ac6eba89ff">
 
+## **Watch demo video:**
 
-- Visit this website: https://support-hive.vercel.app/
-- Check Figma Design: https://www.figma.com/design/cFBRfD9pGk81EbVgud8Fdn/SupportHive?node-id=0-1&t=v43DdWriBvalCcOy-1
+https://www.awesomescreenshot.com/video/32914565?key=c0acf6916b6c7abb2e599ccab88a5a33
+
+## **Visit this website**
+ https://support-hive.vercel.app/
+
+## **Check Figma Design**
+https://www.figma.com/design/cFBRfD9pGk81EbVgud8Fdn/SupportHive?node-id=0-1&t=v43DdWriBvalCcOy-1
 
 **Key Features:**
 - Create Campaigns: Individuals and organizations can create campaigns for various causes.
@@ -38,7 +44,7 @@ Ensure you have these prerequisites installed and set up on your system before p
 
 **Installation**
 
-1. **Fork the Repository**: Fork the [noteey](https://github.com/preshpi/SupportHive) project to your own GitHub account.
+1. **Fork the Repository**: Fork the [Supporthive](https://github.com/preshpi/SupportHive) project to your own GitHub account.
 
 2. **Clone the Repository**: Clone the forked repository to your local machine by running the following command in your terminal:
 
