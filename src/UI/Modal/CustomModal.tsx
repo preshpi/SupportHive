@@ -11,6 +11,7 @@ const ConfirmationModal = ({
 }: ConfirmationModalProps) => {
   if (!isOpen) return null;
 
+
   return (
     <div className="fixed inset-0 bg-gray-600 z-10 bg-opacity-50 flex items-center justify-center">
       <div className="bg-white rounded-md p-6">

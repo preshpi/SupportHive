@@ -18,6 +18,7 @@ import CampaignDetails from "./components/campaign/CampaignDetails.js";
 import CreateCampaigns from "./components/campaign/CreateCampaigns.js";
 import Donate from "./components/donate/donate.js";
 import Profile from "./views/Dashboard/Profile.js";
+import ErrorPage from "./views/ErrorPage.js";
 
 const AppRoutes = () => {
   return (
@@ -49,7 +50,10 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<p>404 Not Found</p>} />
+          <Route path="*" element={
+          <ErrorPage/>
+        } 
+          />
           <Route
             caseSensitive={false}
             path="/dashboard/campaign/:id"
@@ -92,6 +96,9 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="*"
+           />
         </Route>
 
         {/* Auth Routes */}
