@@ -17,7 +17,7 @@ export const handlePaymentInitialization = async (
     subaccount: campaignData.subAccountId,
     transaction_charge: 100,
     bearer: "subaccount",
-    callback_url: "http://localhost:5001/dashboard/transactions",
+    callback_url: "https://support-hive.vercel.app/dashboard/transactions",
     metadata: {
       userId: campaignData.userId,
       campaignId: campaignData.campaignId,
