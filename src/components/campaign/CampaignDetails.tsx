@@ -14,6 +14,8 @@ import { Button } from "../Button";
 import { client, urlFor } from "../../../supporthive/sanity.cli";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
+import NumberFormat from "../../utils/numberFormat";
 
 function CampaignDetails() {
   const { id } = useParams();
@@ -22,6 +24,11 @@ function CampaignDetails() {
 
   const userDetails = useSelector((state: RootState) => state.user);
   const userId = userDetails.userDetails._id;
+
+  // const getDownloadLink = (ref) => {
+  //   if (!ref) return '#';
+  //   return getFileAssetUrl({ projectId: "yourProjectId", dataset: "yourDataset" }, ref);
+  // };
 
   const handleDelete = async () => {
     try {
@@ -39,12 +46,23 @@ function CampaignDetails() {
     }
   };
 
+  const [totalAmountForCampaign, setTotalAmountForCampaign] = useState<
+    number | null
+  >(null);
+
+  // const progressPercentage = totalAmountForCampaign
+  //   ? (totalAmountForCampaign / (campaign?.goalAmount ?? 1)) * 100
+  //   : 0;
+
   useEffect(() => {
     const getCampaignDetail = async () => {
       try {
         setLoading(true);
         const data = await fetchCampaignById(id);
         setCampaign(data);
+        const totalAmount = await calculateTotalAmountForCampaign(id);
+        setTotalAmountForCampaign(totalAmount);
+
         setLoading(false);
       } catch (error) {
         toast.error((error as { message: string }).message);
@@ -54,10 +72,6 @@ function CampaignDetails() {
     getCampaignDetail();
   }, [id]);
 
-  // const getDocumentUrl = (documentRef: string) => {
-  //   const [, id] = documentRef.split("-"); // Extract the ID from the reference
-  //   return `https://cdn.sanity.io/files/${process.env.VITE_SANITY_PROJECT_ID}/${id}`; // Replace with your Sanity project ID
-  // };
   const navigate = useNavigate();
   const handleDonation = () => {
     navigate(`/dashboard/campaign/${id}/donate`);
@@ -110,15 +124,22 @@ function CampaignDetails() {
                 </div>
 
                 <div className="flex items-center flex-wrap gap-3">
-                  <h1>Amount Raised:</h1>
                   <div className="flex items-center">
-                    <FaNairaSign />
-                    <h1>3,000,000 </h1>
+                    <h1>Amount Raised:</h1>
+                    <NumberFormat
+                      value={
+                        totalAmountForCampaign !== null
+                          ? totalAmountForCampaign
+                          : "N/A"
+                      }
+                    />
                   </div>
-
-                  <div className="w-60 bg-gray-200 rounded-full h-[15px] my-2">
-                    <div className="bg-[#28A745] h-full rounded-full" />
-                  </div>
+                  {/* <div className="w-60 bg-gray-200 rounded-full h-[15px] my-2">
+        <div
+          className="bg-green-500 h-full rounded-full transition-width duration-300"
+          style={{ width: `${Math.min(progressPercentage, 100)}%` }} // Cap at 100%
+        ></div>
+      </div> */}
                 </div>
               </div>
             </div>
@@ -157,7 +178,7 @@ function CampaignDetails() {
               </div>
             </div>
 
-            <div className="m-10 space-y-3">
+            <div className="m-10 space-y-3 flex items-center justify-center flex-col">
               <h1 className="text-center font-bold text-2xl">GALLERY</h1>
               <div className="flex flex-wrap gap-5 justify-center">
                 {campaign?.images?.map((image, index) => (
@@ -165,24 +186,26 @@ function CampaignDetails() {
                     key={image._key}
                     src={urlFor(image)}
                     alt={`Campaign image ${index + 1}`}
-                    className="w-32 h-32 object-cover"
+                    className="w-60  rounded-lg object-cover"
                   />
                 ))}
               </div>
 
-              {/* <div className="flex flex-wrap gap-5 justify-center">
-              {campaign?.supportingDocuments?.map((document) => (
-                <a
-                  key={document._key}
-                  href={getDocumentUrl(document.asset._ref)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="your-document-class"
-                >
-                  Download Document
-                </a>
-              ))}
-            </div> */}
+              <div>
+                <h1 className="text-center font-bold text-2xl">Documents</h1>
+                {/* <div className="flex flex-wrap gap-5 justify-center">
+                  {campaign?.supportingDocuments?.map((doc, index) => (
+                   <a
+                   href={getDownloadLink(documentRef)}
+                   download={documentName} 
+                   target="_blank"
+                   rel="noopener noreferrer"
+                 >
+                   <button>Download</button>
+                 </a>
+                  ))}
+                </div> */}
+              </div>
             </div>
           </div>
           <div className="flex pt-6 gap-5 max-w-[400px] mx-auto w-full justify-center">
