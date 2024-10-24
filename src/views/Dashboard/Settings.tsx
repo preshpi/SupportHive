@@ -22,7 +22,7 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from "firebase/auth";
-import { getInitials } from "../../utils/userInitials";
+
 const Settings = () => {
   const { tab, setTab } = useSettingsTab();
   const dispatch = useAppDispatch();
@@ -37,6 +37,7 @@ const Settings = () => {
         setTab(1);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
         break;
+
       default:
         setTab(0);
         localStorage.setItem("selectedTabIndex", tabIndex.toString());
@@ -82,8 +83,7 @@ const Settings = () => {
 
       return response;
     } catch (error) {
-      console.error("Error updating user profile:", error);
-      throw new Error("Unable to update profile");
+      toast.error((error as { message: string }).message);
     }
   };
 
@@ -108,9 +108,6 @@ const Settings = () => {
       toast.error((error as { message: string }).message);
     }
   };
-
-  const { firstname, lastname } = userDetails.userDetails;
-  const initials = getInitials(firstname, lastname);
 
   const {
     register: registerSecurity,
@@ -155,7 +152,7 @@ const Settings = () => {
     <div>
       <h3 className="font-bold text-[24px] mt-10">Settings</h3>
 
-      <div className="flex items-center  pt-[32px] gap-x-6">
+      <div className="flex items-center  pt-[32px] border-b border-gray-100 gap-x-6">
         <button
           onClick={() => handleChangeTab("profile", 0)}
           className={`text-[16px] p-2 ${
@@ -164,7 +161,7 @@ const Settings = () => {
               : "text-[#777777]"
           } `}
         >
-          User Profile
+          Edit Profile
         </button>
         <button
           onClick={() => handleChangeTab("security", 1)}
@@ -181,17 +178,7 @@ const Settings = () => {
       <div className="py-8">
         {tab === 0 && (
           <>
-            <div className="flex items-center gap-x-4 ">
-              <div className="bg-Dark-600 text-white w-[60px] h-[60px] flex items-center justify-center rounded-full">
-                <p>{initials}</p>
-              </div>
-              <div className="flex gap-x-3 items-center">
-                <p className="text-[#101828] text-[24px] font-semibold">
-                  {firstname} {lastname}
-                </p>
-              </div>
-            </div>
-            <form className="flex flex-col max-w-[440px] gap-y-6 gap-x-4 pt-8">
+            <form className="flex flex-col max-w-[440px] gap-y-6 gap-x-4">
               <div className="flex gap-4">
                 <div className="flex flex-col gap-y-1">
                   <Input

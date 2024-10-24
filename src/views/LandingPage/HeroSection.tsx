@@ -23,13 +23,13 @@ const HeroSection = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl mt-4 max-w-[600px] text-center">
+          <p className="text-lg md:text-xl mt-4 max-w-[600px] mx-auto text-center">
             Discover an easy and effective way to raise funds for personal
             initiatives, charitable projects, and friends in need.
           </p>
 
           {/* Search Input */}
-          <div className="mt-8 flex justify-center">
+          {/* <div className="mt-8 flex justify-center">
             <div className="flex items-center w-full max-w-lg bg-white rounded-full px-4 py-2 shadow-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const HeroSection = () => {
                 Search
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

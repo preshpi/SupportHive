@@ -1,92 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Spotlight1 from "../../assets/image (3).svg";
-import Spotlight2 from "../../assets/image (4).svg";
-import Spotlight3 from "../../assets/image (5).svg";
+import { useEffect, useState } from "react";
+import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
+import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
+import { SpotLightCard } from "../../components/spolightCards";
+import { Image } from "../../types/images";
+import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
 
-type SpotLightCardProps = {
-  image: string;
+type Campaign = {
+  _id: string;
+  title: string;
+  country: string;
+  city: string;
+  category: string;
   description: string;
-  name: string;
-  price: string;
-  per: string;
-};
-
-const SpotLightCard: React.FC<SpotLightCardProps> = ({
-  image,
-  name,
-  price,
-  per,
-  description,
-}) => {
-  return (
-    <div className="bg-white border border-[#F9F9F9] rounded-lg py-2 px-5  group transform transition-transform duration-300 shadow-sm hover:shadow-md">
-      <div className="">
-        <img
-          src={image}
-          alt={name}
-          className="w-full lg:w-[366px] h-[271px] rounded-lg transform transition-transform duration-300 hover:scale-105"
-        />
-      </div>
-      <p className="font-semibold text-[20px]">{name}</p>
-      <p className="text-black/80 text-[16px] py-2">{description}</p>
-      <p className="text-[14px] py-1">
-        By{" "}
-        <span className="semi-bold text-[#28A745]">
-          community Health Initiatives
-        </span>
-      </p>
-
-      <div className="w-full bg-gray-200 rounded-full h-[5px] my-2">
-        <div className="bg-[#28A745] h-full rounded-full" />
-      </div>
-      {/* <div className="slidecontainer">
-          <input
-            type="range"
-            name="price"
-            id="price"
-            min="1"
-            max="100"
-            value="50"
-            className="slider "
-          />
-        </div> */}
-      <p className="text-[16px] font-semibold py-2">{price}</p>
-      <span className="text-[12px] text-[#838383]">{per}</span>
-    </div>
-  );
+  goalAmount: number;
+  startDate: string;
+  endDate: string;
+  raiseMoneyFor: string;
+  importance: string;
+  images: Image[];
+  impact: string;
+  status: string;
+  createdBy: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+  };
 };
 
 const Spotlight = () => {
-  const spotItems = [
-    {
-      id: 1,
-      name: "Climate Action Now",
-      price: "N12,050 ",
-      description:
-        "Join us in funding local environmental projects aimed at combating climate change and promoting sustainability",
-      image: Spotlight1,
-      per: "raised",
-    },
-    {
-      id: 2,
-      name: "Support For Orphans",
-      price: "N12,050 ",
-      description:
-        "This campaign will offer food, shelter, and education to orphans, helping them build a better future",
-      image: Spotlight2,
-      per: "raised",
-    },
-    {
-      id: 3,
-      name: "Support Entepreneurs",
-      price: "N12,050 ",
-      description:
-        "This campaign supports small businesses by providing them with the capital they need to grow and thrive",
-      image: Spotlight3,
-      per: "raised",
-    },
-  ];
+  const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [totalAmountForCampaign, setTotalAmountForCampaign] = useState<
+    number | null
+  >(null);
+
+  useEffect(() => {
+    const getApprovedCampaigns = async () => {
+      setLoading(true);
+      const campaigns = await fetchApprovedCampaigns();
+      setApprovedCampaigns(campaigns);
+      const totalAmount = await calculateTotalAmountForCampaign(campaigns._id);
+      setTotalAmountForCampaign(totalAmount);
+      console.log(campaigns);
+
+      setLoading(false);
+    };
+
+    getApprovedCampaigns();
+  }, []);
 
   return (
     <section
@@ -94,18 +56,34 @@ const Spotlight = () => {
       className="px-5 lg:px-10 lg:mt-[100px] mt-[80px]"
     >
       <h1 className="text-[40px] font-bold">In the Spotlight</h1>
-      <div className="grid grid-cols-1 gap-6 my-5 py-5 w-full no-scrollbar overflow-x-auto lg:grid-cols-3 md:grid-cols-2">
-        {spotItems.map((campaign) => (
-          <SpotLightCard
-            key={campaign.id}
-            description={campaign.description}
-            image={campaign.image}
-            name={campaign.name}
-            price={campaign.price}
-            per={campaign.per}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="mt-6 w-full grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+          {Array(3)
+            .fill(null)
+            .map((_, index) => (
+              <CampaignSkeleton key={index} />
+            ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 my-5 py-5 w-full no-scrollbar overflow-x-auto lg:grid-cols-3 justify-center md:grid-cols-2">
+          {approvedCampaigns.length > 0 ? (
+            approvedCampaigns
+              .slice(0, 3)
+              .map((campaign) => (
+                <SpotLightCard
+                  key={campaign._id}
+                  title={campaign.title}
+                  description={campaign.description}
+                  goalAmount={campaign.goalAmount}
+                  raisedAmount={totalAmountForCampaign}
+                  images={campaign.images}
+                />
+              ))
+          ) : (
+            <p>No campaigns available.</p>
+          )}
+        </div>
+      )}
     </section>
   );
 };

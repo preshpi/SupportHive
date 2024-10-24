@@ -4,7 +4,7 @@ SupportHive is a community-based crowdfunding platform designed to empower indiv
 
 **Demo:**
 
-<img width="1280" alt="Screenshot 2024-10-21 at 9 25 18 AM" src="https://github.com/user-attachments/assets/b0cae03a-0309-433b-9d97-4a08f872f260">
+<img width="1279" alt="Screenshot 2024-10-24 at 12 06 47 PM" src="https://github.com/user-attachments/assets/2d237e0c-5dd7-4c8d-a543-b2ac6eba89ff">
 
 
 - Visit this website: https://support-hive.vercel.app/
@@ -92,7 +92,7 @@ Ensure you have these prerequisites installed and set up on your system before p
 
 - <a href="https://github.com/faithegwuenu"> Egwuenu Faith </a>
 - <a href="https://github.com/TaiwoAzeezat"> Azeezat Funmilayo Taiwo </a>
-- <a href="https://github.com/Ladyruth"> Lady Ruth </a>
+- <a href="https://github.com/Ladyruth"> Ruth Ezeneche  </a>
 
 
 # License

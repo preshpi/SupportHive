@@ -18,6 +18,8 @@ export default {
         "Dark-700": "#186429",
         "Dark-800": "#124B1F",
         "Dark-900": "#000E04",
+        "light-red": "#F62C23",
+        "dark-red": "#F62C23",
       },
     },
   },
