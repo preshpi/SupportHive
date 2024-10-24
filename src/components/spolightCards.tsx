@@ -28,7 +28,7 @@ export const SpotLightCard: React.FC<SpotLightCardProps> = ({
   // console.log(progressPercentage, "progressPercentage");
 
   return (
-    <Link to={_id}>
+    <Link to={`/dashboard/campaign/${_id}`}>
       <div className="bg-white border border-[#F9F9F9] space-y-2 rounded-lg p-4 group transform transition-transform duration-300 group-hover:shadow-lg shadow-sm">
         <img
           src={images ? urlFor(images[0]) : ""}
