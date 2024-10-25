@@ -42,7 +42,6 @@ const Spotlight = () => {
       setApprovedCampaigns(campaigns);
       const totalAmount = await calculateTotalAmountForCampaign(campaigns._id);
       setTotalAmountForCampaign(totalAmount);
-      console.log(campaigns);
 
       setLoading(false);
     };

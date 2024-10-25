@@ -72,7 +72,9 @@ export const calculateTotalAmountForCampaign = async (
     // Filter transactions by campaignId
     const campaignTransactions = transactions.filter((transaction: any) => {
       return (
-        transaction.metadata && transaction.metadata.campaignId === campaignId
+        transaction.metadata &&
+        transaction.metadata.campaignId === campaignId &&
+        transaction.status === "success"
       );
     });
 
@@ -83,6 +85,7 @@ export const calculateTotalAmountForCampaign = async (
       },
       0
     );
+
     return totalAmount / 100; // Convert kobo to Naira
   } catch (error) {
     toast.error((error as { message: string }).message);

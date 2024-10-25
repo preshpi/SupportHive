@@ -19,8 +19,6 @@ export const SpotLightCard: React.FC<SpotLightCardProps> = ({
   images,
   _id,
 }) => {
-  // console.log(goalAmount, "goalAmount");
-
   // const amount = raisedAmount && raisedAmount * 100;
   // console.log(amount, "amount");
 

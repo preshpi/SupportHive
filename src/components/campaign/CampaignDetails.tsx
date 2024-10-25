@@ -119,8 +119,7 @@ function CampaignDetails() {
               <div className="flex gap-3 flex-wrap mt-3">
                 <div className="flex items-center">
                   <h1>Funding Goal:</h1>
-                  <FaNairaSign />
-                  <h1>{campaign?.goalAmount}</h1>
+                  <NumberFormat value={campaign?.goalAmount} />
                 </div>
 
                 <div className="flex items-center flex-wrap gap-3">

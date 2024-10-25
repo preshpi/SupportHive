@@ -70,11 +70,11 @@ export const createCampaign = async (data: createCampaignProps) => {
     }
   }
 
-  const fileData = data.supportingDocuments;
-  const filesArray = Array.from({ length: fileData.length }, (_, index) =>
-    fileData.item(index)
-  );
-  uploadFile(filesArray[0]);
+  // const fileData = data.supportingDocuments;
+  // const filesArray = Array.from({ length: fileData.length }, (_, index) =>
+  //   fileData.item(index)
+  // );
+  // uploadFile(filesArray[0]);
 
   const imagesData = data.images;
   const imagesArray = Array.from({ length: imagesData.length }, (_, index) =>
@@ -89,9 +89,9 @@ export const createCampaign = async (data: createCampaignProps) => {
         imagesArray.map((file: any) => uploadImage(file))
       );
 
-      const supportingDocuments = await Promise.all(
-        filesArray.map((file) => uploadFile(file))
-      );
+      // const supportingDocuments = await Promise.all(
+      //   filesArray.map((file) => uploadFile(file))
+      // );
 
       const result = await client.create({
         _type: "campaign",
@@ -118,14 +118,14 @@ export const createCampaign = async (data: createCampaignProps) => {
             _type: "reference",
           },
         })),
-        supportingDocuments: supportingDocuments.map((doc) => ({
-          _key: uuidv4(),
-          _type: "file",
-          asset: {
-            _ref: doc?._id,
-            _type: "reference",
-          },
-        })),
+        // supportingDocuments: supportingDocuments.map((doc) => ({
+        //   _key: uuidv4(),
+        //   _type: "file",
+        //   asset: {
+        //     _ref: doc?._id,
+        //     _type: "reference",
+        //   },
+        // })),
         name: data.name,
         email: data.email,
         phone: data.phone,
@@ -139,6 +139,7 @@ export const createCampaign = async (data: createCampaignProps) => {
       toast.error((error as { message: string }).message);
     }
   }
+
   campaignRequest(data);
 };
 

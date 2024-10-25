@@ -53,16 +53,17 @@ export const campaignSchema = z.object({
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported."
     ),
-  supportingDocuments: z
-    .any()
-    .refine(
-      (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-      `Max document size is 5MB.`
-    )
-    .refine(
-      (files) => ACCEPTED_DOCUMENT_TYPES.includes(files?.[0]?.type),
-      "Only flipdf, doc, docx, ppt, pptx formats are supported."
-    ),
+  // supportingDocuments: z
+  //   .any()
+  //   .optional()
+  //   .refine(
+  //     (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+  //     `Max document size is 5MB.`
+  //   )
+  //   .refine(
+  //     (files) => ACCEPTED_DOCUMENT_TYPES.includes(files?.[0]?.type),
+  //     "Only flipdf, doc, docx, ppt, pptx formats are supported."
+  //   ),
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone Number must be at least 10 characters"),
@@ -92,7 +93,7 @@ export type createCampaignProps = {
   raiseMoneyFor: string;
   impact: string;
   images: FileList;
-  supportingDocuments: FileList;
+  supportingDocuments?: FileList;
   name: string;
   email: string;
   phone: string;
