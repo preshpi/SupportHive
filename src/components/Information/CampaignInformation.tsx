@@ -26,7 +26,7 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
       "importance",
       "impact",
       "images",
-      "supportingDocuments",
+      // "supportingDocuments",
     ]);
     if (isValid) {
       onNext();
@@ -158,24 +158,22 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
           <span className="text-red-500 text-sm">{`${errors.impact.message}`}</span>
         )}
       </div>
+      <div className="mt-4">
+        <label className="block text-black font-bold mb-2">
+          Have images related to your Campaign?
+        </label>
+        <input
+          type="file"
+          accept=".jpg,.jpeg,.png"
+          id="images"
+          autoComplete="off"
+          multiple
+          {...register("images")}
+          onChange={handleImagesChange}
+        />
+      </div>
 
-      <div className="flex flex-col gap-y-5">
-        <div className="mt-4">
-          <label className="block text-black font-bold mb-2">
-            Have images related to your Campaign?
-          </label>
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png"
-            id="images"
-            autoComplete="off"
-            multiple
-            {...register("images")}
-            onChange={handleImagesChange}
-          />
-        </div>
-
-        <div className="mt-4">
+      {/* <div className="mt-4">
           <label className="block text-black font-bold mb-2">
             Have documents related to your Campaign?
           </label>
@@ -189,10 +187,9 @@ const CampaignInformation: React.FC<CampaignInformationProps> = ({
             additionalClasses="border-none"
             {...register("supportingDocuments")}
           />
-        </div>
-      </div>
+        </div> */}
 
-      <div className="mt-8 justify-end flex">
+      <div className="mt-4 justify-end flex">
         <button
           className="bg-green-600 text-white px-6 py-2 rounded-md flex items-center"
           onClick={handleNext}

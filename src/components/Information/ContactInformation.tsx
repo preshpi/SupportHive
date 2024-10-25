@@ -35,7 +35,7 @@ const ContactInformation = () => {
         });
         setBanks(response.data.data);
       } catch (error) {
-        console.error("Error fetching banks:", error);
+        toast.error("Error fetching banks");
       }
     };
 
@@ -109,12 +109,13 @@ const ContactInformation = () => {
       endDate,
       userId: sanityID,
       images: data.images,
-      supportingDocuments: data.supportingDocuments,
+      // supportingDocuments: data.supportingDocuments,
     };
 
     if (sanityID) {
       const subAccount = await createSubAccount(campaignData);
       campaignData.subAccountId = subAccount.subaccount_code;
+
       await createCampaign(campaignData);
     }
     navigate("/dashboard/profile");

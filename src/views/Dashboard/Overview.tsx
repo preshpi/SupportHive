@@ -9,6 +9,7 @@ import {
 import NumberFormat from "../../utils/numberFormat";
 import { getTotalCampaigns } from "../../utils/requests/campaign.request";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
+import { Link } from "react-router-dom";
 
 type Campaign = {
   _id: string;
@@ -83,7 +84,7 @@ const Overview = () => {
     const getApprovedCampaigns = async () => {
       setLoading(true);
       const campaigns = await fetchApprovedCampaigns();
-      setApprovedCampaigns(campaigns);
+      setApprovedCampaigns(campaigns.slice(0, 3));
       setLoading(false);
     };
 
@@ -120,20 +121,34 @@ const Overview = () => {
 
           <div className="pt-8">
             {loading ? (
-              <p>Loading campaigns...</p>
+              <div>
+                {Array(3)
+                  .fill(null)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-y-1 border-b py-3 border-[#D0D5DD]"
+                    >
+                      <p className="w-56 h-6 animate-pulse bg-gray-50 rounded-md"></p>
+                      <p className="w-80 h-12 animate-pulse bg-gray-50  rounded-md"></p>
+                    </div>
+                  ))}
+              </div>
             ) : (
               approvedCampaigns.map((campaign) => (
-                <div
+                <Link
                   key={campaign._id}
-                  className="flex flex-col gap-y-1 border-b py-2 border-[#D0D5DD]"
+                  to={`/dashboard/campaign/${campaign._id}`}
                 >
-                  <p className="font-bold text-base text-black">
-                    {campaign.title}
-                  </p>
-                  <p className="text-[#777777] text-sm">
-                    {campaign.description}
-                  </p>
-                </div>
+                  <div className="flex flex-col gap-y-1 border-b py-2 border-[#D0D5DD]">
+                    <p className="font-bold text-base text-black">
+                      {campaign.title}
+                    </p>
+                    <p className="text-[#777777] text-sm line-clamp-3">
+                      {campaign.description}
+                    </p>
+                  </div>
+                </Link>
               ))
             )}
           </div>
