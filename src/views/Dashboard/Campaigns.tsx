@@ -14,8 +14,6 @@ const Campaigns = () => {
     {}
   );
 
-  console.log(raisedAmounts);
-
   useEffect(() => {
     const getCampaigns = async () => {
       setLoading(true);

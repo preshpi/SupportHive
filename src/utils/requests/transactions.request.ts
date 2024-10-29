@@ -1,5 +1,4 @@
 import axios from "axios";
-import { log } from "console";
 import { toast } from "sonner";
 
 export const fetchUserTransactions = async (userId: string | undefined) => {
