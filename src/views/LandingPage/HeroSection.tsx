@@ -1,11 +1,16 @@
 const HeroSection = () => {
   return (
     <section>
-      <div className="lg:h-full md:h-full h-[70vh] lg:bg-transparent md:bg-transparent bg-[#11451E] flex items-center justify-center px-10 pt-5">
+      <div className="lg:h-full md:h-full h-[70vh] flex items-center px-0 lg:px-10 md:px-6 justify-center pt-5">
         <img
           src="./hero-image.svg"
           alt="background image"
           className="relative w-full  lg:block md:block hidden"
+        />
+        <img
+          src="./mobile-bg2.svg"
+          alt="background image"
+          className="relative w-full object-cover bg-cover lg:hidden md:hidden block"
         />
         <div className="absolute inset-0 lg:block md:block hidden"></div>
 

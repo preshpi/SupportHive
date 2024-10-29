@@ -10,6 +10,7 @@ type SpotLightCardProps = {
   images: Image[];
   raisedAmount: number | null;
   _id: string;
+  createdBy: string;
 };
 
 export const SpotLightCard: React.FC<SpotLightCardProps> = ({
@@ -18,6 +19,7 @@ export const SpotLightCard: React.FC<SpotLightCardProps> = ({
   goalAmount,
   images,
   _id,
+  createdBy,
 }) => {
   // const amount = raisedAmount && raisedAmount * 100;
   // console.log(amount, "amount");
@@ -33,13 +35,10 @@ export const SpotLightCard: React.FC<SpotLightCardProps> = ({
           alt={title}
           className="h-[300px] w-full rounded-lg group-hover:scale-105 transition-transform duration-300 object-cover"
         />
-        <p className="font-semibold text-[20px]">{title}</p>
+        <p className="font-semibold text-[20px] truncate">{title}</p>
         <p className="text-black/80 text-[16px] line-clamp-2">{description}</p>
         <p className="text-[14px] border-t border-Light-200 py-2">
-          By{" "}
-          <span className="semi-bold text-[#28A745]">
-            community Health Initiatives
-          </span>
+          By <span className="semi-bold text-[#28A745]">{createdBy}</span>
         </p>
         {/* 
       <input
