@@ -12,7 +12,7 @@ const NavBar = () => {
 
   return (
     <div className="sticky top-0 z-30 inset-0 bg-white">
-      <div className="container">
+      <div className="w-full">
         <div className="flex justify-between items-center mx-auto container px-10 py-5">
           <div>
             <img src="/Logo.svg" alt="Logo" />

@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+// update profile schema
+
 export const updateProfileSchema = z.object({
   firstname: z
     .string({ required_error: "First Name is required" })
@@ -13,6 +15,7 @@ export const updateProfileSchema = z.object({
 
 export type TupdateProfileSchema = z.infer<typeof updateProfileSchema>;
 
+// security schema
 export const securitySchema = z
   .object({
     currentPassword: z
@@ -29,3 +32,35 @@ export const securitySchema = z
   });
 
 export type TsecuritySchema = z.infer<typeof securitySchema>;
+
+// feedback schema
+export const feedbackSchema = z.object({
+  feedback: z.string().min(1, "Feedback is required"),
+});
+
+export type TfeedbackSchema = z.infer<typeof feedbackSchema>;
+
+// types
+export type EditProfileProps = {
+  register: any;
+  errors: any;
+  handleSubmit: any;
+  onSubmit: any;
+  isSubmitting: boolean;
+};
+
+export type SecurityProps = {
+  registerSecurity: any;
+  errorSecurity: any;
+  handleSubmitSecurity: any;
+  onSecuritySubmit: any;
+  isSubmittingSecurity: boolean;
+};
+
+export type FeedbackProps = {
+  registerFeedback: any;
+  errorsFeedback: any;
+  onSubmitFeedback: any;
+  isFeedbackSubmitting: boolean;
+  handleSubmitFeedback: any;
+};

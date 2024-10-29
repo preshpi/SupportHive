@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.9.0",
     "@paystack/inline-js": "^2.22.0",
     "@reduxjs/toolkit": "^2.3.0",

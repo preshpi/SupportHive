@@ -2,34 +2,13 @@ import { useEffect, useState } from "react";
 import { fetchApprovedCampaigns } from "../../../supporthive/sanity.query";
 import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
 import { SpotLightCard } from "../../components/spolightCards";
-import { Image } from "../../types/images";
 import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
-
-type Campaign = {
-  _id: string;
-  title: string;
-  country: string;
-  city: string;
-  category: string;
-  description: string;
-  goalAmount: number;
-  startDate: string;
-  endDate: string;
-  raiseMoneyFor: string;
-  importance: string;
-  images: Image[];
-  impact: string;
-  status: string;
-  createdBy: {
-    _id: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-  };
-};
+import { spotlightCampaign } from "../../types/components/spotlightCampaign";
 
 const Spotlight = () => {
-  const [approvedCampaigns, setApprovedCampaigns] = useState<Campaign[]>([]);
+  const [approvedCampaigns, setApprovedCampaigns] = useState<
+    spotlightCampaign[]
+  >([]);
   const [loading, setLoading] = useState(false);
   const [totalAmountForCampaign, setTotalAmountForCampaign] = useState<
     number | null
@@ -77,6 +56,11 @@ const Spotlight = () => {
                   goalAmount={campaign.goalAmount}
                   raisedAmount={totalAmountForCampaign}
                   images={campaign.images}
+                  createdBy={
+                    campaign.createdBy.firstname +
+                      " " +
+                      campaign.createdBy.lastname || "N/A"
+                  }
                 />
               ))
           ) : (

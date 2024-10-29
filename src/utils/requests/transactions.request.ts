@@ -1,4 +1,5 @@
 import axios from "axios";
+import { log } from "console";
 import { toast } from "sonner";
 
 export const fetchUserTransactions = async (userId: string | undefined) => {
@@ -30,15 +31,20 @@ export const calculateTotalDonationForUser = async (
   try {
     const userTransactions = await fetchUserTransactions(userId);
 
-    // Calculate total donation amount for the user
-    const totalAmount = userTransactions.reduce(
-      (acc: number, transaction: any) => {
-        return acc + transaction.amount;
-      },
-      0
+    const filterSuccessfulTransactions = userTransactions.filter(
+      (item: any) => {
+        return item.status === "success";
+      }
     );
 
-    return totalAmount / 100; // Convert kobo to Naira
+    const totalAmount = filterSuccessfulTransactions.reduce(
+      (acc: number, item: any) => {
+        return acc + item.amount;
+      }
+    );
+    const totalAmountInNaira = totalAmount.amount / 100;
+
+    return totalAmountInNaira;
   } catch (error) {
     toast.error((error as { message: string }).message);
     return 0;

@@ -74,7 +74,8 @@ export const fetchApprovedCampaigns = async () => {
     status,
     createdBy->{
       _id,
-      name, 
+        firstname,
+      lastname,
       email
     }
   }`
