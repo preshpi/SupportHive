@@ -80,7 +80,7 @@ const CreateAccount = () => {
           <p className="text-base">Get started by creating an account.</p>
         </div>
 
-        <form className="w-full">
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <div className="flex gap-4">
               <div className="flex flex-col gap-y-1">

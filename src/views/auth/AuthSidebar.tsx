@@ -5,10 +5,10 @@ const AuthSidebar = () => {
     <main className="w-full h-full bg-[#28A745]/15 flex items-center justify-center">
       <div className="px-[50px]">
         <h1 className="text-[#4F4F4F] font-bold text-[32px]">
-          Empowering Ideas, One Contribution at a Time
+          Empowering Dreams, One Contribution at a Time{" "}
         </h1>
         <p className="text-base pt-1 text-[#333333]">
-          Join a community of changemakers and fuel the future.
+          Together, we can fund the future we believe in.{" "}
         </p>
 
         <img
