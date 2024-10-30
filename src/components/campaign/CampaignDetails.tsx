@@ -6,16 +6,27 @@ import { fetchCampaign } from "../../types/campaign";
 import { GrLocationPin } from "react-icons/gr";
 import { TbCategory } from "react-icons/tb";
 import { BiTimeFive } from "react-icons/bi";
-import { FaNairaSign } from "react-icons/fa6";
-import { IoCallOutline } from "react-icons/io5";
+import {
+  FacebookShareButton,
+  WhatsappShareButton,
+  LinkedinShareButton,
+  TelegramShareButton,
+  RedditShareButton,
+  EmailShareButton,
+} from "react-share";
+import { IoCallOutline, IoLogoReddit } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { CiUser } from "react-icons/ci";
+import { CiMail, CiUser } from "react-icons/ci";
 import { Button } from "../Button";
 import { client, urlFor } from "../../../supporthive/sanity.cli";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
 import NumberFormat from "../../utils/numberFormat";
+import { FaFacebookF, FaWhatsapp } from "react-icons/fa6";
+import { IoIosLink } from "react-icons/io";
+import { FaLinkedinIn } from "react-icons/fa";
+import { BsTelegram } from "react-icons/bs";
 
 function CampaignDetails() {
   const { id } = useParams();
@@ -29,11 +40,10 @@ function CampaignDetails() {
   //   if (!ref) return '#';
   //   return getFileAssetUrl({ projectId: "yourProjectId", dataset: "yourDataset" }, ref);
   // };
+  const campaignId = campaign?._id;
 
   const handleDelete = async () => {
     try {
-      const campaignId = campaign?._id;
-
       if (campaignId) {
         await client.delete(campaignId);
       } else {
@@ -49,6 +59,13 @@ function CampaignDetails() {
   const [totalAmountForCampaign, setTotalAmountForCampaign] = useState<
     number | null
   >(null);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("link copied to clipboard");
+  };
+
+  const campaignURL = `https://support-hive.vercel.app/dashboard/campaign/${campaignId}`;
 
   // const progressPercentage = totalAmountForCampaign
   //   ? (totalAmountForCampaign / (campaign?.goalAmount ?? 1)) * 100
@@ -87,9 +104,39 @@ function CampaignDetails() {
         <div className="pt-6 pb-10">
           <div>
             <div>
-              <h1 className="mt-5 font-extrabold text-2xl">
-                {campaign?.title}
-              </h1>
+              <div className="flex md:flex-row lg:flex-row gap-5 mb-5 px-0 flex-col-reverse justify-between">
+                <h1 className="font-extrabold text-2xl">{campaign?.title}</h1>
+
+                <div className="flex gap-6 text-[#2e2e2f] text-xl">
+                  <FacebookShareButton url={campaignURL}>
+                    <FaFacebookF />
+                  </FacebookShareButton>
+
+                  <WhatsappShareButton url={campaignURL}>
+                    <FaWhatsapp />
+                  </WhatsappShareButton>
+
+                  <LinkedinShareButton url={campaignURL}>
+                    <FaLinkedinIn />
+                  </LinkedinShareButton>
+
+                  <TelegramShareButton url={campaignURL}>
+                    <BsTelegram />
+                  </TelegramShareButton>
+
+                  <RedditShareButton url={campaignURL}>
+                    <IoLogoReddit />
+                  </RedditShareButton>
+
+                  <EmailShareButton url={campaignURL}>
+                    <CiMail />
+                  </EmailShareButton>
+                  <button onClick={copyToClipboard}>
+                    <IoIosLink />
+                  </button>
+                </div>
+              </div>
+
               <div className="flex gap-6 mt-3 text-[#555657] flex-wrap">
                 <div className="flex gap-2 items-center">
                   <GrLocationPin />
@@ -111,7 +158,11 @@ function CampaignDetails() {
                   </p>
                 </div>
               </div>
-              <p className="mt-2">{campaign?.description}</p>
+
+              <div className="flex flex-col gap-3 mt-5">
+                <h1 className="font-bold text-xl">Description</h1>
+                <p>{campaign?.description}</p>
+              </div>
             </div>
 
             <div>

@@ -64,7 +64,7 @@ const Login = () => {
           <p className="text-base">Log in to begin and manage your campaign</p>
         </div>
 
-        <form className="w-full">
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <div className="flex flex-col gap-y-1">
               <Input
@@ -103,9 +103,9 @@ const Login = () => {
 
           <div className="mt-[32px] space-y-4">
             <Button
-              onClick={handleSubmit(onSubmit)}
               disabled={isSubmitting}
               loading={isSubmitting}
+              onClick={handleSubmit(onSubmit)}
               className="bg-normal-300 text-white text-sm disabled:cursor-not-allowed disabled:opacity-40"
             >
               Proceed
