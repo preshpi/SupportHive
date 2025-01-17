@@ -24,6 +24,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({
   _id,
 }) => {
   // const progress = (raisedAmount / goalAmount) * 100;
+
   const isExpired = daysLeft <= 0;
 
   return (

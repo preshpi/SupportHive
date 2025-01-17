@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
 import CampaignCard from "../../components/campaign/CampaignCard";
 import Icon from "../../assets/campaign icon.svg";
+import { calculateDaysLeft } from "../../utils/userInitials";
 
 const Campaigns = () => {
   const [allCampaigns, setAllCampaigns] = useState<fetchCampaign[]>([]);
@@ -32,15 +33,6 @@ const Campaigns = () => {
 
     getCampaigns();
   }, []);
-
-  // Calculate days left for each campaign
-  const calculateDaysLeft = (endDate: number | string) => {
-    const currentDate = new Date();
-    const campaignEndDate = new Date(endDate);
-    const timeDiff = campaignEndDate.getTime() - currentDate.getTime();
-    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Convert milliseconds to days
-    return daysLeft;
-  };
 
   return (
     <div className="py-5 w-full">
