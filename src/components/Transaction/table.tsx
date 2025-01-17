@@ -1,3 +1,5 @@
+import NumberFormat from "../../utils/numberFormat";
+
 interface Transaction {
   id: number;
   status: string;
@@ -60,7 +62,9 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                   <tr key={transaction.id} className="border-b">
                     <td className="py-3 px-6">{transaction.customer.email}</td>
                     <td className="py-3 px-6">
-                      ₦{(transaction.amount / 100).toFixed(2)}
+                      <NumberFormat
+                        value={(transaction.amount / 100).toFixed(2)}
+                      />
                     </td>
                     <td>
                       <p
