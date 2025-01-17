@@ -166,6 +166,7 @@ const Settings = () => {
 
   const onSubmitFeedback = async (data: TfeedbackSchema) => {
     console.log(data);
+    resetFeedback();
   };
   return (
     <div>
