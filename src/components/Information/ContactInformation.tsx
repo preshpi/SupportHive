@@ -114,7 +114,9 @@ const ContactInformation = () => {
 
     if (sanityID) {
       const subAccount = await createSubAccount(campaignData);
-      campaignData.subAccountId = subAccount.subaccount_code;
+      campaignData.subAccountId = subAccount?.subaccount_code;
+
+      console.log(campaignData);
 
       await createCampaign(campaignData);
     }

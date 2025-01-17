@@ -40,9 +40,9 @@ export const campaignSchema = z.object({
       (val) => val > new Date(),
       "Campaign End Date must be after the Start Date"
     ),
-  raiseMoneyFor: z.string().min(200, "must be at least 200 words"),
-  importance: z.string().min(200, "must be at least 200 words"),
-  impact: z.string().min(200, "must be at least 200 words"),
+  raiseMoneyFor: z.string().min(50, "must be at least 50 words"),
+  importance: z.string().min(50, "must be at least 50 words"),
+  impact: z.string().min(50, "must be at least 50 words"),
   images: z
     .any()
     .refine(

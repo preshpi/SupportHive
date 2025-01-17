@@ -108,6 +108,7 @@ function CampaignDetails() {
                 <h1 className="font-extrabold text-2xl">{campaign?.title}</h1>
 
                 <div className="flex gap-6 text-[#2e2e2f] text-xl">
+                  <p>Share:</p>
                   <FacebookShareButton url={campaignURL}>
                     <FaFacebookF />
                   </FacebookShareButton>
