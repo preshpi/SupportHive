@@ -12,10 +12,11 @@ import {
   userRejectedCampaigns,
 } from "../../utils/requests/campaign.request";
 import { toast } from "sonner";
-import CampaignCard, {
-  CampaignCardProps,
-} from "../../components/campaign/CampaignCard";
+import CampaignCard from "../../components/campaign/CampaignCard";
 import { CampaignSkeleton } from "../../components/campaign/CampaignLoader";
+import { calculateTotalAmountForCampaign } from "../../utils/requests/transactions.request";
+import { calculateDaysLeft } from "../../utils/userInitials";
+import { fetchCampaign } from "../../types/campaign";
 
 const Profile = () => {
   const userDetails = useSelector((state: RootState) => state.user);
@@ -46,22 +47,23 @@ const Profile = () => {
     navigate("/dashboard/settings");
   };
   const [activeStatusTab, setActiveStatusTab] = useState(0);
-  const [approvedCampaigns, setApprovedCampaigns] = useState<
-    CampaignCardProps[]
-  >([]);
-  const [pendingCampaigns, setPendingCampaigns] = useState<CampaignCardProps[]>(
+  const [approvedCampaigns, setApprovedCampaigns] = useState<fetchCampaign[]>(
     []
   );
-  const [rejectedCampaigns, setRejectedCampaigns] = useState<
-    CampaignCardProps[]
-  >([]);
-  const [allCampaigns, setAllCampaign] = useState<CampaignCardProps[]>([]);
+  const [pendingCampaigns, setPendingCampaigns] = useState<fetchCampaign[]>([]);
+  const [rejectedCampaigns, setRejectedCampaigns] = useState<fetchCampaign[]>(
+    []
+  );
+  const [allCampaigns, setAllCampaign] = useState<fetchCampaign[]>([]);
 
   //loading states
   const [loadingAll, setLoadingAll] = useState(false);
   const [loadingApproved, setLoadingApproved] = useState(false);
   const [loadingPending, setLoadingPending] = useState(false);
   const [loadingRejected, setLoadingRejected] = useState(false);
+  const [raisedAmounts, setRaisedAmounts] = useState<Record<string, number>>(
+    {}
+  );
 
   const handleChangeTab = (tabName: string, tabIndex: number) => {
     switch (tabName) {
@@ -104,6 +106,15 @@ const Profile = () => {
             const allCampaigns = await userAllCampaigns(userId);
             setAllCampaign(allCampaigns);
             setLoadingAll(false);
+
+            const campaignRaisedAmounts: Record<string, number> = {};
+            for (const campaign of allCampaigns) {
+              const totalAmount = await calculateTotalAmountForCampaign(
+                campaign._id
+              );
+              campaignRaisedAmounts[campaign._id] = totalAmount;
+            }
+            setRaisedAmounts(campaignRaisedAmounts);
           } else if (activeStatusTab === 1) {
             setLoadingApproved(true);
             const approvedCampaigns = await userApprovedCampaigns(userId);
@@ -218,8 +229,8 @@ const Profile = () => {
                   title={campaign.title}
                   description={campaign.description}
                   goalAmount={campaign.goalAmount}
-                  raisedAmount={0}
-                  daysLeft={2}
+                  raisedAmount={raisedAmounts[campaign._id] || 0}
+                  daysLeft={calculateDaysLeft(campaign.endDate)}
                   images={campaign.images}
                   _id={campaign._id}
                 />
@@ -248,8 +259,8 @@ const Profile = () => {
                   title={campaign.title}
                   description={campaign.description}
                   goalAmount={campaign.goalAmount}
-                  raisedAmount={0}
-                  daysLeft={2}
+                  raisedAmount={raisedAmounts[campaign._id] || 0}
+                  daysLeft={calculateDaysLeft(campaign.endDate)}
                   images={campaign.images}
                   _id={campaign._id}
                 />
@@ -280,8 +291,8 @@ const Profile = () => {
                     title={campaign.title}
                     description={campaign.description}
                     goalAmount={campaign.goalAmount}
-                    raisedAmount={0}
-                    daysLeft={2}
+                    raisedAmount={raisedAmounts[campaign._id] || 0}
+                    daysLeft={calculateDaysLeft(campaign.endDate)}
                     images={campaign.images}
                     _id={campaign._id}
                   />
@@ -311,8 +322,8 @@ const Profile = () => {
                   title={campaign.title}
                   description={campaign.description}
                   goalAmount={campaign.goalAmount}
-                  raisedAmount={0}
-                  daysLeft={2}
+                  raisedAmount={raisedAmounts[campaign._id] || 0}
+                  daysLeft={calculateDaysLeft(campaign.endDate)}
                   images={campaign.images}
                   _id={campaign._id}
                 />
