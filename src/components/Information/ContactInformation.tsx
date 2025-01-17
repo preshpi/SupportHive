@@ -116,7 +116,7 @@ const ContactInformation = () => {
       const subAccount = await createSubAccount(campaignData);
       campaignData.subAccountId = subAccount?.subaccount_code;
 
-      console.log(campaignData);
+      // console.log(campaignData);
 
       await createCampaign(campaignData);
     }

@@ -36,7 +36,7 @@ const Feedback = ({
             onClick={handleSubmitFeedback(onSubmitFeedback)}
             className="bg-normal-300 text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Save Changes{" "}
+            Submit{" "}
           </Button>
         </div>
       </form>
