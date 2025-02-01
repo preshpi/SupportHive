@@ -26,22 +26,8 @@ const AppRoutes = () => {
       <Routes>
         {/* dashboard */}
         <Route element={<Dashboardlayout />}>
-          <Route
-            path="/dashboard/overview"
-            element={
-              <ProtectedRoute>
-                <Overview />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard/campaigns"
-            element={
-              <ProtectedRoute>
-                <Campaigns />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard/overview" element={<Overview />} />
+          <Route path="/dashboard/campaigns" element={<Campaigns />} />
           <Route
             path="/dashboard/campaigns/create"
             element={
@@ -50,18 +36,11 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={
-          <ErrorPage/>
-        } 
-          />
+          <Route path="*" element={<ErrorPage />} />
           <Route
             caseSensitive={false}
             path="/dashboard/campaign/:id"
-            element={
-              <ProtectedRoute>
-                <CampaignDetails />
-              </ProtectedRoute>
-            }
+            element={<CampaignDetails />}
           />
           <Route
             path="/dashboard/campaign/:id/donate"
@@ -96,9 +75,7 @@ const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="*"
-           />
+          <Route path="*" />
         </Route>
 
         {/* Auth Routes */}
